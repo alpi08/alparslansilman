@@ -404,7 +404,7 @@
             font-weight: 600;
         }
 
-        /* ── HAZIR PAKETLER (3+2 düzen) ── */
+        /* ── HAZIR PAKETLER (görseldeki gibi 3+2 düzen) ── */
         #packages {
             background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
         }
@@ -434,28 +434,10 @@
         .price-card.visible {
             animation: cardIn 0.6s ease forwards;
         }
-        .price-card.featured {
-            border-color: rgba(124, 58, 237, 0.5);
-            background: linear-gradient(160deg, rgba(124, 58, 237, 0.12), rgba(6, 182, 212, 0.06));
-            box-shadow: 0 0 50px rgba(124, 58, 237, 0.15);
-        }
         .price-card:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow);
             border-color: var(--borderh);
-        }
-        .price-badge {
-            position: absolute;
-            top: 0.8rem;
-            right: 0.8rem;
-            padding: 0.15rem 0.6rem;
-            border-radius: 2rem;
-            background: linear-gradient(135deg, var(--violet), var(--cyan));
-            font-size: 0.55rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #fff;
         }
         .price-tier {
             font-family: 'Outfit', sans-serif;
@@ -512,9 +494,6 @@
             color: var(--cyan);
             font-size: 0.9rem;
         }
-        .price-features li .cross {
-            color: rgba(255, 255, 255, 0.2);
-        }
         .price-card .btn-ghost,
         .price-card .btn-primary {
             width: 100%;
@@ -522,7 +501,7 @@
             margin-top: auto;
         }
 
-        /* mobilde 2 sütun */
+        /* mobilde 2 sütun, sonra 1 */
         @media (max-width: 768px) {
             .pricing-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -976,7 +955,7 @@
         </div>
     </section>
 
-    <!-- HAZIR PAKETLER (3+2 düzen) -->
+    <!-- HAZIR PAKETLER (görseldeki sıralama: Başlangıç, Küçük İşletme, Satış Artırıcı, Popüler, Kurumsal) -->
     <section id="packages">
         <div class="section-center">
             <span class="section-label">⬡ Web Site Paketleri</span>
@@ -984,7 +963,7 @@
             <p class="section-sub">Her bütçeye ve ihtiyaca uygun, şeffaf fiyatlı paketler.</p>
         </div>
         <div class="pricing-grid">
-            <!-- 1 -->
+            <!-- 1. Başlangıç -->
             <div class="price-card" data-delay="0">
                 <div class="price-tier">Başlangıç</div>
                 <div class="price-amount"><sup>₺</sup>2.600</div>
@@ -1001,7 +980,8 @@
                 </ul>
                 <a href="#cta" class="btn-ghost">Hemen Başla →</a>
             </div>
-            <!-- 2 -->
+
+            <!-- 2. Küçük İşletme -->
             <div class="price-card" data-delay="80">
                 <div class="price-tier">Küçük İşletme</div>
                 <div class="price-amount"><sup>₺</sup>3.600</div>
@@ -1019,9 +999,9 @@
                 </ul>
                 <a href="#cta" class="btn-ghost">Hemen Başla →</a>
             </div>
-            <!-- 3 -->
-            <div class="price-card featured" data-delay="160">
-                <div class="price-badge">⭐ Popüler</div>
+
+            <!-- 3. Satış Artırıcı -->
+            <div class="price-card" data-delay="160">
                 <div class="price-tier">Satış Artırıcı</div>
                 <div class="price-amount"><sup>₺</sup>5.000</div>
                 <div class="price-desc">Dönüşüm odaklı, pro tasarım.</div>
@@ -1038,9 +1018,10 @@
                 </ul>
                 <a href="#cta" class="btn-primary">Hemen Başla ✦</a>
             </div>
-            <!-- 4 -->
+
+            <!-- 4. Popüler (eski Profesyonel) -->
             <div class="price-card" data-delay="240">
-                <div class="price-tier">Profesyonel</div>
+                <div class="price-tier">Popüler</div>
                 <div class="price-amount"><sup>₺</sup>6.500</div>
                 <div class="price-desc">Kurumsal kalitede dijital deneyim.</div>
                 <div class="price-divider"></div>
@@ -1056,7 +1037,8 @@
                 </ul>
                 <a href="#cta" class="btn-ghost">Hemen Başla →</a>
             </div>
-            <!-- 5 -->
+
+            <!-- 5. Kurumsal -->
             <div class="price-card" data-delay="320">
                 <div class="price-tier">Kurumsal</div>
                 <div class="price-amount"><sup>₺</sup>8.000<sub>+</sub></div>
