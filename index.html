@@ -404,15 +404,15 @@
             font-weight: 600;
         }
 
-        /* ── HAZIR PAKETLER (düzgün grid) ── */
+        /* ── HAZIR PAKETLER (3+2 düzen) ── */
         #packages {
             background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
         }
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 2rem auto 0;
             align-items: stretch;
         }
@@ -520,6 +520,19 @@
             width: 100%;
             text-align: center;
             margin-top: auto;
+        }
+
+        /* mobilde 2 sütun */
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+        @media (max-width: 500px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* ── CUSTOM PAKET HESAPLAYICI ── */
@@ -840,14 +853,6 @@
             .footer-links {
                 justify-content: center;
             }
-            .pricing-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 500px) {
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* ── KEYFRAMES ── */
@@ -971,7 +976,7 @@
         </div>
     </section>
 
-    <!-- HAZIR PAKETLER (düzgün grid) -->
+    <!-- HAZIR PAKETLER (3+2 düzen) -->
     <section id="packages">
         <div class="section-center">
             <span class="section-label">⬡ Web Site Paketleri</span>
@@ -1074,7 +1079,7 @@
         </div>
     </section>
 
-    <!-- CUSTOM PAKET HESAPLAYICI (güncel fiyatlar) -->
+    <!-- CUSTOM PAKET HESAPLAYICI -->
     <section id="customizer">
         <div class="section-center">
             <span class="section-label">⬡ Kendi Paketini Oluştur</span>
@@ -1312,7 +1317,7 @@
             });
         });
 
-        /* ── CUSTOM PAKET HESAPLAYICI (güncel fiyatlar) ── */
+        /* ── CUSTOM PAKET HESAPLAYICI ── */
         const BASE = 2600;
         const designRadios = document.querySelectorAll('input[name="design"]');
         const featureChecks = document.querySelectorAll('.feature');
@@ -1320,11 +1325,9 @@
 
         function updateCustomPrice() {
             let total = BASE;
-            // design
             let designVal = 0;
             designRadios.forEach(r => { if (r.checked) designVal = parseInt(r.value); });
             total += designVal;
-            // features
             featureChecks.forEach(c => { if (c.checked) total += parseInt(c.value); });
             totalDisplay.innerHTML = `<sup>₺</sup>${total.toLocaleString('tr-TR')}`;
         }
