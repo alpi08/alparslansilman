@@ -404,19 +404,23 @@
             font-weight: 600;
         }
 
-        /* ── HAZIR PAKETLER (görseldeki gibi 3+2 düzen) ── */
+        /* ── HAZIR PAKETLER (flex ile ortalanmış) ── */
         #packages {
             background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
         }
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 1.5rem;
             max-width: 1100px;
             margin: 2rem auto 0;
             align-items: stretch;
         }
         .price-card {
+            flex: 0 0 calc(33.333% - 1.5rem);
+            max-width: 320px;
+            min-width: 240px;
             padding: 1.8rem 1.5rem;
             border-radius: 1.5rem;
             border: 1px solid var(--border);
@@ -429,7 +433,7 @@
             transform: translateY(30px);
             display: flex;
             flex-direction: column;
-            height: 100%;
+            height: auto;
         }
         .price-card.visible {
             animation: cardIn 0.6s ease forwards;
@@ -503,14 +507,15 @@
 
         /* mobilde 2 sütun, sonra 1 */
         @media (max-width: 768px) {
-            .pricing-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+            .price-card {
+                flex: 0 0 calc(50% - 1rem);
+                min-width: 180px;
             }
         }
         @media (max-width: 500px) {
-            .pricing-grid {
-                grid-template-columns: 1fr;
+            .price-card {
+                flex: 0 0 100%;
+                max-width: 100%;
             }
         }
 
@@ -639,13 +644,16 @@
             background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
         }
         .ref-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 2rem;
             max-width: 1000px;
             margin: 2rem auto 0;
         }
         .ref-card {
+            flex: 0 0 calc(50% - 1rem);
+            max-width: 420px;
             padding: 1.8rem;
             border-radius: 1.5rem;
             border: 1px solid var(--border);
@@ -657,7 +665,7 @@
             display: block;
             opacity: 0;
             transform: translateY(24px);
-            height: 100%;
+            height: auto;
         }
         .ref-card.visible {
             animation: cardIn 0.6s ease forwards;
@@ -688,6 +696,11 @@
             color: var(--cyan);
             font-weight: 600;
             letter-spacing: 0.04em;
+        }
+        @media (max-width: 600px) {
+            .ref-card {
+                flex: 0 0 100%;
+            }
         }
 
         /* ── CTA ── */
@@ -955,7 +968,7 @@
         </div>
     </section>
 
-    <!-- HAZIR PAKETLER (görseldeki sıralama: Başlangıç, Küçük İşletme, Satış Artırıcı, Popüler, Kurumsal) -->
+    <!-- HAZIR PAKETLER (flex ile ortalanmış) -->
     <section id="packages">
         <div class="section-center">
             <span class="section-label">⬡ Web Site Paketleri</span>
@@ -1019,7 +1032,7 @@
                 <a href="#cta" class="btn-primary">Hemen Başla ✦</a>
             </div>
 
-            <!-- 4. Popüler (eski Profesyonel) -->
+            <!-- 4. Popüler -->
             <div class="price-card" data-delay="240">
                 <div class="price-tier">Popüler</div>
                 <div class="price-amount"><sup>₺</sup>6.500</div>
