@@ -292,6 +292,25 @@
             transform: translateY(-3px);
         }
 
+        .btn-whatsapp {
+            padding: 0.75rem 2rem;
+            border-radius: 2rem;
+            background: #25D366;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.3);
+        }
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.5);
+        }
+
         /* floating orbs */
         .orb {
             position: absolute;
@@ -385,15 +404,15 @@
             font-weight: 600;
         }
 
-        /* ── HAZIR PAKETLER ── */
+        /* ── HAZIR PAKETLER (düzgün grid) ── */
         #packages {
             background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
         }
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
-            max-width: 1250px;
+            max-width: 1200px;
             margin: 2rem auto 0;
             align-items: stretch;
         }
@@ -508,7 +527,7 @@
             background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
         }
         .customizer-box {
-            max-width: 950px;
+            max-width: 900px;
             margin: 2rem auto 0;
             padding: 2rem 2rem 2.5rem;
             border-radius: 2rem;
@@ -548,7 +567,7 @@
         .custom-group .options {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem 1.2rem;
+            gap: 0.5rem 1rem;
         }
         .custom-group .options label {
             display: flex;
@@ -929,7 +948,7 @@
             </p>
             <div class="hero-buttons">
                 <a href="#packages" class="btn-primary">Paketleri İncele ✦</a>
-                <a href="#cta" class="btn-ghost">Hemen Konuş →</a>
+                <a href="https://wa.me/905366814908" target="_blank" class="btn-whatsapp">💬 WhatsApp'tan Yaz</a>
             </div>
         </div>
     </section>
@@ -952,7 +971,7 @@
         </div>
     </section>
 
-    <!-- HAZIR PAKETLER (5 ADET) -->
+    <!-- HAZIR PAKETLER (düzgün grid) -->
     <section id="packages">
         <div class="section-center">
             <span class="section-label">⬡ Web Site Paketleri</span>
@@ -1055,21 +1074,21 @@
         </div>
     </section>
 
-    <!-- CUSTOM PAKET HESAPLAYICI (tüm seçenekler burada) -->
+    <!-- CUSTOM PAKET HESAPLAYICI (güncel fiyatlar) -->
     <section id="customizer">
         <div class="section-center">
             <span class="section-label">⬡ Kendi Paketini Oluştur</span>
             <h2 class="section-title">İhtiyacına Göre Fiyat Hesapla</h2>
-            <p class="section-sub">Aşağıdan istediğin özellikleri seç, toplam fiyat anında güncellensin.</p>
+            <p class="section-sub">Base site (domain + hosting + kurulum) 2.600 ₺ zorunludur. Aşağıdan eklemek istediklerini seç, toplam fiyat anında güncellenir.</p>
         </div>
         <div class="customizer-box">
             <h3>📦 Paketini özelleştir</h3>
-            <div class="sub">Her özellik ayrı fiyatlandırılmıştır. Toplam tek seferlik ve aylık bakım ücreti gösterilir.</div>
+            <div class="sub">Seçimlerine göre tek seferlik toplam fiyat gösterilir.</div>
 
             <!-- BASE (zorunlu) -->
             <div class="custom-group">
                 <label>🔒 Zorunlu Base (Domain + Hosting + Kurulum + SSL)</label>
-                <div style="color:var(--muted);font-size:0.9rem;">2.800 ₺ (tek seferlik)</div>
+                <div style="color:var(--muted);font-size:0.9rem;">2.600 ₺ (tek seferlik)</div>
             </div>
 
             <!-- Tasarım -->
@@ -1082,60 +1101,55 @@
                 </div>
             </div>
 
-            <!-- İletişim ve butonlar -->
+            <!-- İletişim Araçları -->
             <div class="custom-group">
-                <label>📞 İletişim & Butonlar (tek seferlik)</label>
+                <label>📞 İletişim Araçları (tek seferlik)</label>
                 <div class="options">
                     <label><input type="checkbox" class="feature" value="200" /> WhatsApp Butonu (+200 ₺)</label>
                     <label><input type="checkbox" class="feature" value="150" /> Tıkla-Ara Butonu (+150 ₺)</label>
                     <label><input type="checkbox" class="feature" value="250" /> İletişim Formu (+250 ₺)</label>
                     <label><input type="checkbox" class="feature" value="200" /> Google Harita Gömme (+200 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="500" /> Müşteri Yorumları Bölümü (+500 ₺)</label>
                 </div>
             </div>
 
-            <!-- Galeri ve içerik -->
+            <!-- İçerik Modülleri -->
             <div class="custom-group">
-                <label>🖼️ Galeri & İçerik Bölümleri (tek seferlik)</label>
+                <label>📄 İçerik Modülleri (tek seferlik)</label>
                 <div class="options">
                     <label><input type="checkbox" class="feature" value="250" /> Basit Galeri (+250 ₺)</label>
                     <label><input type="checkbox" class="feature" value="500" /> Gelişmiş Galeri (+500 ₺)</label>
                     <label><input type="checkbox" class="feature" value="300" /> Hizmetler Bölümü (+300 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="200" /> Çalışan Ekip Bölümü (+200 ₺)</label>
                     <label><input type="checkbox" class="feature" value="200" /> Hakkımızda Bölümü (+200 ₺)</label>
                     <label><input type="checkbox" class="feature" value="250" /> SSS Bölümü (+250 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="150" /> Çalışma Saatleri Bölümü (+150 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="300" /> Fiyat Listesi Bölümü (+300 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="150" /> Çalışma Saatleri (+150 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="300" /> Fiyat Listesi (+300 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="200" /> Çalışan Ekip Bölümü (+200 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="500" /> Müşteri Yorumları (+500 ₺)</label>
                 </div>
             </div>
 
-            <!-- Teknik ve özel özellikler -->
+            <!-- Teknik Ekstralar -->
             <div class="custom-group">
-                <label>⚙️ Teknik & Özel Özellikler (tek seferlik)</label>
+                <label>⚙️ Teknik Ekstralar (tek seferlik)</label>
                 <div class="options">
                     <label><input type="checkbox" class="feature" value="400" /> SEO Optimizasyonu (+400 ₺)</label>
                     <label><input type="checkbox" class="feature" value="350" /> Hız Optimizasyonu (+350 ₺)</label>
                     <label><input type="checkbox" class="feature" value="500" /> Özel Animasyonlar (+500 ₺)</label>
                     <label><input type="checkbox" class="feature" value="50" /> Dark Mode Desteği (+50 ₺)</label>
                     <label><input type="checkbox" class="feature" value="400" /> Çoklu Dil Desteği (+400 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="1000" /> Blog Sistemi (+1000 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="2500" /> Yönetim Paneli (+2500 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="1000" /> Rezervasyon Sistemi (+1000 ₺)</label>
-                    <label><input type="checkbox" class="feature" value="1000" /> Randevu Sistemi (+1000 ₺)</label>
                     <label><input type="checkbox" class="feature" value="1000" /> Google Maps API (+1000 ₺)</label>
                     <label><input type="checkbox" class="feature" value="1500" /> Özel API Entegrasyonu (+1500 ₺)</label>
                 </div>
             </div>
 
-            <!-- Bakım Paketleri (aylık) -->
+            <!-- Gelişmiş Sistemler -->
             <div class="custom-group">
-                <label>🛡️ Bakım Paketi (aylık ücret)</label>
+                <label>🚀 Gelişmiş Sistemler (tek seferlik)</label>
                 <div class="options">
-                    <label><input type="radio" name="maintenance" value="0" checked /> Bakım yok (0 ₺/ay)</label>
-                    <label><input type="radio" name="maintenance" value="500" /> Temel (+500 ₺/ay)</label>
-                    <label><input type="radio" name="maintenance" value="1000" /> Standart (+1000 ₺/ay)</label>
-                    <label><input type="radio" name="maintenance" value="2000" /> Profesyonel (+2000 ₺/ay)</label>
-                    <label><input type="radio" name="maintenance" value="3500" /> Kurumsal (+3500 ₺/ay)</label>
+                    <label><input type="checkbox" class="feature" value="1000" /> Blog Sistemi (+1000 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="2500" /> Yönetim Paneli (+2500 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="1000" /> Rezervasyon Sistemi (+1000 ₺)</label>
+                    <label><input type="checkbox" class="feature" value="1000" /> Randevu Sistemi (+1000 ₺)</label>
                 </div>
             </div>
 
@@ -1143,11 +1157,7 @@
             <div class="custom-total">
                 <div class="total-item">
                     <span class="total-label">Tek Seferlik Toplam</span>
-                    <span class="total-price" id="customTotalOneTime"><sup>₺</sup>2.800</span>
-                </div>
-                <div class="total-item">
-                    <span class="total-label">Aylık Bakım Ücreti</span>
-                    <span class="total-price" id="customTotalMonthly"><sup>₺</sup>0</span>
+                    <span class="total-price" id="customTotal"><sup>₺</sup>2.600</span>
                 </div>
                 <a href="#cta" class="btn-primary">Teklif Al →</a>
             </div>
@@ -1188,11 +1198,11 @@
             <p>Ücretsiz ön görüşme ile projenizi konuşalım, size özel bir yol haritası çizelim. Taahhüt yok, sadece fikir.</p>
             <div class="btn-group">
                 <a href="mailto:nailsilman08@gmail.com" class="btn-primary">📧 E-posta Gönder</a>
-                <a href="tel:+905366814908" class="btn-ghost">📞 Hemen Ara</a>
+                <a href="https://wa.me/905366814908" target="_blank" class="btn-whatsapp">💬 WhatsApp'tan Yaz</a>
             </div>
             <div class="contact-info">
                 <span>📧 <a href="mailto:nailsilman08@gmail.com">nailsilman08@gmail.com</a></span>
-                <span>📞 <a href="tel:+905366814908">0536 681 49 08</a></span>
+                <span>📞 <a href="https://wa.me/905366814908" target="_blank">0536 681 49 08 (WhatsApp)</a></span>
             </div>
         </div>
     </section>
@@ -1302,35 +1312,26 @@
             });
         });
 
-        /* ── CUSTOM PAKET HESAPLAYICI ── */
-        const BASE = 2800;
+        /* ── CUSTOM PAKET HESAPLAYICI (güncel fiyatlar) ── */
+        const BASE = 2600;
         const designRadios = document.querySelectorAll('input[name="design"]');
         const featureChecks = document.querySelectorAll('.feature');
-        const maintenanceRadios = document.querySelectorAll('input[name="maintenance"]');
-        const totalOneTime = document.getElementById('customTotalOneTime');
-        const totalMonthly = document.getElementById('customTotalMonthly');
+        const totalDisplay = document.getElementById('customTotal');
 
-        function updateCustomPrices() {
-            let oneTime = BASE;
+        function updateCustomPrice() {
+            let total = BASE;
             // design
             let designVal = 0;
             designRadios.forEach(r => { if (r.checked) designVal = parseInt(r.value); });
-            oneTime += designVal;
+            total += designVal;
             // features
-            featureChecks.forEach(c => { if (c.checked) oneTime += parseInt(c.value); });
-
-            let monthly = 0;
-            maintenanceRadios.forEach(r => { if (r.checked) monthly = parseInt(r.value); });
-
-            totalOneTime.innerHTML = `<sup>₺</sup>${oneTime.toLocaleString('tr-TR')}`;
-            totalMonthly.innerHTML = `<sup>₺</sup>${monthly.toLocaleString('tr-TR')}`;
+            featureChecks.forEach(c => { if (c.checked) total += parseInt(c.value); });
+            totalDisplay.innerHTML = `<sup>₺</sup>${total.toLocaleString('tr-TR')}`;
         }
 
-        designRadios.forEach(r => r.addEventListener('change', updateCustomPrices));
-        featureChecks.forEach(c => c.addEventListener('change', updateCustomPrices));
-        maintenanceRadios.forEach(r => r.addEventListener('change', updateCustomPrices));
-
-        updateCustomPrices();
+        designRadios.forEach(r => r.addEventListener('change', updateCustomPrice));
+        featureChecks.forEach(c => c.addEventListener('change', updateCustomPrice));
+        updateCustomPrice();
 
         console.log('🚀 NAS Web — Nail Alparslan Silman');
     </script>
