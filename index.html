@@ -1,1058 +1,1263 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALPİ — Geleceği Birlikte İnşa Ediyoruz</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NAS Web · Nail Alparslan Silman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+        /* ── RESET & BASE ── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  :root {
-    --bg:       #060b18;
-    --bg2:      #0a1020;
-    --violet:   #7c3aed;
-    --violet2:  #a855f7;
-    --cyan:     #06b6d4;
-    --gold:     #f59e0b;
-    --white:    #f0f4ff;
-    --muted:    rgba(200,210,255,0.55);
-    --glass:    rgba(255,255,255,0.055);
-    --glassh:   rgba(255,255,255,0.10);
-    --border:   rgba(255,255,255,0.10);
-    --borderh:  rgba(160,100,255,0.45);
-  }
+        :root {
+            --bg: #0b0e1a;
+            --bg2: #11152a;
+            --violet: #7c3aed;
+            --violet2: #a855f7;
+            --cyan: #06b6d4;
+            --gold: #f59e0b;
+            --white: #f0f4ff;
+            --muted: rgba(200, 210, 255, 0.6);
+            --glass: rgba(255, 255, 255, 0.06);
+            --glassh: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.08);
+            --borderh: rgba(160, 100, 255, 0.4);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
 
-  html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-  body {
-    background: var(--bg);
-    color: var(--white);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
 
-  /* ── CANVAS BG ── */
-  #bg-canvas {
-    position: fixed; inset: 0; z-index: 0;
-    pointer-events: none;
-  }
+        /* ── CANVAS BG ── */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0; z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-    background-size: 180px;
-    pointer-events: none;
-    opacity: .5;
-  }
+        /* ── NOISE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 180px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 4rem;
-    transition: background .4s, backdrop-filter .4s, border-color .4s;
-  }
-  nav.scrolled {
-    background: rgba(6,11,24,0.75);
-    backdrop-filter: blur(24px) saturate(1.4);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.6rem; font-weight: 900;
-    letter-spacing: .06em;
-    background: linear-gradient(135deg, var(--violet2), var(--cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none;
-    font-size: .875rem; font-weight: 500; letter-spacing: .04em;
-    transition: color .25s;
-    position: relative;
-  }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
-    height: 1.5px;
-    background: linear-gradient(90deg, var(--violet), var(--cyan));
-    transform: scaleX(0); transform-origin: left;
-    transition: transform .3s ease;
-  }
-  .nav-links a:hover { color: var(--white); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  .nav-cta {
-    padding: .55rem 1.5rem;
-    border: 1px solid var(--borderh);
-    border-radius: 2rem;
-    background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(6,182,212,.12));
-    color: var(--white) !important;
-    font-weight: 600 !important;
-    backdrop-filter: blur(8px);
-    transition: background .3s, transform .2s, box-shadow .3s !important;
-  }
-  .nav-cta::after { display: none !important; }
-  .nav-cta:hover {
-    background: linear-gradient(135deg, rgba(124,58,237,.38), rgba(6,182,212,.28)) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(124,58,237,.3) !important;
-  }
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--violet);
+            border-radius: 10px;
+        }
 
-  /* ── HERO ── */
-  #hero {
-    position: relative; z-index: 2;
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center;
-    padding: 8rem 2rem 4rem;
-  }
-  .hero-inner { max-width: 860px; }
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 3rem;
+            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(11, 14, 26, 0.75);
+            backdrop-filter: blur(24px) saturate(1.4);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            background: linear-gradient(135deg, var(--violet2), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-logo span {
+            font-weight: 300;
+            background: none;
+            -webkit-text-fill-color: var(--muted);
+            font-size: 0.9rem;
+            margin-left: 0.3rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            transition: color 0.25s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, var(--violet), var(--cyan));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--white);
+        }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        .nav-cta {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--borderh);
+            border-radius: 2rem;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(6, 182, 212, 0.12));
+            color: var(--white) !important;
+            font-weight: 600 !important;
+            backdrop-filter: blur(8px);
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s !important;
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+        .nav-cta:hover {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.38), rgba(6, 182, 212, 0.28)) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3) !important;
+        }
 
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .4rem 1.1rem;
-    border-radius: 2rem;
-    border: 1px solid rgba(168,85,247,.35);
-    background: rgba(124,58,237,.12);
-    backdrop-filter: blur(10px);
-    font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--violet2);
-    margin-bottom: 2rem;
-    animation: fadeUp .8s ease both;
-  }
-  .badge-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--violet2);
-    animation: pulse 2s infinite;
-  }
+        /* ── HERO ── */
+        #hero {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+        .hero-inner {
+            max-width: 860px;
+        }
 
-  .hero-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 900; line-height: 1.0;
-    letter-spacing: -.02em;
-    animation: fadeUp .8s .15s ease both;
-    margin-bottom: 1.4rem;
-  }
-  .hero-title .grad {
-    background: linear-gradient(135deg, #c4b5fd 0%, var(--cyan) 50%, var(--violet2) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-size: 200% 200%;
-    animation: gradMove 4s ease infinite;
-  }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.1rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            background: rgba(124, 58, 237, 0.12);
+            backdrop-filter: blur(10px);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--violet2);
+            margin-bottom: 2rem;
+            animation: fadeUp 0.8s ease both;
+        }
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--violet2);
+            animation: pulse 2s infinite;
+        }
 
-  .hero-sub {
-    font-size: 1.15rem; font-weight: 300; color: var(--muted);
-    max-width: 580px; margin: 0 auto 2.8rem;
-    line-height: 1.75;
-    animation: fadeUp .8s .3s ease both;
-  }
-  .hero-buttons {
-    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-    animation: fadeUp .8s .45s ease both;
-  }
-  .btn-primary {
-    padding: .85rem 2.2rem;
-    border-radius: 2rem;
-    background: linear-gradient(135deg, var(--violet), var(--cyan));
-    color: #fff; font-weight: 700; font-size: .95rem;
-    border: none; cursor: pointer;
-    position: relative; overflow: hidden;
-    transition: transform .25s, box-shadow .3s;
-    text-decoration: none;
-    box-shadow: 0 0 30px rgba(124,58,237,.35);
-  }
-  .btn-primary::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
-    opacity: 0; transition: opacity .3s;
-  }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(124,58,237,.55); }
-  .btn-primary:hover::after { opacity: 1; }
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.02em;
+            animation: fadeUp 0.8s 0.15s ease both;
+            margin-bottom: 0.8rem;
+        }
+        .hero-title .grad {
+            background: linear-gradient(135deg, #c4b5fd 0%, var(--cyan) 50%, var(--violet2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradMove 4s ease infinite;
+        }
+        .hero-title .highlight {
+            color: var(--white);
+            -webkit-text-fill-color: var(--white);
+        }
 
-  .btn-ghost {
-    padding: .85rem 2.2rem;
-    border-radius: 2rem;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    color: var(--white); font-weight: 600; font-size: .95rem;
-    cursor: pointer;
-    transition: border-color .3s, background .3s, transform .25s;
-    text-decoration: none;
-  }
-  .btn-ghost:hover { border-color: var(--borderh); background: var(--glassh); transform: translateY(-3px); }
+        .hero-sub {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: var(--muted);
+            max-width: 580px;
+            margin: 0.5rem auto 2rem;
+            line-height: 1.75;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
 
-  /* floating orbs */
-  .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(80px); pointer-events: none; z-index: 1;
-    animation: floatOrb 8s ease-in-out infinite;
-  }
-  .orb1 { width:400px; height:400px; background: rgba(124,58,237,.22); top:10%; left:5%; animation-delay:0s; }
-  .orb2 { width:300px; height:300px; background: rgba(6,182,212,.18); top:30%; right:8%; animation-delay:-3s; }
-  .orb3 { width:250px; height:250px; background: rgba(168,85,247,.15); bottom:15%; left:30%; animation-delay:-5s; }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s 0.45s ease both;
+        }
+        .btn-primary {
+            padding: 0.85rem 2.2rem;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, var(--violet), var(--cyan));
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.35);
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(124, 58, 237, 0.55);
+        }
+        .btn-primary:hover::after {
+            opacity: 1;
+        }
 
-  /* hero stats strip */
-  .hero-stats {
-    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
-    margin-top: 4.5rem;
-    animation: fadeUp .8s .6s ease both;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2.5rem; font-weight: 800;
-    background: linear-gradient(135deg, var(--white), var(--violet2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .stat-label { font-size: .78rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-top: .2rem; }
+        .btn-ghost {
+            padding: 0.85rem 2.2rem;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s, transform 0.25s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-ghost:hover {
+            border-color: var(--borderh);
+            background: var(--glassh);
+            transform: translateY(-3px);
+        }
 
-  /* ── SECTION BASE ── */
-  section { position: relative; z-index: 2; }
-  .section-label {
-    display: inline-block;
-    font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; line-height: 1.15;
-  }
-  .section-sub { color: var(--muted); max-width: 520px; line-height: 1.7; margin-top: .85rem; }
+        /* floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 1;
+            animation: floatOrb 8s ease-in-out infinite;
+        }
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(124, 58, 237, 0.22);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        .orb2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(6, 182, 212, 0.18);
+            top: 30%;
+            right: 8%;
+            animation-delay: -3s;
+        }
+        .orb3 {
+            width: 250px;
+            height: 250px;
+            background: rgba(168, 85, 247, 0.15);
+            bottom: 15%;
+            left: 30%;
+            animation-delay: -5s;
+        }
 
-  /* ── SERVICES ── */
-  #services { padding: 6rem 4rem; }
-  .services-header { text-align: center; margin-bottom: 4rem; }
-  .services-header .section-sub { margin: .85rem auto 0; }
+        /* ── SECTION BASE ── */
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 5rem 2rem;
+        }
+        @media (min-width: 768px) {
+            section {
+                padding: 6rem 4rem;
+            }
+        }
 
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem; max-width: 1200px; margin: 0 auto;
-  }
-  .service-card {
-    padding: 2rem;
-    border-radius: 1.25rem;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    backdrop-filter: blur(20px) saturate(1.5);
-    position: relative; overflow: hidden;
-    cursor: default;
-    transition: transform .35s ease, border-color .35s, box-shadow .35s;
-    opacity: 0; transform: translateY(32px);
-  }
-  .service-card.visible { animation: cardIn .6s ease forwards; }
-  .service-card::before {
-    content: ''; position: absolute;
-    top: -80px; right: -80px;
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    background: var(--card-accent, rgba(124,58,237,.12));
-    filter: blur(50px);
-    transition: transform .5s;
-  }
-  .service-card:hover { transform: translateY(-8px); border-color: var(--borderh); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
-  .service-card:hover::before { transform: scale(1.4); }
+        .section-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 0.6rem;
+        }
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+        }
+        .section-sub {
+            color: var(--muted);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-top: 0.6rem;
+        }
+        .section-center {
+            text-align: center;
+        }
+        .section-center .section-sub {
+            margin: 0.6rem auto 0;
+        }
 
-  .service-icon {
-    width: 52px; height: 52px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.25rem;
-    background: linear-gradient(135deg, var(--card-from, var(--violet)), var(--card-to, var(--cyan)));
-    font-size: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,.3);
-  }
-  .service-title { font-family:'Outfit',sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: .5rem; }
-  .service-desc { font-size: .875rem; color: var(--muted); line-height: 1.7; }
-  .service-tag {
-    display: inline-block; margin-top: 1.25rem;
-    padding: .25rem .75rem;
-    border-radius: 2rem;
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.08);
-    font-size: .7rem; font-weight: 600; letter-spacing: .08em;
-    color: var(--muted);
-  }
+        /* ── ABOUT ── */
+        #about {
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.04), transparent);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-text p {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-top: 1rem;
+        }
+        .about-text .highlight-name {
+            color: var(--white);
+            font-weight: 600;
+        }
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .about-stat {
+            padding: 1.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .about-stat:hover {
+            transform: translateY(-4px);
+            border-color: var(--borderh);
+        }
+        .about-stat .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--violet2), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .about-stat .label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
 
-  /* ── FEATURE STRIP ── */
-  #features {
-    padding: 5rem 4rem;
-    background: linear-gradient(180deg, transparent, rgba(124,58,237,.06), transparent);
-  }
-  .features-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-  }
-  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
-  .feature-item {
-    display: flex; gap: 1rem; align-items: flex-start;
-    padding: 1.25rem 1.5rem;
-    border-radius: 1rem;
-    border: 1px solid transparent;
-    transition: border-color .3s, background .3s;
-    cursor: default;
-  }
-  .feature-item:hover { border-color: var(--border); background: var(--glass); }
-  .fi-icon {
-    flex-shrink: 0;
-    width: 40px; height: 40px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    background: linear-gradient(135deg, rgba(124,58,237,.25), rgba(6,182,212,.2));
-  }
-  .fi-title { font-family: 'Outfit', sans-serif; font-weight: 700; margin-bottom: .3rem; }
-  .fi-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+        @media (max-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
 
-  /* glass phone mockup */
-  .phone-mock {
-    width: 100%; max-width: 380px; margin: 0 auto;
-    border-radius: 2.5rem;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    backdrop-filter: blur(30px);
-    padding: 2rem 1.5rem;
-    position: relative;
-    box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1);
-    animation: floatPhone 5s ease-in-out infinite;
-  }
-  .phone-mock::before {
-    content: ''; position: absolute; inset: 0; border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,.06) 0%, transparent 60%);
-  }
-  .pm-bar {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  .pm-dots { display: flex; gap: .4rem; }
-  .pm-dots span { width:10px; height:10px; border-radius:50%; }
-  .pm-dots span:nth-child(1){background:#ff5f57;}
-  .pm-dots span:nth-child(2){background:#febc2e;}
-  .pm-dots span:nth-child(3){background:#28c840;}
-  .pm-logo { font-family:'Outfit',sans-serif; font-size:.85rem; font-weight:800; color:var(--violet2); }
-  .pm-metric {
-    background: rgba(255,255,255,.04);
-    border: 1px solid var(--border);
-    border-radius: .75rem;
-    padding: 1rem;
-    margin-bottom: .75rem;
-  }
-  .pm-metric-label { font-size:.65rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; margin-bottom:.4rem; }
-  .pm-metric-val { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; }
-  .pm-bar-chart { display:flex; align-items:flex-end; gap:.35rem; height:60px; margin-top:.6rem; }
-  .pm-bar-chart span {
-    flex:1; border-radius:.25rem;
-    background: linear-gradient(to top, var(--violet), var(--cyan));
-    opacity: .7;
-    animation: barGrow 1.2s ease both;
-  }
-  .pm-tags { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.75rem; }
-  .pm-tag {
-    padding:.2rem .6rem; border-radius:.4rem;
-    font-size:.65rem; font-weight:600;
-    background: rgba(124,58,237,.2); color:var(--violet2);
-    border: 1px solid rgba(124,58,237,.3);
-  }
+        /* ── SERVICES / PAKETLER ── */
+        #packages {
+            background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 2.5rem auto 0;
+        }
+        .price-card {
+            padding: 2rem 1.8rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .price-card.visible {
+            animation: cardIn 0.6s ease forwards;
+        }
+        .price-card.featured {
+            border-color: rgba(124, 58, 237, 0.5);
+            background: linear-gradient(160deg, rgba(124, 58, 237, 0.12), rgba(6, 182, 212, 0.06));
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.15);
+        }
+        .price-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+            border-color: var(--borderh);
+        }
+        .price-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, var(--violet), var(--cyan));
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .price-tier {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .price-amount {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .price-amount sup {
+            font-size: 1.2rem;
+            vertical-align: top;
+            margin-top: 0.4rem;
+            display: inline-block;
+        }
+        .price-amount sub {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--muted);
+        }
+        .price-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin: 0.6rem 0 1.2rem;
+        }
+        .price-divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 1.2rem;
+        }
+        .price-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1.8rem;
+        }
+        .price-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .price-features li .chk {
+            color: var(--cyan);
+            font-size: 1rem;
+        }
+        .price-features li .cross {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .price-features li .faded {
+            opacity: 0.4;
+        }
 
-  /* ── PROCESS ── */
-  #process { padding: 6rem 4rem; }
-  .process-header { text-align: center; margin-bottom: 4rem; }
-  .process-steps {
-    max-width: 900px; margin: 0 auto;
-    display: flex; flex-direction: column; gap: 0;
-    position: relative;
-  }
-  .process-steps::before {
-    content: ''; position: absolute;
-    left: 32px; top: 48px; bottom: 48px;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--violet), var(--cyan), transparent);
-  }
-  .process-step {
-    display: flex; gap: 2rem; align-items: flex-start;
-    padding: 2rem 2rem 2rem 0;
-    opacity: 0; transform: translateX(-20px);
-  }
-  .process-step.visible { animation: stepIn .5s ease forwards; }
-  .step-num {
-    flex-shrink: 0;
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    display: flex; align-items: center; justify-content: center;
-    font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800;
-    color: var(--violet2);
-    position: relative; z-index: 1;
-    box-shadow: 0 0 0 4px rgba(124,58,237,.1);
-  }
-  .step-content { padding-top: .9rem; }
-  .step-title { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
-  .step-desc { font-size:.875rem; color:var(--muted); line-height:1.7; max-width:520px; }
+        /* ── EXTRA SERVICES (Tasarım, Bakım) ── */
+        #extra {
+            background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.03), transparent);
+        }
+        .extra-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            max-width: 1100px;
+            margin: 2rem auto 0;
+        }
+        .extra-box {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            transition: border-color 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+        .extra-box.visible {
+            animation: cardIn 0.6s ease forwards;
+        }
+        .extra-box:hover {
+            border-color: var(--borderh);
+            transform: translateY(-4px);
+        }
+        .extra-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+        .extra-box ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+        }
+        .extra-box ul li {
+            font-size: 0.85rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .extra-box ul li .price-tag {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+        .extra-box .subnote {
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+            opacity: 0.7;
+        }
 
-  /* ── TESTIMONIALS ── */
-  #testimonials { padding: 6rem 4rem; }
-  .test-header { text-align:center; margin-bottom:3.5rem; }
-  .test-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap:1.5rem; max-width:1100px; margin:0 auto;
-  }
-  .test-card {
-    padding:2rem;
-    border-radius:1.25rem;
-    border:1px solid var(--border);
-    background:var(--glass);
-    backdrop-filter:blur(20px);
-    position:relative; overflow:hidden;
-    transition:transform .3s, border-color .3s;
-    opacity:0; transform:translateY(24px);
-  }
-  .test-card.visible { animation: cardIn .6s ease forwards; }
-  .test-card:hover { transform:translateY(-6px); border-color:var(--borderh); }
-  .test-quote {
-    font-size:.95rem; color:var(--muted); line-height:1.8;
-    margin-bottom:1.5rem;
-  }
-  .test-quote::before { content:'"'; font-size:3rem; color:var(--violet); line-height:0; vertical-align:-.6em; margin-right:.2rem; font-family:'Outfit',sans-serif; }
-  .test-author { display:flex; align-items:center; gap:.85rem; }
-  .test-avatar {
-    width:42px; height:42px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:1.1rem; font-weight:700;
-    background: linear-gradient(135deg, var(--violet), var(--cyan));
-    font-family:'Outfit',sans-serif;
-    flex-shrink:0;
-  }
-  .test-name { font-weight:600; font-size:.9rem; }
-  .test-role { font-size:.75rem; color:var(--muted); }
-  .test-stars { display:flex; gap:.15rem; margin-bottom:1rem; font-size:.85rem; }
+        @media (max-width: 768px) {
+            .extra-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
 
-  /* ── PRICING ── */
-  #pricing { padding: 6rem 4rem; }
-  .pricing-header { text-align:center; margin-bottom:3.5rem; }
-  .pricing-grid {
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:1.5rem; max-width:1050px; margin:0 auto;
-  }
-  .price-card {
-    padding:2.5rem 2rem;
-    border-radius:1.5rem;
-    border:1px solid var(--border);
-    background:var(--glass);
-    backdrop-filter:blur(20px);
-    position:relative; overflow:hidden;
-    transition:transform .35s, box-shadow .35s, border-color .35s;
-    opacity:0;
-  }
-  .price-card.visible { animation: cardIn .6s ease forwards; }
-  .price-card.featured {
-    border-color: rgba(124,58,237,.5);
-    background: linear-gradient(160deg, rgba(124,58,237,.12), rgba(6,182,212,.06));
-    box-shadow: 0 0 50px rgba(124,58,237,.2);
-  }
-  .price-card:hover { transform:translateY(-8px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
-  .price-badge {
-    position:absolute; top:1.25rem; right:1.25rem;
-    padding:.2rem .7rem; border-radius:2rem;
-    background:linear-gradient(135deg,var(--violet),var(--cyan));
-    font-size:.65rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-  }
-  .price-tier { font-family:'Outfit',sans-serif; font-size:.8rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:.8rem; }
-  .price-amount { font-family:'Outfit',sans-serif; font-size:3rem; font-weight:900; line-height:1; }
-  .price-amount sup { font-size:1.2rem; vertical-align:top; margin-top:.6rem; display:inline-block; }
-  .price-amount sub { font-size:.85rem; font-weight:400; color:var(--muted); }
-  .price-desc { font-size:.85rem; color:var(--muted); margin:.6rem 0 1.5rem; }
-  .price-divider { height:1px; background:var(--border); margin-bottom:1.5rem; }
-  .price-features { list-style:none; display:flex; flex-direction:column; gap:.75rem; margin-bottom:2rem; }
-  .price-features li { display:flex; align-items:center; gap:.6rem; font-size:.875rem; }
-  .price-features li .chk { color:var(--cyan); font-size:1rem; }
-  .price-features li .cross { color:rgba(255,255,255,.2); }
+        /* ── REFERANSLAR ── */
+        #references {
+            background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
+        }
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 2rem auto 0;
+        }
+        .ref-card {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: var(--white);
+            display: block;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+        .ref-card.visible {
+            animation: cardIn 0.6s ease forwards;
+        }
+        .ref-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--borderh);
+            box-shadow: var(--shadow);
+        }
+        .ref-card .ref-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .ref-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .ref-card p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+        }
+        .ref-card .link-hint {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
 
-  /* ── CTA SECTION ── */
-  #cta {
-    padding: 7rem 4rem;
-    text-align:center;
-  }
-  .cta-glass {
-    max-width: 780px; margin:0 auto;
-    padding:4rem 3rem;
-    border-radius:2rem;
-    border:1px solid var(--border);
-    background: linear-gradient(160deg, rgba(124,58,237,.12), rgba(6,182,212,.06));
-    backdrop-filter:blur(24px);
-    position:relative; overflow:hidden;
-    box-shadow:0 0 80px rgba(124,58,237,.15);
-  }
-  .cta-glass::before {
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);
-  }
-  .cta-glass h2 { font-family:'Outfit',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; margin-bottom:1rem; }
-  .cta-glass p { color:var(--muted); max-width:480px; margin:0 auto 2rem; line-height:1.7; }
+        /* ── CTA ── */
+        #cta {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        .cta-glass {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            background: linear-gradient(160deg, rgba(124, 58, 237, 0.12), rgba(6, 182, 212, 0.06));
+            backdrop-filter: blur(24px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(124, 58, 237, 0.12);
+        }
+        .cta-glass::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+        }
+        .cta-glass h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        .cta-glass p {
+            color: var(--muted);
+            max-width: 480px;
+            margin: 0 auto 1.8rem;
+            line-height: 1.7;
+            position: relative;
+        }
+        .cta-glass .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
 
-  /* ── FOOTER ── */
-  footer {
-    position:relative; z-index:2;
-    padding:3rem 4rem;
-    border-top:1px solid var(--border);
-    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem;
-  }
-  .footer-logo { font-family:'Outfit',sans-serif; font-size:1.3rem; font-weight:900;
-    background:linear-gradient(135deg,var(--violet2),var(--cyan));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .footer-links { display:flex; gap:1.8rem; list-style:none; }
-  .footer-links a { color:var(--muted); text-decoration:none; font-size:.85rem; transition:color .25s; }
-  .footer-links a:hover { color:var(--white); }
-  .footer-copy { font-size:.78rem; color:var(--muted); }
-  .social-links { display:flex; gap:.75rem; }
-  .soc-btn {
-    width:36px; height:36px; border-radius:50%;
-    border:1px solid var(--border);
-    background:var(--glass);
-    display:flex; align-items:center; justify-content:center;
-    font-size:1rem;
-    transition:border-color .3s, background .3s, transform .25s;
-    cursor:pointer; text-decoration:none;
-  }
-  .soc-btn:hover { border-color:var(--borderh); background:var(--glassh); transform:translateY(-2px); }
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--violet2), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.25s;
+        }
+        .footer-links a:hover {
+            color: var(--white);
+        }
+        .footer-copy {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .soc-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: border-color 0.3s, background 0.3s, transform 0.25s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--muted);
+        }
+        .soc-btn:hover {
+            border-color: var(--borderh);
+            background: var(--glassh);
+            transform: translateY(-2px);
+        }
 
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width:5px; }
-  ::-webkit-scrollbar-track { background:var(--bg); }
-  ::-webkit-scrollbar-thumb { background:var(--violet); border-radius:10px; }
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 1.2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
 
-  /* ── KEYFRAMES ── */
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(24px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  @keyframes cardIn {
-    from { opacity:0; transform:translateY(32px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  @keyframes stepIn {
-    from { opacity:0; transform:translateX(-20px); }
-    to   { opacity:1; transform:translateX(0); }
-  }
-  @keyframes floatOrb {
-    0%,100% { transform:translateY(0) scale(1); }
-    50%      { transform:translateY(-30px) scale(1.05); }
-  }
-  @keyframes floatPhone {
-    0%,100% { transform:translateY(0) rotate(-1deg); }
-    50%      { transform:translateY(-12px) rotate(1deg); }
-  }
-  @keyframes gradMove {
-    0%,100% { background-position:0% 50%; }
-    50%      { background-position:100% 50%; }
-  }
-  @keyframes pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50%      { opacity:.5; transform:scale(1.5); }
-  }
-  @keyframes barGrow {
-    from { transform:scaleY(0); transform-origin:bottom; }
-    to   { transform:scaleY(1); }
-  }
-  @keyframes shimmer {
-    0%   { background-position:-200% 0; }
-    100% { background-position:200% 0; }
-  }
+        /* ── KEYFRAMES ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes floatOrb {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+        }
+        @keyframes gradMove {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+        }
 
-  /* ── RESPONSIVE ── */
-  @media(max-width:900px){
-    nav { padding:1rem 1.5rem; }
-    .nav-links { display:none; }
-    #services,#features,#process,#testimonials,#pricing,#cta,footer { padding:4rem 1.5rem; }
-    .features-inner { grid-template-columns:1fr; }
-    .phone-mock { max-width:300px; }
-    footer { flex-direction:column; text-align:center; }
-  }
+        /* ── RESPONSIVE UTILITIES ── */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--violet2), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-  @media(prefers-reduced-motion:reduce) {
-    *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
-  }
-</style>
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
+    <!-- CANVAS BG -->
+    <canvas id="bg-canvas"></canvas>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">ALPİ</div>
-  <ul class="nav-links">
-    <li><a href="#services">Hizmetler</a></li>
-    <li><a href="#features">Neden Biz</a></li>
-    <li><a href="#process">Süreç</a></li>
-    <li><a href="#testimonials">Referanslar</a></li>
-    <li><a href="#pricing">Fiyatlar</a></li>
-    <li><a href="#cta" class="nav-cta">Başla →</a></li>
-  </ul>
-</nav>
+    <!-- NAV -->
+    <nav id="nav">
+        <div class="nav-logo">NAS<span>Web</span></div>
+        <ul class="nav-links">
+            <li><a href="#about">Hakkımda</a></li>
+            <li><a href="#packages">Paketler</a></li>
+            <li><a href="#extra">Ek Hizmetler</a></li>
+            <li><a href="#references">Referanslar</a></li>
+            <li><a href="#cta" class="nav-cta">İletişim →</a></li>
+        </ul>
+    </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      ✦ 2024'ün En İyi Dijital Ajansı
-    </div>
-    <h1 class="hero-title">
-      Geleceği<br>
-      <span class="grad">Birlikte</span><br>
-      İnşa Ediyoruz
-    </h1>
-    <p class="hero-sub">
-      ALPİ olarak dijital dönüşüm yolculuğunuzda stratejik çözümler, yenilikçi teknolojiler ve yaratıcı yaklaşımlarla yanınızdayız.
-    </p>
-    <div class="hero-buttons">
-      <a href="#cta" class="btn-primary">Ücretsiz Konsültasyon Al ✦</a>
-      <a href="#services" class="btn-ghost">Hizmetlerimiz →</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num" data-target="320">0</div>
-        <div class="stat-label">Başarılı Proje</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" data-target="98">0</div>
-        <div class="stat-label">Müşteri Memnuniyeti %</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" data-target="12">0</div>
-        <div class="stat-label">Yıllık Deneyim</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" data-target="45">0</div>
-        <div class="stat-label">Uzman Ekip</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="services-header">
-    <span class="section-label">⬡ Hizmetlerimiz</span>
-    <h2 class="section-title">Tüm Dijital<br>İhtiyaçlarınız Burada</h2>
-    <p class="section-sub">Markanızı güçlendirmek ve iş hedeflerinize ulaşmak için kapsamlı dijital çözümler sunuyoruz.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card" style="--card-accent:rgba(124,58,237,.15);--card-from:#7c3aed;--card-to:#a855f7;">
-      <div class="service-icon">🎨</div>
-      <div class="service-title">UI/UX Tasarım</div>
-      <div class="service-desc">Kullanıcı odaklı, modern ve etkileyici arayüzler tasarlıyoruz. Her piksel bir amaca hizmet eder.</div>
-      <span class="service-tag">Figma · Prototyping · Research</span>
-    </div>
-    <div class="service-card" style="--card-accent:rgba(6,182,212,.15);--card-from:#06b6d4;--card-to:#0e7490;">
-      <div class="service-icon">⚡</div>
-      <div class="service-title">Web Geliştirme</div>
-      <div class="service-desc">Performanslı, ölçeklenebilir ve güvenli web uygulamaları. React, Next.js ve modern stack ile hızlı çözümler.</div>
-      <span class="service-tag">React · Node.js · TypeScript</span>
-    </div>
-    <div class="service-card" style="--card-accent:rgba(245,158,11,.15);--card-from:#f59e0b;--card-to:#d97706;">
-      <div class="service-icon">📱</div>
-      <div class="service-title">Mobil Uygulama</div>
-      <div class="service-desc">iOS ve Android için native veya cross-platform uygulamalar. App Store'dan Play Store'a tam destek.</div>
-      <span class="service-tag">Flutter · React Native · Swift</span>
-    </div>
-    <div class="service-card" style="--card-accent:rgba(168,85,247,.15);--card-from:#a855f7;--card-to:#7c3aed;">
-      <div class="service-icon">🧠</div>
-      <div class="service-title">Yapay Zeka Çözümleri</div>
-      <div class="service-desc">İş süreçlerinizi otomatikleştirin. Özel AI modelleri, chatbot sistemleri ve veri analitiği çözümleri.</div>
-      <span class="service-tag">LLM · Computer Vision · NLP</span>
-    </div>
-    <div class="service-card" style="--card-accent:rgba(236,72,153,.15);--card-from:#ec4899;--card-to:#be185d;">
-      <div class="service-icon">📈</div>
-      <div class="service-title">Dijital Pazarlama</div>
-      <div class="service-desc">SEO, sosyal medya yönetimi ve performance marketing ile markanızı görünür kılıyoruz.</div>
-      <span class="service-tag">SEO · Meta Ads · Google Ads</span>
-    </div>
-    <div class="service-card" style="--card-accent:rgba(34,197,94,.15);--card-from:#22c55e;--card-to:#15803d;">
-      <div class="service-icon">☁️</div>
-      <div class="service-title">Cloud & DevOps</div>
-      <div class="service-desc">AWS, GCP ve Azure üzerinde ölçeklenebilir altyapı. CI/CD pipeline'ları ve container orkestrasyonu.</div>
-      <span class="service-tag">AWS · Docker · Kubernetes</span>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-  <div class="features-inner">
-    <div>
-      <span class="section-label">⬡ Neden ALPİ?</span>
-      <h2 class="section-title">Fark Yaratan<br>Yaklaşım</h2>
-      <p class="section-sub">Sadece kod yazmıyor, iş ortağınız oluyoruz. Her projede mükemmelliği hedefleyen bir ekip.</p>
-      <ul class="feature-list" style="margin-top:2rem;">
-        <li class="feature-item">
-          <div class="fi-icon">🎯</div>
-          <div>
-            <div class="fi-title">Sonuç Odaklı Strateji</div>
-            <div class="fi-desc">Her projeyi KPI'larla ölçüyor, ölçülebilir başarı hedefleri belirliyor ve sürekli optimizasyon yapıyoruz.</div>
-          </div>
-        </li>
-        <li class="feature-item">
-          <div class="fi-icon">⚡</div>
-          <div>
-            <div class="fi-title">Hızlı Teslimat</div>
-            <div class="fi-desc">Agile metodoloji ve sprint bazlı çalışma ile projelerinizi zamanında, hatta öncesinde teslim ediyoruz.</div>
-          </div>
-        </li>
-        <li class="feature-item">
-          <div class="fi-icon">🔒</div>
-          <div>
-            <div class="fi-title">Güvenlik & Kalite</div>
-            <div class="fi-desc">ISO 27001 standartlarında güvenlik testleri ve kapsamlı QA süreçleri ile hatasız çözümler sunuyoruz.</div>
-          </div>
-        </li>
-        <li class="feature-item">
-          <div class="fi-icon">🤝</div>
-          <div>
-            <div class="fi-title">7/24 Destek</div>
-            <div class="fi-desc">Proje sonrasında da yanınızdayız. Dedicated support ekibimiz her an yardıma hazır.</div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="phone-mock">
-      <div class="pm-bar">
-        <div class="pm-dots"><span></span><span></span><span></span></div>
-        <div class="pm-logo">ALPİ Dashboard</div>
-      </div>
-      <div class="pm-metric">
-        <div class="pm-metric-label">Aylık Büyüme</div>
-        <div class="pm-metric-val" style="background:linear-gradient(135deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+142%</div>
-        <div class="pm-bar-chart">
-          <span style="height:40%;animation-delay:.1s"></span>
-          <span style="height:60%;animation-delay:.2s"></span>
-          <span style="height:45%;animation-delay:.3s"></span>
-          <span style="height:80%;animation-delay:.4s"></span>
-          <span style="height:65%;animation-delay:.5s"></span>
-          <span style="height:90%;animation-delay:.6s"></span>
-          <span style="height:100%;animation-delay:.7s"></span>
+    <!-- HERO -->
+    <section id="hero">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                ✦ Freelance Web Tasarımcı
+            </div>
+            <h1 class="hero-title">
+                <span class="highlight">Nail Alparslan</span><br>
+                <span class="grad">Silman</span>
+            </h1>
+            <p class="hero-sub">
+                İşletmenize özel, modern ve dönüştürücü web çözümleri. <br>
+                Hızlı, güvenilir ve estetik — dijital varlığınızı güçlendirelim.
+            </p>
+            <div class="hero-buttons">
+                <a href="#packages" class="btn-primary">Paketleri İncele ✦</a>
+                <a href="#cta" class="btn-ghost">Hemen Konuş →</a>
+            </div>
         </div>
-      </div>
-      <div class="pm-metric">
-        <div class="pm-metric-label">Aktif Projeler</div>
-        <div class="pm-metric-val">24</div>
-      </div>
-      <div class="pm-tags">
-        <span class="pm-tag">React ✦</span>
-        <span class="pm-tag">AI/ML ✦</span>
-        <span class="pm-tag">Cloud ✦</span>
-        <span class="pm-tag">UX ✦</span>
-        <span class="pm-tag">Mobile ✦</span>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- PROCESS -->
-<section id="process">
-  <div class="process-header">
-    <span class="section-label">⬡ Çalışma Sürecimiz</span>
-    <h2 class="section-title">Fikrinizden<br>Ürüne Giden Yol</h2>
-    <p class="section-sub" style="margin:0 auto;">Şeffaf ve sistematik bir yaklaşımla her projeyi başarıya taşıyoruz.</p>
-  </div>
-  <div class="process-steps">
-    <div class="process-step">
-      <div class="step-num">01</div>
-      <div class="step-content">
-        <div class="step-title">Keşif & Analiz</div>
-        <div class="step-desc">İş hedeflerinizi, hedef kitlenizi ve pazar dinamiklerini derinlemesine analiz ediyoruz. Kapsamlı bir yol haritası oluşturuyoruz.</div>
-      </div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">02</div>
-      <div class="step-content">
-        <div class="step-title">Strateji & Planlama</div>
-        <div class="step-desc">Araştırma bulgularına dayalı, ölçülebilir hedefler içeren detaylı bir proje planı hazırlıyoruz. Her adım net ve anlaşılır.</div>
-      </div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">03</div>
-      <div class="step-content">
-        <div class="step-title">Tasarım & Geliştirme</div>
-        <div class="step-desc">Yaratıcı ekibimiz wireframe'den final tasarıma, frontend'den backend'e kadar tüm geliştirme sürecini yönetiyor.</div>
-      </div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">04</div>
-      <div class="step-content">
-        <div class="step-title">Test & Optimizasyon</div>
-        <div class="step-desc">Kapsamlı kalite testleri, performans optimizasyonu ve kullanıcı testleri ile mükemmel bir ürün çıkarıyoruz.</div>
-      </div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">05</div>
-      <div class="step-content">
-        <div class="step-title">Lansman & Büyüme</div>
-        <div class="step-desc">Başarılı lansman sonrasında analitik takibi, sürekli iyileştirme ve büyüme stratejileri ile yanınızda olmaya devam ediyoruz.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="test-header">
-    <span class="section-label">⬡ Referanslar</span>
-    <h2 class="section-title">Müşterilerimiz<br>Ne Diyor?</h2>
-  </div>
-  <div class="test-grid">
-    <div class="test-card">
-      <div class="test-stars">⭐⭐⭐⭐⭐</div>
-      <div class="test-quote">ALPİ ekibi ile çalışmak gerçekten bir ayrıcalık. Projemizi belirlenen sürenin çok öncesinde teslim ettiler ve kalite olağanüstüydü. Kesinlikle tekrar çalışacağız.</div>
-      <div class="test-author">
-        <div class="test-avatar">AK</div>
-        <div>
-          <div class="test-name">Ahmet Koçak</div>
-          <div class="test-role">CEO, TechVision A.Ş.</div>
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="about-grid">
+            <div class="about-text">
+                <span class="section-label">⬡ Ben Kimim?</span>
+                <h2 class="section-title">Dijital Dönüşüm <br>Danışmanınız</h2>
+                <p>
+                    Merhaba, ben <span class="highlight-name">Nail Alparslan Silman</span>.
+                    İşletmelerin dijital dünyada güçlü bir duruş sergilemesi için tutkuyla çalışan bir
+                    freelance web tasarımcıyım. Her projede estetik, hız ve kullanıcı deneyimini
+                    ön planda tutuyorum.
+                </p>
+                <p>
+                    Amacım, sadece bir web sitesi değil; markanızı büyütecek, müşterilerinizle
+                    bağ kuracak ve satışlarınızı artıracak dijital bir vitrin oluşturmak.
+                </p>
+            </div>
+            <div class="about-stats">
+                <div class="about-stat">
+                    <div class="num" data-target="15">0</div>
+                    <div class="label">Tamamlanan Proje</div>
+                </div>
+                <div class="about-stat">
+                    <div class="num" data-target="100">0%</div>
+                    <div class="label">Müşteri Memnuniyeti</div>
+                </div>
+                <div class="about-stat">
+                    <div class="num" data-target="2">0+</div>
+                    <div class="label">Yıl Deneyim</div>
+                </div>
+                <div class="about-stat">
+                    <div class="num" data-target="7">0/24</div>
+                    <div class="label">Teknik Destek</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="test-card">
-      <div class="test-stars">⭐⭐⭐⭐⭐</div>
-      <div class="test-quote">E-ticaret platformumuzu ALPİ ile yeniden tasarladık. Dönüşüm oranlarımız %180 arttı ve kullanıcı deneyimi tamamen değişti. Harika bir ekip!</div>
-      <div class="test-author">
-        <div class="test-avatar">SY</div>
-        <div>
-          <div class="test-name">Selin Yıldız</div>
-          <div class="test-role">Pazarlama Direktörü, ModaModa</div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section id="packages">
+        <div class="section-center">
+            <span class="section-label">⬡ Web Site Paketleri</span>
+            <h2 class="section-title">İşletmenize Özel Çözümler</h2>
+            <p class="section-sub">Her bütçeye ve ihtiyaca uygun, şeffaf fiyatlı paketler.</p>
         </div>
-      </div>
-    </div>
-    <div class="test-card">
-      <div class="test-stars">⭐⭐⭐⭐⭐</div>
-      <div class="test-quote">AI entegrasyonumuz için ALPİ'yi tercih ettik. Müşteri hizmetleri maliyetlerimizi %60 düşürdük. Vizyoner bir yaklaşım ve flawless execution.</div>
-      <div class="test-author">
-        <div class="test-avatar">MÖ</div>
-        <div>
-          <div class="test-name">Mehmet Özdemir</div>
-          <div class="test-role">CTO, FinansHub</div>
+        <div class="pricing-grid">
+            <!-- 1: Başlangıç -->
+            <div class="price-card" data-delay="0">
+                <div class="price-tier">Başlangıç</div>
+                <div class="price-amount"><sup>₺</sup>2.600</div>
+                <div class="price-desc">Temel ihtiyaçlar için ideal.</div>
+                <div class="price-divider"></div>
+                <ul class="price-features">
+                    <li><span class="chk">✦</span> Domain + Hosting</li>
+                    <li><span class="chk">✦</span> Basic tasarım</li>
+                    <li><span class="chk">✦</span> Site kurulumu + SSL</li>
+                    <li><span class="chk">✦</span> İletişim sayfası</li>
+                    <li><span class="chk">✦</span> Google Maps</li>
+                    <li><span class="chk">✦</span> Basit galeri</li>
+                    <li><span class="chk">✦</span> Hizmetler + Çalışma saatleri</li>
+                </ul>
+                <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Hemen Başla →</a>
+            </div>
+
+            <!-- 2: Küçük İşletme -->
+            <div class="price-card" data-delay="80">
+                <div class="price-tier">Küçük İşletme</div>
+                <div class="price-amount"><sup>₺</sup>3.600</div>
+                <div class="price-desc">Büyümeye hazır işletmeler için.</div>
+                <div class="price-divider"></div>
+                <ul class="price-features">
+                    <li><span class="chk">✦</span> Domain + Hosting</li>
+                    <li><span class="chk">✦</span> Standart tasarım</li>
+                    <li><span class="chk">✦</span> WhatsApp, Tıkla ara, Form</li>
+                    <li><span class="chk">✦</span> Google Maps + Galeri</li>
+                    <li><span class="chk">✦</span> Hizmetler, Çalışma saatleri</li>
+                    <li><span class="chk">✦</span> SSS bölümü</li>
+                    <li><span class="chk">✦</span> Fiyat listesi</li>
+                    <li><span class="chk">✦</span> SEO temel + Hız optimizasyonu</li>
+                </ul>
+                <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Hemen Başla →</a>
+            </div>
+
+            <!-- 3: Satış Artırıcı (Popüler) -->
+            <div class="price-card featured" data-delay="160">
+                <div class="price-badge">⭐ Popüler</div>
+                <div class="price-tier">Satış Artırıcı</div>
+                <div class="price-amount"><sup>₺</sup>5.000</div>
+                <div class="price-desc">Dönüşüm odaklı, pro tasarım.</div>
+                <div class="price-divider"></div>
+                <ul class="price-features">
+                    <li><span class="chk">✦</span> Domain + Hosting</li>
+                    <li><span class="chk">✦</span> Pro tasarım</li>
+                    <li><span class="chk">✦</span> WhatsApp, Tıkla ara, Form</li>
+                    <li><span class="chk">✦</span> Gelişmiş galeri + Hizmetler</li>
+                    <li><span class="chk">✦</span> Hakkımızda, Çalışma saatleri</li>
+                    <li><span class="chk">✦</span> SSS, Ekip tanıtımı</li>
+                    <li><span class="chk">✦</span> Fiyat listesi + Google yorumları</li>
+                    <li><span class="chk">✦</span> SEO + Hız optimizasyonu</li>
+                </ul>
+                <a href="#cta" class="btn-primary" style="display:block;text-align:center;width:100%;">Hemen Başla ✦</a>
+            </div>
+
+            <!-- 4: Profesyonel -->
+            <div class="price-card" data-delay="240">
+                <div class="price-tier">Profesyonel</div>
+                <div class="price-amount"><sup>₺</sup>6.500</div>
+                <div class="price-desc">Kurumsal kalitede dijital deneyim.</div>
+                <div class="price-divider"></div>
+                <ul class="price-features">
+                    <li><span class="chk">✦</span> Domain + Hosting</li>
+                    <li><span class="chk">✦</span> Pro tasarım</li>
+                    <li><span class="chk">✦</span> Tüm iletişim araçları</li>
+                    <li><span class="chk">✦</span> Gelişmiş galeri + Hizmetler</li>
+                    <li><span class="chk">✦</span> Hakkımızda, Çalışma saatleri</li>
+                    <li><span class="chk">✦</span> SSS, Ekip tanıtımı, Fiyat listesi</li>
+                    <li><span class="chk">✦</span> SEO + Hız optimizasyonu</li>
+                    <li><span class="chk">✦</span> Google Maps API</li>
+                </ul>
+                <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Hemen Başla →</a>
+            </div>
+
+            <!-- 5: Kurumsal -->
+            <div class="price-card" data-delay="320">
+                <div class="price-tier">Kurumsal</div>
+                <div class="price-amount"><sup>₺</sup>8.000<sub>+</sub></div>
+                <div class="price-desc">Tam özel, sınırsız potansiyel.</div>
+                <div class="price-divider"></div>
+                <ul class="price-features">
+                    <li><span class="chk">✦</span> Domain + Hosting</li>
+                    <li><span class="chk">✦</span> Özel/Pro tasarım</li>
+                    <li><span class="chk">✦</span> Full iletişim sistemi</li>
+                    <li><span class="chk">✦</span> Google Maps + Yorum sistemi</li>
+                    <li><span class="chk">✦</span> Gelişmiş galeri, Hizmetler</li>
+                    <li><span class="chk">✦</span> Hakkımızda, Çalışma saatleri</li>
+                    <li><span class="chk">✦</span> SSS, Ekip, Menü sistemi</li>
+                    <li><span class="chk">✦</span> Fiyat listesi, SEO + Hız</li>
+                    <li><span class="chk">✦</span> Google Maps API + Özel API</li>
+                    <li><span class="chk">✦</span> Ekstra özel geliştirmeler</li>
+                </ul>
+                <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Teklif Al →</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="pricing-header">
-    <span class="section-label">⬡ Fiyatlandırma</span>
-    <h2 class="section-title">Her Bütçeye<br>Uygun Paket</h2>
-    <p class="section-sub" style="margin:0 auto;">Şeffaf fiyatlandırma. Gizli ücret yok. İhtiyacınıza göre özelleştirin.</p>
-  </div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div>
-      <div class="price-amount"><sup>₺</sup>4.990<sub>/ay</sub></div>
-      <div class="price-desc">Küçük işletmeler ve start-up'lar için ideal başlangıç paketi.</div>
-      <div class="price-divider"></div>
-      <ul class="price-features">
-        <li><span class="chk">✦</span> 1 Web Sitesi</li>
-        <li><span class="chk">✦</span> Temel SEO Optimizasyonu</li>
-        <li><span class="chk">✦</span> Aylık 5 İçerik</li>
-        <li><span class="chk">✦</span> E-posta Desteği</li>
-        <li><span class="cross">✗</span> <span style="opacity:.4">Mobil Uygulama</span></li>
-        <li><span class="cross">✗</span> <span style="opacity:.4">AI Entegrasyonu</span></li>
-      </ul>
-      <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Başla →</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-badge">⭐ Popüler</div>
-      <div class="price-tier">Growth</div>
-      <div class="price-amount"><sup>₺</sup>12.990<sub>/ay</sub></div>
-      <div class="price-desc">Büyüyen işletmeler için kapsamlı dijital çözüm paketi.</div>
-      <div class="price-divider"></div>
-      <ul class="price-features">
-        <li><span class="chk">✦</span> 3 Web Sitesi / Uygulama</li>
-        <li><span class="chk">✦</span> Gelişmiş SEO & SEM</li>
-        <li><span class="chk">✦</span> Aylık 20 İçerik</li>
-        <li><span class="chk">✦</span> 24/7 Canlı Destek</li>
-        <li><span class="chk">✦</span> Mobil Uygulama</li>
-        <li><span class="cross">✗</span> <span style="opacity:.4">Özel AI Modeli</span></li>
-      </ul>
-      <a href="#cta" class="btn-primary" style="display:block;text-align:center;width:100%;">Hemen Başla ✦</a>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Enterprise</div>
-      <div class="price-amount" style="font-size:2rem;">Özel<br>Fiyat</div>
-      <div class="price-desc">Kurumsal firmalar için tam kapsamlı, özelleştirilmiş çözümler.</div>
-      <div class="price-divider"></div>
-      <ul class="price-features">
-        <li><span class="chk">✦</span> Sınırsız Proje</li>
-        <li><span class="chk">✦</span> Tam Stack Geliştirme</li>
-        <li><span class="chk">✦</span> Sınırsız İçerik</li>
-        <li><span class="chk">✦</span> Dedicated Ekip</li>
-        <li><span class="chk">✦</span> Mobil Uygulama</li>
-        <li><span class="chk">✦</span> Özel AI Modeli</li>
-      </ul>
-      <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Teklif Al →</a>
-    </div>
-  </div>
-</section>
+    <!-- EXTRA SERVICES -->
+    <section id="extra">
+        <div class="section-center">
+            <span class="section-label">⬡ Ek Hizmetler</span>
+            <h2 class="section-title">Tasarım, Bakım & Destek</h2>
+            <p class="section-sub">İhtiyacınıza göre özelleştirin, ekstra avantajlarla güçlendirin.</p>
+        </div>
+        <div class="extra-grid">
+            <!-- Tasarım Seçenekleri -->
+            <div class="extra-box" data-delay="0">
+                <h3>🎨 Tasarım Seçenekleri</h3>
+                <ul>
+                    <li><span class="chk">✦</span> Basic – <span class="price-tag">0 ₺</span> (sade & temiz)</li>
+                    <li><span class="chk">✦</span> Standart – <span class="price-tag">+500 ₺</span> (modern & şık)</li>
+                    <li><span class="chk">✦</span> Pro – <span class="price-tag">+1000 ₺</span> (özel & premium)</li>
+                </ul>
+                <div class="subnote">Kendi paketinizi oluşturmak için custom seçenekler de mevcut.</div>
+            </div>
 
-<!-- CTA -->
-<section id="cta">
-  <div class="cta-glass">
-    <span class="section-label">⬡ Hadi Başlayalım</span>
-    <h2>Projenizi Hayata<br>Geçirmeye Hazır mısınız?</h2>
-    <p>Ücretsiz danışma görüşmemizde iş hedeflerinizi konuşalım ve size özel bir yol haritası çizelim. İlk adım bizden!</p>
-    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="mailto:merhaba@alpi.com.tr" class="btn-primary">📧 Bizimle İletişime Geç</a>
-      <a href="tel:+905001234567" class="btn-ghost">📞 Hemen Ara</a>
-    </div>
-    <p style="margin-top:1.5rem;font-size:.8rem;color:var(--muted);">Yanıt süremiz ortalama 2 saat ✦ Ücretsiz konsültasyon ✦ Taahhüt yok</p>
-  </div>
-</section>
+            <!-- Bakım & Destek -->
+            <div class="extra-box" data-delay="100">
+                <h3>🛡️ Bakım & Destek Paketleri</h3>
+                <ul>
+                    <li><span class="chk">✦</span> Temel Destek – <span class="price-tag">500 ₺ / yıl</span></li>
+                    <li><span class="chk">✦</span> Standart Destek – <span class="price-tag">1000 ₺ / yıl</span></li>
+                    <li><span class="chk">✦</span> Profesyonel Destek – <span class="price-tag">2000 ₺ / yıl</span></li>
+                    <li><span class="chk">✦</span> Kurumsal Destek – <span class="price-tag">3500 ₺ / yıl</span></li>
+                </ul>
+                <div class="subnote">7/24 teknik destek, içerik güncellemeleri, SEO ve güvenlik kontrolü.</div>
+            </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">ALPİ</div>
-  <ul class="footer-links">
-    <li><a href="#services">Hizmetler</a></li>
-    <li><a href="#process">Süreç</a></li>
-    <li><a href="#pricing">Fiyatlar</a></li>
-    <li><a href="#">Blog</a></li>
-    <li><a href="#">Kariyer</a></li>
-  </ul>
-  <div class="social-links">
-    <a class="soc-btn" href="#" title="LinkedIn">💼</a>
-    <a class="soc-btn" href="#" title="Twitter/X">🐦</a>
-    <a class="soc-btn" href="#" title="Instagram">📸</a>
-    <a class="soc-btn" href="#" title="GitHub">⚡</a>
-  </div>
-  <div class="footer-copy">© 2024 ALPİ Dijital Ajans — Tüm hakları saklıdır.</div>
-</footer>
+            <!-- Custom Paket -->
+            <div class="extra-box" data-delay="200" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+                <h3>⚙️ Custom Paket – Kendi Paketini Oluştur</h3>
+                <ul>
+                    <li><span class="chk">✦</span> Base site (domain + hosting + kurulum) – <span class="price-tag">2.600 ₺</span></li>
+                    <li><span class="chk">✦</span> + Tasarım seçeneği (Basic / Standart / Pro)</li>
+                    <li><span class="chk">✦</span> + İletişim (WhatsApp, Tıkla ara, Form)</li>
+                    <li><span class="chk">✦</span> + İçerik modülleri (galeri, hizmetler, SSS, ekip, fiyat listesi, menü)</li>
+                    <li><span class="chk">✦</span> + SEO & Hız optimizasyonu (<span class="price-tag">+300 ₺</span>)</li>
+                    <li><span class="chk">✦</span> + Google Maps API (<span class="price-tag">+250 ₺</span>)</li>
+                    <li><span class="chk">✦</span> + Özel API (<span class="price-tag">+1000 ₺+</span>)</li>
+                </ul>
+                <div class="subnote">İhtiyacına göre modülleri seç, sadece istediklerin için öde.</div>
+            </div>
+        </div>
+    </section>
 
-<script>
-/* ── PARTICLE CANVAS ── */
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-let W, H, particles=[];
+    <!-- REFERENCES -->
+    <section id="references">
+        <div class="section-center">
+            <span class="section-label">⬡ Referans Projeler</span>
+            <h2 class="section-title">Daha Önce Yaptıklarım</h2>
+            <p class="section-sub">İşte tasarım ve geliştirme yeteneklerimi gösteren iki örnek çalışma.</p>
+        </div>
+        <div class="ref-grid">
+            <a href="https://alpi08.github.io/piccolo-concept/" target="_blank" class="ref-card" data-delay="0">
+                <div class="ref-icon">🎵</div>
+                <h4>Piccolo Concept</h4>
+                <p>Müzik ve sanat odaklı konsept site. Modern, minimalist ve etkileyici bir dijital deneyim.</p>
+                <span class="link-hint">🌐 Projeyi Gör →</span>
+            </a>
+            <a href="https://alpi08.github.io/GEC_Garaj_concept/" target="_blank" class="ref-card" data-delay="100">
+                <div class="ref-icon">🔧</div>
+                <h4>GEC Garaj Concept</h4>
+                <p>Otomotiv sektörüne yönelik sağlam, güvenilir ve profesyonel bir web konsepti.</p>
+                <span class="link-hint">🌐 Projeyi Gör →</span>
+            </a>
+        </div>
+    </section>
 
-function resize(){
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resize(); window.addEventListener('resize', resize);
+    <!-- CTA -->
+    <section id="cta">
+        <div class="cta-glass">
+            <span class="section-label">⬡ Hadi Başlayalım</span>
+            <h2>Hayalinizdeki Web Sitesi <br>Bir Tık Uzakta</h2>
+            <p>Ücretsiz ön görüşme ile projenizi konuşalım, size özel bir yol haritası çizelim. Taahhüt yok, sadece fikir.</p>
+            <div class="btn-group">
+                <a href="mailto:nas@example.com" class="btn-primary">📧 E-posta Gönder</a>
+                <a href="tel:+905001234567" class="btn-ghost">📞 Hemen Ara</a>
+            </div>
+            <p style="margin-top:1.2rem;font-size:0.8rem;color:var(--muted);">Yanıt süresi ortalama 2 saat ✦ Ücretsiz danışma ✦ Esnek çalışma</p>
+        </div>
+    </section>
 
-function Particle(){
-  this.x = Math.random()*W;
-  this.y = Math.random()*H;
-  this.vx = (Math.random()-.5)*.3;
-  this.vy = (Math.random()-.5)*.3;
-  this.r  = Math.random()*1.4+.4;
-  this.alpha = Math.random()*.5+.1;
-  this.color = Math.random()>.5 ? '124,58,237' : '6,182,212';
-}
-for(let i=0;i<90;i++) particles.push(new Particle());
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">NAS<span style="font-weight:300;color:var(--muted);">Web</span></div>
+        <ul class="footer-links">
+            <li><a href="#about">Hakkımda</a></li>
+            <li><a href="#packages">Paketler</a></li>
+            <li><a href="#references">Referanslar</a></li>
+            <li><a href="#cta">İletişim</a></li>
+        </ul>
+        <div class="social-links">
+            <a class="soc-btn" href="#" title="LinkedIn">💼</a>
+            <a class="soc-btn" href="#" title="Twitter">🐦</a>
+            <a class="soc-btn" href="#" title="Instagram">📸</a>
+            <a class="soc-btn" href="#" title="GitHub">⚡</a>
+        </div>
+        <div class="footer-copy">© 2026 Nail Alparslan Silman · Tüm hakları saklıdır.</div>
+    </footer>
 
-function drawLine(a,b,d){
-  const op = (1-d/120)*.18;
-  ctx.beginPath();
-  ctx.strokeStyle = `rgba(124,58,237,${op})`;
-  ctx.lineWidth = .5;
-  ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-}
+    <!-- ── SCRIPTS ── -->
+    <script>
+        /* ── PARTICLE CANVAS ── */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
 
-function animate(){
-  ctx.clearRect(0,0,W,H);
-  particles.forEach(p=>{
-    p.x+=p.vx; p.y+=p.vy;
-    if(p.x<0||p.x>W) p.vx*=-1;
-    if(p.y<0||p.y>H) p.vy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${p.color},${p.alpha})`;
-    ctx.fill();
-  });
-  for(let i=0;i<particles.length;i++){
-    for(let j=i+1;j<particles.length;j++){
-      const d=Math.hypot(particles[i].x-particles[j].x, particles[i].y-particles[j].y);
-      if(d<120) drawLine(particles[i],particles[j],d);
-    }
-  }
-  requestAnimationFrame(animate);
-}
-animate();
+        function resize() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
 
-/* ── SCROLL NAV ── */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
+        function Particle() {
+            this.x = Math.random() * W;
+            this.y = Math.random() * H;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.3;
+            this.r = Math.random() * 1.4 + 0.4;
+            this.alpha = Math.random() * 0.5 + 0.1;
+            this.color = Math.random() > 0.5 ? '124,58,237' : '6,182,212';
+        }
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
 
-/* ── COUNTER ANIMATION ── */
-const statNums = document.querySelectorAll('.stat-num[data-target]');
-const counterObs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting) return;
-    const el = e.target;
-    const target = +el.dataset.target;
-    const suffix = el.dataset.suffix || (target<=100?'%':'+')||'+';
-    let cur=0; const step = target/60;
-    const id = setInterval(()=>{
-      cur = Math.min(cur+step, target);
-      el.textContent = Math.floor(cur)+(target<=100&&el.dataset.target=='98'?'%':'+');
-      if(cur>=target){
-        el.textContent = target+(target===98?'%':'+');
-        clearInterval(id);
-      }
-    },20);
-    counterObs.unobserve(el);
-  });
-},{threshold:.5});
-statNums.forEach(el=>counterObs.observe(el));
+        function drawLine(a, b, d) {
+            const op = (1 - d / 120) * 0.18;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(124,58,237,${op})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+        }
 
-/* ── SCROLL REVEAL ── */
-const revealObs = new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(!e.isIntersecting) return;
-    setTimeout(()=> e.target.classList.add('visible'), e.target.dataset.delay||0);
-  });
-},{threshold:.15});
+        function animateParticles() {
+            ctx.clearRect(0, 0, W, H);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > W) p.vx *= -1;
+                if (p.y < 0 || p.y > H) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+                ctx.fill();
+            });
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                    if (d < 120) drawLine(particles[i], particles[j], d);
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
 
-document.querySelectorAll('.service-card').forEach((el,i)=>{
-  el.dataset.delay = i*80; revealObs.observe(el);
-});
-document.querySelectorAll('.test-card').forEach((el,i)=>{
-  el.dataset.delay = i*100; revealObs.observe(el);
-});
-document.querySelectorAll('.price-card').forEach((el,i)=>{
-  el.dataset.delay = i*120; revealObs.observe(el);
-});
-document.querySelectorAll('.process-step').forEach((el,i)=>{
-  el.dataset.delay = i*100; revealObs.observe(el);
-});
+        /* ── SCROLL NAV ── */
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        });
 
-/* ── MOUSE PARALLAX ORBS ── */
-document.addEventListener('mousemove',e=>{
-  const mx=(e.clientX/window.innerWidth-.5)*20;
-  const my=(e.clientY/window.innerHeight-.5)*20;
-  document.querySelectorAll('.orb').forEach((o,i)=>{
-    const f=(i+1)*.4;
-    o.style.transform=`translate(${mx*f}px,${my*f}px)`;
-  });
-});
+        /* ── COUNTER ANIMATION ── */
+        const statNums = document.querySelectorAll('.about-stat .num[data-target]');
+        const counterObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const el = e.target;
+                const target = +el.dataset.target;
+                let cur = 0;
+                const step = target / 50;
+                const isPercent = el.dataset.target.includes('%') || target === 100;
+                const suffix = (target === 100) ? '%' : (target > 50 ? '+' : '');
+                const id = setInterval(() => {
+                    cur = Math.min(cur + step, target);
+                    el.textContent = Math.floor(cur) + (suffix || '');
+                    if (cur >= target) {
+                        el.textContent = target + (suffix || '');
+                        clearInterval(id);
+                    }
+                }, 20);
+                counterObs.unobserve(el);
+            });
+        }, { threshold: 0.4 });
+        statNums.forEach(el => counterObs.observe(el));
 
-/* ── BAR HEIGHTS ── */
-const bars = document.querySelectorAll('.pm-bar-chart span');
-const heights = [40,60,45,80,65,90,100];
-bars.forEach((b,i)=> b.style.height=heights[i]+'%');
-</script>
+        /* ── SCROLL REVEAL ── */
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (!e.isIntersecting) return;
+                const delay = parseInt(e.target.dataset.delay) || 0;
+                setTimeout(() => e.target.classList.add('visible'), delay);
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.price-card, .extra-box, .ref-card').forEach(el => {
+            revealObs.observe(el);
+        });
+
+        /* ── MOUSE PARALLAX ORBS ── */
+        document.addEventListener('mousemove', (e) => {
+            const mx = (e.clientX / window.innerWidth - 0.5) * 20;
+            const my = (e.clientY / window.innerHeight - 0.5) * 20;
+            document.querySelectorAll('.orb').forEach((o, i) => {
+                const f = (i + 1) * 0.4;
+                o.style.transform = `translate(${mx * f}px, ${my * f}px)`;
+            });
+        });
+
+        /* ── HERO STATIC BADGE PULSE ── */
+        // Already animated via CSS.
+
+        console.log('🚀 NAS Web — Nail Alparslan Silman');
+    </script>
 </body>
 </html>
