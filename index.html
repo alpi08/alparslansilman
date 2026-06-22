@@ -6,7 +6,7 @@
   <title>ALPİ — Geleceği Birlikte İnşa Ediyoruz</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ── Mevcut stiller (kısaltılmış) ── */
+    /* ── MEVCUT TÜM STILLER (orijinal haliyle) ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #060b18; --bg2: #0a1020; --violet: #7c3aed; --violet2: #a855f7;
@@ -25,27 +25,402 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       background-size: 180px; pointer-events: none; opacity: .5;
     }
-    /* Nav, Hero, Services, Features, Process, Pricing, CTA, Footer stilleri (öncekiyle aynı) */
-    /* … kısaltıldı, tam kod aşağıda verilecek … */
-
-    /* ── Galeri CSS ── */
-    .circular-gallery {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      cursor: grab;
-      position: relative;
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      transition: background .4s, backdrop-filter .4s, border-color .4s;
     }
-    .circular-gallery:active { cursor: grabbing; }
-    .circular-gallery:focus-visible {
-      outline: 2px solid #fff;
-      outline-offset: 4px;
+    nav.scrolled {
+      background: rgba(6,11,24,0.75);
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
     }
-    #gallery {
-      padding: 4rem 0;
+    .nav-logo {
+      font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900;
+      letter-spacing: .06em;
+      background: linear-gradient(135deg, var(--violet2), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: .875rem; font-weight: 500; letter-spacing: .04em;
+      transition: color .25s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      padding: .55rem 1.5rem; border: 1px solid var(--borderh); border-radius: 2rem;
+      background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(6,182,212,.12));
+      color: var(--white) !important; font-weight: 600 !important;
+      backdrop-filter: blur(8px); transition: background .3s, transform .2s, box-shadow .3s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover {
+      background: linear-gradient(135deg, rgba(124,58,237,.38), rgba(6,182,212,.28)) !important;
+      transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124,58,237,.3) !important;
+    }
+    #hero {
+      position: relative; z-index: 2; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      padding: 8rem 2rem 4rem;
+    }
+    .hero-inner { max-width: 860px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .4rem 1.1rem; border-radius: 2rem;
+      border: 1px solid rgba(168,85,247,.35);
+      background: rgba(124,58,237,.12); backdrop-filter: blur(10px);
+      font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--violet2); margin-bottom: 2rem; animation: fadeUp .8s ease both;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet2); animation: pulse 2s infinite; }
+    .hero-title {
+      font-family: 'Outfit', sans-serif; font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900; line-height: 1.0; letter-spacing: -.02em;
+      animation: fadeUp .8s .15s ease both; margin-bottom: 1.4rem;
+    }
+    .hero-title .grad {
+      background: linear-gradient(135deg, #c4b5fd 0%, var(--cyan) 50%, var(--violet2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size: 200% 200%; animation: gradMove 4s ease infinite;
+    }
+    .hero-sub {
+      font-size: 1.15rem; font-weight: 300; color: var(--muted);
+      max-width: 580px; margin: 0 auto 2.8rem; line-height: 1.75;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .hero-buttons {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp .8s .45s ease both;
+    }
+    .btn-primary {
+      padding: .85rem 2.2rem; border-radius: 2rem;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      color: #fff; font-weight: 700; font-size: .95rem; border: none; cursor: pointer;
+      position: relative; overflow: hidden; transition: transform .25s, box-shadow .3s;
+      text-decoration: none; box-shadow: 0 0 30px rgba(124,58,237,.35);
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(124,58,237,.55); }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-ghost {
+      padding: .85rem 2.2rem; border-radius: 2rem; border: 1px solid var(--border);
+      background: var(--glass); backdrop-filter: blur(12px);
+      color: var(--white); font-weight: 600; font-size: .95rem; cursor: pointer;
+      transition: border-color .3s, background .3s, transform .25s; text-decoration: none;
+    }
+    .btn-ghost:hover { border-color: var(--borderh); background: var(--glassh); transform: translateY(-3px); }
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 1;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    .orb1 { width:400px; height:400px; background: rgba(124,58,237,.22); top:10%; left:5%; animation-delay:0s; }
+    .orb2 { width:300px; height:300px; background: rgba(6,182,212,.18); top:30%; right:8%; animation-delay:-3s; }
+    .orb3 { width:250px; height:250px; background: rgba(168,85,247,.15); bottom:15%; left:30%; animation-delay:-5s; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+      margin-top: 4.5rem; animation: fadeUp .8s .6s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--white), var(--violet2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: .78rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-top: .2rem; }
+    section { position: relative; z-index: 2; }
+    .section-label {
+      display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.15;
+    }
+    .section-sub { color: var(--muted); max-width: 520px; line-height: 1.7; margin-top: .85rem; }
+    #services { padding: 6rem 2rem; }
+    .services-header { text-align: center; margin-bottom: 3rem; }
+    .services-header .section-sub { margin: .85rem auto 0; }
+    .bento-section { position: relative; user-select: none; }
+    .card-grid {
+      display: grid; gap: 0.65em; padding: 0.75em;
+      max-width: 62em; margin: 0 auto; font-size: clamp(1rem, 0.9rem + 0.4vw, 1.4rem);
+    }
+    @media(min-width:600px) { .card-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(min-width:1024px) {
+      .card-grid { grid-template-columns: repeat(4,1fr); }
+      .magic-bento-card:nth-child(3) { grid-column: span 2; grid-row: span 2; }
+      .magic-bento-card:nth-child(4) { grid-column: 1 / span 2; grid-row: 2 / span 2; }
+      .magic-bento-card:nth-child(6) { grid-column: 4; grid-row: 3; }
+    }
+    @media(max-width:599px) { .card-grid { grid-template-columns:1fr; width:92%; margin:0 auto; padding:.5em; } }
+    .magic-bento-card {
+      display: flex; flex-direction: column; justify-content: space-between; position: relative;
+      aspect-ratio: 4/3; min-height: 200px; width: 100%; padding: 1.4em;
+      border-radius: 20px; border: 1px solid rgba(255,255,255,0.09);
+      background: #0d1020; overflow: hidden; transition: all 0.3s ease; cursor: default;
+      --glow-x: 50%; --glow-y: 50%; --glow-intensity: 0; --glow-radius: 300px; --glow-color: 124,58,237;
+    }
+    .magic-bento-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+    .magic-bento-card__header {
+      display: flex; justify-content: space-between; align-items: flex-start; position: relative; color: var(--white);
+    }
+    .magic-bento-card__label {
+      font-size: .7em; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(200,210,255,.5); padding: .3em .75em; border: 1px solid rgba(255,255,255,.08);
+      border-radius: 2em; background: rgba(255,255,255,.04);
+    }
+    .bento-icon { width: 2.4em; height: 2.4em; border-radius: .7em; display: flex; align-items: center; justify-content: center; font-size: 1.2em; flex-shrink: 0; }
+    .magic-bento-card__content { display: flex; flex-direction: column; position: relative; color: var(--white); }
+    .magic-bento-card__title {
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.2em; margin: 0 0 .3em; color: #f0f4ff;
+    }
+    .magic-bento-card__description { font-size: .78em; line-height: 1.55; color: rgba(200,210,255,.6); }
+    .bento-tag {
+      display: inline-block; margin-top: .7em; padding: .2em .65em; border-radius: 2em;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+      font-size: .65em; font-weight: 600; letter-spacing: .07em; color: rgba(200,210,255,.5);
+    }
+    .magic-bento-card--border-glow::after {
+      content: ''; position: absolute; inset: 0; padding: 6px;
+      background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+        rgba(var(--glow-color), calc(var(--glow-intensity) * 0.85)) 0%,
+        rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 30%,
+        transparent 60%);
+      border-radius: inherit;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude; pointer-events: none; z-index: 1;
+    }
+    .magic-bento-card--border-glow:hover { box-shadow: 0 4px 24px rgba(46,24,78,.5), 0 0 40px rgba(var(--glow-color),.15); }
+    .particle-container { position: relative; overflow: hidden; }
+    .particle-container:hover { box-shadow: 0 4px 24px rgba(46,24,78,.3), 0 0 30px rgba(var(--glow-color),.12); }
+    .global-spotlight { mix-blend-mode: screen; will-change: transform, opacity; z-index: 200 !important; pointer-events: none; }
+    .magic-bento-card .blob {
+      position: absolute; border-radius: 50%; filter: blur(55px); pointer-events: none; z-index: 0;
+      opacity: .55; transition: transform .6s ease;
+    }
+    .magic-bento-card:hover .blob { transform: scale(1.3); }
+    #features {
+      padding: 5rem 4rem;
       background: linear-gradient(180deg, transparent, rgba(124,58,237,.06), transparent);
-      position: relative;
-      z-index: 2;
+    }
+    .features-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+    .feature-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.25rem 1.5rem; border-radius: 1rem;
+      border: 1px solid transparent; transition: border-color .3s, background .3s; cursor: default;
+    }
+    .feature-item:hover { border-color: var(--border); background: var(--glass); }
+    .fi-icon {
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+      background: linear-gradient(135deg, rgba(124,58,237,.25), rgba(6,182,212,.2));
+    }
+    .fi-title { font-family: 'Outfit', sans-serif; font-weight: 700; margin-bottom: .3rem; }
+    .fi-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+    .phone-mock {
+      width: 100%; max-width: 380px; margin: 0 auto;
+      border-radius: 2.5rem; border: 1px solid var(--border);
+      background: var(--glass); backdrop-filter: blur(30px);
+      padding: 2rem 1.5rem; position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1);
+      animation: floatPhone 5s ease-in-out infinite;
+    }
+    .phone-mock::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,.06) 0%, transparent 60%);
+    }
+    .pm-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .pm-dots { display: flex; gap: .4rem; }
+    .pm-dots span { width:10px; height:10px; border-radius:50%; }
+    .pm-dots span:nth-child(1){background:#ff5f57;}
+    .pm-dots span:nth-child(2){background:#febc2e;}
+    .pm-dots span:nth-child(3){background:#28c840;}
+    .pm-logo { font-family:'Outfit',sans-serif; font-size:.85rem; font-weight:800; color:var(--violet2); }
+    .pm-metric {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: .75rem; padding: 1rem; margin-bottom: .75rem;
+    }
+    .pm-metric-label { font-size:.65rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; margin-bottom:.4rem; }
+    .pm-metric-val { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; }
+    .pm-bar-chart { display:flex; align-items:flex-end; gap:.35rem; height:60px; margin-top:.6rem; }
+    .pm-bar-chart span {
+      flex:1; border-radius:.25rem;
+      background: linear-gradient(to top, var(--violet), var(--cyan));
+      opacity: .7; animation: barGrow 1.2s ease both;
+    }
+    .pm-tags { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.75rem; }
+    .pm-tag {
+      padding:.2rem .6rem; border-radius:.4rem; font-size:.65rem; font-weight:600;
+      background: rgba(124,58,237,.2); color:var(--violet2); border: 1px solid rgba(124,58,237,.3);
+    }
+    #process { padding: 6rem 4rem; }
+    .process-header { text-align: center; margin-bottom: 4rem; }
+    .process-steps {
+      max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute;
+      left: 32px; top: 48px; bottom: 48px; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--violet), var(--cyan), transparent);
+    }
+    .process-step {
+      display: flex; gap: 2rem; align-items: flex-start; padding: 2rem 2rem 2rem 0;
+      opacity: 0; transform: translateX(-20px);
+    }
+    .process-step.visible { animation: stepIn .5s ease forwards; }
+    .step-num {
+      flex-shrink: 0; width: 64px; height: 64px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--glass); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800;
+      color: var(--violet2); position: relative; z-index: 1;
+      box-shadow: 0 0 0 4px rgba(124,58,237,.1);
+    }
+    .step-content { padding-top: .9rem; }
+    .step-title { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
+    .step-desc { font-size:.875rem; color:var(--muted); line-height:1.7; max-width:520px; }
+    #pricing { padding: 6rem 4rem; }
+    .pricing-header { text-align:center; margin-bottom:3.5rem; }
+    .pricing-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.5rem; max-width:1050px; margin:0 auto;
+    }
+    .price-card {
+      padding:2.5rem 2rem; border-radius:1.5rem; border:1px solid var(--border);
+      background:var(--glass); backdrop-filter:blur(20px);
+      position:relative; overflow:hidden; transition:transform .35s, box-shadow .35s, border-color .35s;
+      opacity:0;
+    }
+    .price-card.visible { animation: cardIn .6s ease forwards; }
+    .price-card.featured {
+      border-color: rgba(124,58,237,.5);
+      background: linear-gradient(160deg, rgba(124,58,237,.12), rgba(6,182,212,.06));
+      box-shadow: 0 0 50px rgba(124,58,237,.2);
+    }
+    .price-card:hover { transform:translateY(-8px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+    .price-badge {
+      position:absolute; top:1.25rem; right:1.25rem;
+      padding:.2rem .7rem; border-radius:2rem;
+      background:linear-gradient(135deg,var(--violet),var(--cyan));
+      font-size:.65rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    }
+    .price-tier { font-family:'Outfit',sans-serif; font-size:.8rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:.8rem; }
+    .price-amount { font-family:'Outfit',sans-serif; font-size:3rem; font-weight:900; line-height:1; }
+    .price-amount sup { font-size:1.2rem; vertical-align:top; margin-top:.6rem; display:inline-block; }
+    .price-amount sub { font-size:.85rem; font-weight:400; color:var(--muted); }
+    .price-desc { font-size:.85rem; color:var(--muted); margin:.6rem 0 1.5rem; }
+    .price-divider { height:1px; background:var(--border); margin-bottom:1.5rem; }
+    .price-features { list-style:none; display:flex; flex-direction:column; gap:.75rem; margin-bottom:2rem; }
+    .price-features li { display:flex; align-items:center; gap:.6rem; font-size:.875rem; }
+    .price-features li .chk { color:var(--cyan); font-size:1rem; }
+    .price-features li .cross { color:rgba(255,255,255,.2); }
+    #cta { padding: 7rem 4rem; text-align:center; }
+    .cta-glass {
+      max-width: 780px; margin:0 auto; padding:4rem 3rem; border-radius:2rem;
+      border:1px solid var(--border);
+      background: linear-gradient(160deg, rgba(124,58,237,.12), rgba(6,182,212,.06));
+      backdrop-filter:blur(24px); position:relative; overflow:hidden;
+      box-shadow:0 0 80px rgba(124,58,237,.15);
+    }
+    .cta-glass::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);
+    }
+    .cta-glass h2 { font-family:'Outfit',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; margin-bottom:1rem; }
+    .cta-glass p { color:var(--muted); max-width:480px; margin:0 auto 2rem; line-height:1.7; }
+    footer {
+      position:relative; z-index:2; padding:3rem 4rem;
+      border-top:1px solid var(--border);
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem;
+    }
+    .footer-logo { font-family:'Outfit',sans-serif; font-size:1.3rem; font-weight:900;
+      background:linear-gradient(135deg,var(--violet2),var(--cyan));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .footer-links { display:flex; gap:1.8rem; list-style:none; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-size:.85rem; transition:color .25s; }
+    .footer-links a:hover { color:var(--white); }
+    .footer-copy { font-size:.78rem; color:var(--muted); }
+    .social-links { display:flex; gap:.75rem; }
+    .soc-btn {
+      width:36px; height:36px; border-radius:50%; border:1px solid var(--border);
+      background:var(--glass); display:flex; align-items:center; justify-content:center;
+      font-size:1rem; transition:border-color .3s, background .3s, transform .25s;
+      cursor:pointer; text-decoration:none;
+    }
+    .soc-btn:hover { border-color:var(--borderh); background:var(--glassh); transform:translateY(-2px); }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--violet); border-radius:10px; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+    @keyframes cardIn {
+      from { opacity:0; transform:translateY(32px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+    @keyframes stepIn {
+      from { opacity:0; transform:translateX(-20px); }
+      to { opacity:1; transform:translateX(0); }
+    }
+    @keyframes floatOrb {
+      0%,100% { transform:translateY(0) scale(1); }
+      50% { transform:translateY(-30px) scale(1.05); }
+    }
+    @keyframes floatPhone {
+      0%,100% { transform:translateY(0) rotate(-1deg); }
+      50% { transform:translateY(-12px) rotate(1deg); }
+    }
+    @keyframes gradMove {
+      0%,100% { background-position:0% 50%; }
+      50% { background-position:100% 50%; }
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:.5; transform:scale(1.5); }
+    }
+    @keyframes barGrow {
+      from { transform:scaleY(0); transform-origin:bottom; }
+      to { transform:scaleY(1); }
+    }
+    @media(max-width:900px) {
+      nav { padding:1rem 1.5rem; }
+      .nav-links { display:none; }
+      #services,#features,#process,#pricing,#cta,footer { padding:4rem 1.5rem; }
+      .features-inner { grid-template-columns:1fr; }
+      .phone-mock { max-width:300px; }
+      footer { flex-direction:column; text-align:center; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+    }
+
+    /* ── GALERİ EK STİLLERİ ── */
+    #gallery {
+      padding: 4rem 2rem;
+      background: linear-gradient(180deg, transparent, rgba(124,58,237,.06), transparent);
+      position: relative; z-index: 2;
     }
     #gallery .section-label { text-align: center; display: block; }
     #gallery .section-title { text-align: center; }
@@ -53,7 +428,7 @@
       height: 600px;
       width: 100%;
       max-width: 1400px;
-      margin: 0 auto;
+      margin: 1.5rem auto 0;
       border-radius: 28px;
       overflow: hidden;
       border: 1px solid var(--border);
@@ -63,602 +438,1144 @@
     }
     @media(max-width: 768px) {
       .gallery-wrapper { height: 400px; border-radius: 16px; }
+      #gallery { padding: 3rem 1rem; }
+    }
+
+    /* Galeri içindeki canvas'ı konteynıra tam oturt */
+    .gallery-wrapper canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
     }
   </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
+  <canvas id="bg-canvas"></canvas>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">ALPİ</div>
-  <ul class="nav-links">
-    <li><a href="#services">Hizmetler</a></li>
-    <li><a href="#gallery">Galeri</a></li>
-    <li><a href="#features">Neden Biz</a></li>
-    <li><a href="#process">Süreç</a></li>
-    <li><a href="#pricing">Fiyatlar</a></li>
-    <li><a href="#cta" class="nav-cta">Başla →</a></li>
-  </ul>
-</nav>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">ALPİ</div>
+    <ul class="nav-links">
+      <li><a href="#services">Hizmetler</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#features">Neden Biz</a></li>
+      <li><a href="#process">Süreç</a></li>
+      <li><a href="#pricing">Fiyatlar</a></li>
+      <li><a href="#cta" class="nav-cta">Başla →</a></li>
+    </ul>
+  </nav>
 
-<!-- HERO (öncekiyle aynı) -->
-<section id="hero"> ... </section>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> ✦ 2024'ün En İyi Dijital Ajansı
+      </div>
+      <h1 class="hero-title">Geleceği<br><span class="grad">Birlikte</span><br>İnşa Ediyoruz</h1>
+      <p class="hero-sub">ALPİ olarak dijital dönüşüm yolculuğunuzda stratejik çözümler, yenilikçi teknolojiler ve yaratıcı yaklaşımlarla yanınızdayız.</p>
+      <div class="hero-buttons">
+        <a href="#cta" class="btn-primary">Ücretsiz Konsültasyon Al ✦</a>
+        <a href="#services" class="btn-ghost">Hizmetlerimiz →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num" data-target="320">0</div><div class="stat-label">Başarılı Proje</div></div>
+        <div class="stat"><div class="stat-num" data-target="98">0</div><div class="stat-label">Müşteri Memnuniyeti %</div></div>
+        <div class="stat"><div class="stat-num" data-target="12">0</div><div class="stat-label">Yıllık Deneyim</div></div>
+        <div class="stat"><div class="stat-num" data-target="45">0</div><div class="stat-label">Uzman Ekip</div></div>
+      </div>
+    </div>
+  </section>
 
-<!-- SERVICES (öncekiyle aynı) -->
-<section id="services"> ... </section>
+  <!-- SERVICES / MAGIC BENTO -->
+  <section id="services">
+    <div class="services-header">
+      <span class="section-label">⬡ Hizmetlerimiz</span>
+      <h2 class="section-title">Tüm Dijital<br>İhtiyaçlarınız Burada</h2>
+      <p class="section-sub" style="margin:.85rem auto 0;">Markanızı güçlendirmek ve iş hedeflerinize ulaşmak için kapsamlı dijital çözümler sunuyoruz.</p>
+    </div>
+    <div id="bento-grid" class="card-grid bento-section">
+      <!-- Card 1: UI/UX -->
+      <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:124,58,237;">
+        <div class="blob" style="width:180px;height:180px;background:rgba(124,58,237,.22);top:-60px;right:-60px;"></div>
+        <div class="magic-bento-card__header">
+          <span class="magic-bento-card__label">Tasarım</span>
+          <div class="bento-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">🎨</div>
+        </div>
+        <div class="magic-bento-card__content">
+          <h2 class="magic-bento-card__title">UI/UX Tasarım</h2>
+          <p class="magic-bento-card__description">Kullanıcı odaklı, modern arayüzler. Her piksel bir amaca hizmet eder.</p>
+          <span class="bento-tag">Figma · Prototyping</span>
+        </div>
+      </div>
+      <!-- Card 2: Web Dev -->
+      <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:6,182,212;">
+        <div class="blob" style="width:160px;height:160px;background:rgba(6,182,212,.2);top:-50px;left:-50px;"></div>
+        <div class="magic-bento-card__header">
+          <span class="magic-bento-card__label">Geliştirme</span>
+          <div class="bento-icon" style="background:linear-gradient(135deg,#06b6d4,#0e7490);">⚡</div>
+        </div>
+        <div class="magic-bento-card__content">
+          <h2 class="magic-bento-card__title">Web Geliştirme</h2>
+          <p class="magic-bento-card__description">Performanslı, ölçeklenebilir web uygulamaları. React, Next.js ile hız.</p>
+          <span class="bento-tag">React · Node.js · TS</span>
+        </div>
+      </div>
+      <!-- Card 3: AI (span 2x2) -->
+      <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:168,85,247;">
+        <div class="blob" style="width:280px;height:280px;background:rgba(168,85,247,.18);bottom:-80px;right:-80px;"></div>
+        <div class="blob" style="width:150px;height:150px;background:rgba(6,182,212,.12);top:-40px;left:30%;"></div>
+        <div class="magic-bento-card__header">
+          <span class="magic-bento-card__label">Yapay Zeka</span>
+          <div class="bento-icon" style="background:linear-gradient(135deg,#a855f7,#7c3aed);font-size:1.4em;">🧠</div>
+        </div>
+        <div class="magic-bento-card__content">
+          <h2 class="magic-bento-card__title" style="font-size:1.6em;">Yapay Zeka<br>Çözümleri</h2>
+          <p class="magic-bento-card__description" style="font-size:.82em;max-width:340px;">İş süreçlerinizi otomatikleştirin. Özel AI modelleri, akıllı chatbot sistemleri ve ileri düzey veri analitiği çözümleri ile rekabette öne geçin.</p>
+          <span class="bento-tag">LLM · Computer Vision · NLP</span>
+        </div>
+      </div>
+      <!-- Card 4: Mobile (span 2 col) -->
+      <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:245,158,11;">
+        <div class="blob" style="width:200px;height:200px;background:rgba(245,158,11,.18);bottom:-60px;right:-40px;"></div>
+        <div class="magic-bento-card__header">
+          <span class="magic-bento-card__label">Mobil</span>
+          <div class="bento-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">📱</div>
+        </div>
+        <div class="magic-bento-card__content">
+          <h2 class="magic-bento-card__title">Mobil Uygulama</h2>
+          <p class="magic-bento-card__description">iOS & Android için native veya cross-platform. App Store'dan Play Store'a tam destek.</p>
+          <span class="bento-tag">Flutter · React Native</span>
+        </div>
+      </div>
+      <!-- Card 5: Marketing -->
+      <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:236,72,153;">
+        <div class="blob" style="width:160px;height:160px;background:rgba(236,72,153,.2);top:-50px;right:-30px;"></div>
+        <div class="magic-bento-card__header">
+          <span class="magic-bento-card__label">Pazarlama</span>
+          <div class="bento-icon" style="background:linear-gradient(135deg,#ec4899,#be185d);">📈</div>
+        </div>
+        <div class="magic-bento-card__content">
+          <h2 class="magic-bento-card__title">Dijital Pazarlama</h2>
+          <p class="magic-bento-card__description">SEO, sosyal medya ve performance marketing ile markanızı öne çıkarın.</p>
+          <span class="bento-tag">SEO · Meta · Google Ads</span>
+        </div>
+      </div>
+      <!-- Card 6: Cloud -->
+      <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:34,197,94;">
+        <div class="blob" style="width:150px;height:150px;background:rgba(34,197,94,.2);bottom:-50px;left:-30px;"></div>
+        <div class="magic-bento-card__header">
+          <span class="magic-bento-card__label">Altyapı</span>
+          <div class="bento-icon" style="background:linear-gradient(135deg,#22c55e,#15803d);">☁️</div>
+        </div>
+        <div class="magic-bento-card__content">
+          <h2 class="magic-bento-card__title">Cloud & DevOps</h2>
+          <p class="magic-bento-card__description">AWS, GCP, Azure. CI/CD ve container orkestrasyonu ile tam otomasyon.</p>
+          <span class="bento-tag">AWS · Docker · K8s</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- GALERİ (YENİ) -->
-<section id="gallery">
-  <div style="text-align:center; margin-bottom: 2rem;">
-    <span class="section-label">⬡ Dönen Galeri</span>
-    <h2 class="section-title">Keşfet, İlham Al</h2>
-    <p class="section-sub" style="margin:0.5rem auto 0; max-width:480px;">Fare ile sürükleyin, kaydırın veya ok tuşlarını kullanarak görseller arasında gezinin.</p>
-  </div>
-  <div class="gallery-wrapper" id="gallery-container" tabindex="0" role="region" aria-label="Dönen görsel galerisi">
-    <!-- Galeri buraya render edilecek -->
-  </div>
-</section>
+  <!-- GALERİ (CircularGallery) -->
+  <section id="gallery">
+    <div style="text-align:center; margin-bottom: 1rem;">
+      <span class="section-label">⬡ Dönen Galeri</span>
+      <h2 class="section-title">Keşfet, İlham Al</h2>
+      <p class="section-sub" style="margin:0.5rem auto 0; max-width:480px;">Fare ile sürükleyin, kaydırın veya ok tuşlarını kullanarak görseller arasında gezinin.</p>
+    </div>
+    <div class="gallery-wrapper" id="gallery-container" tabindex="0" role="region" aria-label="Dönen görsel galerisi"></div>
+  </section>
 
-<!-- FEATURES (öncekiyle aynı) -->
-<section id="features"> ... </section>
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="features-inner">
+      <div>
+        <span class="section-label">⬡ Neden ALPİ?</span>
+        <h2 class="section-title">Fark Yaratan<br>Yaklaşım</h2>
+        <p class="section-sub">Sadece kod yazmıyor, iş ortağınız oluyoruz. Her projede mükemmelliği hedefleyen bir ekip.</p>
+        <ul class="feature-list" style="margin-top:2rem;">
+          <li class="feature-item">
+            <div class="fi-icon">🎯</div>
+            <div><div class="fi-title">Sonuç Odaklı Strateji</div><div class="fi-desc">Her projeyi KPI'larla ölçüyor, ölçülebilir başarı hedefleri belirliyor ve sürekli optimizasyon yapıyoruz.</div></div>
+          </li>
+          <li class="feature-item">
+            <div class="fi-icon">⚡</div>
+            <div><div class="fi-title">Hızlı Teslimat</div><div class="fi-desc">Agile metodoloji ve sprint bazlı çalışma ile projelerinizi zamanında, hatta öncesinde teslim ediyoruz.</div></div>
+          </li>
+          <li class="feature-item">
+            <div class="fi-icon">🔒</div>
+            <div><div class="fi-title">Güvenlik & Kalite</div><div class="fi-desc">ISO 27001 standartlarında güvenlik testleri ve kapsamlı QA süreçleri ile hatasız çözümler sunuyoruz.</div></div>
+          </li>
+          <li class="feature-item">
+            <div class="fi-icon">🤝</div>
+            <div><div class="fi-title">7/24 Destek</div><div class="fi-desc">Proje sonrasında da yanınızdayız. Dedicated support ekibimiz her an yardıma hazır.</div></div>
+          </li>
+        </ul>
+      </div>
+      <div class="phone-mock">
+        <div class="pm-bar">
+          <div class="pm-dots"><span></span><span></span><span></span></div>
+          <div class="pm-logo">ALPİ Dashboard</div>
+        </div>
+        <div class="pm-metric">
+          <div class="pm-metric-label">Aylık Büyüme</div>
+          <div class="pm-metric-val" style="background:linear-gradient(135deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+142%</div>
+          <div class="pm-bar-chart">
+            <span style="height:40%;animation-delay:.1s"></span>
+            <span style="height:60%;animation-delay:.2s"></span>
+            <span style="height:45%;animation-delay:.3s"></span>
+            <span style="height:80%;animation-delay:.4s"></span>
+            <span style="height:65%;animation-delay:.5s"></span>
+            <span style="height:90%;animation-delay:.6s"></span>
+            <span style="height:100%;animation-delay:.7s"></span>
+          </div>
+        </div>
+        <div class="pm-metric">
+          <div class="pm-metric-label">Aktif Projeler</div>
+          <div class="pm-metric-val">24</div>
+        </div>
+        <div class="pm-tags">
+          <span class="pm-tag">React ✦</span>
+          <span class="pm-tag">AI/ML ✦</span>
+          <span class="pm-tag">Cloud ✦</span>
+          <span class="pm-tag">UX ✦</span>
+          <span class="pm-tag">Mobile ✦</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- PROCESS (öncekiyle aynı) -->
-<section id="process"> ... </section>
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="process-header">
+      <span class="section-label">⬡ Çalışma Sürecimiz</span>
+      <h2 class="section-title">Fikrinizden<br>Ürüne Giden Yol</h2>
+      <p class="section-sub" style="margin:0 auto;">Şeffaf ve sistematik bir yaklaşımla her projeyi başarıya taşıyoruz.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">01</div><div class="step-content"><div class="step-title">Keşif & Analiz</div><div class="step-desc">İş hedeflerinizi, hedef kitlenizi ve pazar dinamiklerini derinlemesine analiz ediyoruz. Kapsamlı bir yol haritası oluşturuyoruz.</div></div></div>
+      <div class="process-step"><div class="step-num">02</div><div class="step-content"><div class="step-title">Strateji & Planlama</div><div class="step-desc">Araştırma bulgularına dayalı, ölçülebilir hedefler içeren detaylı bir proje planı hazırlıyoruz. Her adım net ve anlaşılır.</div></div></div>
+      <div class="process-step"><div class="step-num">03</div><div class="step-content"><div class="step-title">Tasarım & Geliştirme</div><div class="step-desc">Yaratıcı ekibimiz wireframe'den final tasarıma, frontend'den backend'e kadar tüm geliştirme sürecini yönetiyor.</div></div></div>
+      <div class="process-step"><div class="step-num">04</div><div class="step-content"><div class="step-title">Test & Optimizasyon</div><div class="step-desc">Kapsamlı kalite testleri, performans optimizasyonu ve kullanıcı testleri ile mükemmel bir ürün çıkarıyoruz.</div></div></div>
+      <div class="process-step"><div class="step-num">05</div><div class="step-content"><div class="step-title">Lansman & Büyüme</div><div class="step-desc">Başarılı lansman sonrasında analitik takibi, sürekli iyileştirme ve büyüme stratejileri ile yanınızda olmaya devam ediyoruz.</div></div></div>
+    </div>
+  </section>
 
-<!-- PRICING (öncekiyle aynı) -->
-<section id="pricing"> ... </section>
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="pricing-header">
+      <span class="section-label">⬡ Fiyatlandırma</span>
+      <h2 class="section-title">Her Bütçeye<br>Uygun Paket</h2>
+      <p class="section-sub" style="margin:0 auto;">Şeffaf fiyatlandırma. Gizli ücret yok. İhtiyacınıza göre özelleştirin.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount"><sup>₺</sup>4.990<sub>/ay</sub></div>
+        <div class="price-desc">Küçük işletmeler ve start-up'lar için ideal başlangıç paketi.</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="chk">✦</span> 1 Web Sitesi</li>
+          <li><span class="chk">✦</span> Temel SEO Optimizasyonu</li>
+          <li><span class="chk">✦</span> Aylık 5 İçerik</li>
+          <li><span class="chk">✦</span> E-posta Desteği</li>
+          <li><span class="cross">✗</span> <span style="opacity:.4">Mobil Uygulama</span></li>
+          <li><span class="cross">✗</span> <span style="opacity:.4">AI Entegrasyonu</span></li>
+        </ul>
+        <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Başla →</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">⭐ Popüler</div>
+        <div class="price-tier">Growth</div>
+        <div class="price-amount"><sup>₺</sup>12.990<sub>/ay</sub></div>
+        <div class="price-desc">Büyüyen işletmeler için kapsamlı dijital çözüm paketi.</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="chk">✦</span> 3 Web Sitesi / Uygulama</li>
+          <li><span class="chk">✦</span> Gelişmiş SEO & SEM</li>
+          <li><span class="chk">✦</span> Aylık 20 İçerik</li>
+          <li><span class="chk">✦</span> 24/7 Canlı Destek</li>
+          <li><span class="chk">✦</span> Mobil Uygulama</li>
+          <li><span class="cross">✗</span> <span style="opacity:.4">Özel AI Modeli</span></li>
+        </ul>
+        <a href="#cta" class="btn-primary" style="display:block;text-align:center;width:100%;">Hemen Başla ✦</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-amount" style="font-size:2rem;">Özel<br>Fiyat</div>
+        <div class="price-desc">Kurumsal firmalar için tam kapsamlı, özelleştirilmiş çözümler.</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="chk">✦</span> Sınırsız Proje</li>
+          <li><span class="chk">✦</span> Tam Stack Geliştirme</li>
+          <li><span class="chk">✦</span> Sınırsız İçerik</li>
+          <li><span class="chk">✦</span> Dedicated Ekip</li>
+          <li><span class="chk">✦</span> Mobil Uygulama</li>
+          <li><span class="chk">✦</span> Özel AI Modeli</li>
+        </ul>
+        <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Teklif Al →</a>
+      </div>
+    </div>
+  </section>
 
-<!-- CTA (öncekiyle aynı) -->
-<section id="cta"> ... </section>
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-glass">
+      <span class="section-label">⬡ Hadi Başlayalım</span>
+      <h2>Projenizi Hayata<br>Geçirmeye Hazır mısınız?</h2>
+      <p>Ücretsiz danışma görüşmemizde iş hedeflerinizi konuşalım ve size özel bir yol haritası çizelim. İlk adım bizden!</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="mailto:merhaba@alpi.com.tr" class="btn-primary">📧 Bizimle İletişime Geç</a>
+        <a href="tel:+905001234567" class="btn-ghost">📞 Hemen Ara</a>
+      </div>
+      <p style="margin-top:1.5rem;font-size:.8rem;color:var(--muted);">Yanıt süremiz ortalama 2 saat ✦ Ücretsiz konsültasyon ✦ Taahhüt yok</p>
+    </div>
+  </section>
 
-<!-- FOOTER (öncekiyle aynı) -->
-<footer> ... </footer>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">ALPİ</div>
+    <ul class="footer-links">
+      <li><a href="#services">Hizmetler</a></li>
+      <li><a href="#process">Süreç</a></li>
+      <li><a href="#pricing">Fiyatlar</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Kariyer</a></li>
+    </ul>
+    <div class="social-links">
+      <a class="soc-btn" href="#" title="LinkedIn">💼</a>
+      <a class="soc-btn" href="#" title="Twitter/X">🐦</a>
+      <a class="soc-btn" href="#" title="Instagram">📸</a>
+      <a class="soc-btn" href="#" title="GitHub">⚡</a>
+    </div>
+    <div class="footer-copy">© 2024 ALPİ Dijital Ajans — Tüm hakları saklıdır.</div>
+  </footer>
 
-<!-- ─── GALERİ JAVASCRIPT ─── -->
-<script type="importmap">
-{
-  "imports": {
-    "ogl": "https://unpkg.com/ogl@0.0.41/dist/ogl.mjs"
-  }
-}
-</script>
+  <!-- ─── MEVCUT JAVASCRIPT (particles, counter, scroll, bento) ─── -->
+  <script>
+    /* ── PARTICLE CANVAS ── */
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
 
-<script type="module">
-import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
-
-// ── Yardımcı fonksiyonlar ──
-function debounce(func, wait) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
-function lerp(p1, p2, t) { return p1 + (p2 - p1) * t; }
-function autoBind(instance) {
-  const proto = Object.getPrototypeOf(instance);
-  Object.getOwnPropertyNames(proto).forEach(key => {
-    if (key !== 'constructor' && typeof instance[key] === 'function') {
-      instance[key] = instance[key].bind(instance);
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
     }
-  });
-}
-const DEFAULT_FONT = 'bold 30px Figtree';
-const DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap';
+    resize();
+    window.addEventListener('resize', resize);
 
-function deriveFontFamilyFromUrl(url) {
-  const fileName = (url.split('/').pop() || 'custom-font').split('?')[0];
-  const base = fileName.replace(/\.(woff2?|ttf|otf|eot)$/i, '');
-  return base.replace(/[^a-zA-Z0-9-_ ]/g, '').trim() || 'CircularGalleryFont';
-}
-async function loadFontFromStylesheet(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Failed to fetch font stylesheet (${response.status})`);
-  const cssText = await response.text();
-  const faceBlocks = cssText.match(/@font-face\s*{[^}]*}/g) || [];
-  let family = null;
-  const fontFaces = [];
-  for (const block of faceBlocks) {
-    const familyMatch = block.match(/font-family:\s*['"]?([^;'"]+)['"]?/);
-    const urlMatch = block.match(/url\(\s*['"]?([^'")]+)['"]?\s*\)/);
-    if (!familyMatch || !urlMatch) continue;
-    family = familyMatch[1].trim();
-    const descriptors = {};
-    const weightMatch = block.match(/font-weight:\s*([^;]+);/);
-    const styleMatch = block.match(/font-style:\s*([^;]+);/);
-    const rangeMatch = block.match(/unicode-range:\s*([^;]+);/);
-    if (weightMatch) descriptors.weight = weightMatch[1].trim();
-    if (styleMatch) descriptors.style = styleMatch[1].trim();
-    if (rangeMatch) descriptors.unicodeRange = rangeMatch[1].trim();
-    fontFaces.push(new FontFace(family, `url(${urlMatch[1]})`, descriptors));
-  }
-  if (!family) throw new Error('No @font-face rule found in the stylesheet');
-  await Promise.allSettled(
-    fontFaces.map(async face => {
-      await face.load();
-      document.fonts.add(face);
-    })
-  );
-  return family;
-}
-async function loadFontFromFile(url) {
-  const family = deriveFontFamilyFromUrl(url);
-  const fontFace = new FontFace(family, `url(${url})`);
-  await fontFace.load();
-  document.fonts.add(fontFace);
-  return family;
-}
-async function loadCustomFont(fontUrl) {
-  const isStylesheet = fontUrl.includes('fonts.googleapis.com') || /\.css(\?.*)?$/i.test(fontUrl);
-  return isStylesheet ? loadFontFromStylesheet(fontUrl) : loadFontFromFile(fontUrl);
-}
-async function resolveFont(font, fontUrl) {
-  const effectiveUrl = fontUrl || (font === DEFAULT_FONT ? DEFAULT_FONT_URL : null);
-  if (!effectiveUrl) {
-    if (document.fonts && document.fonts.load) {
-      try { await document.fonts.load(font); await document.fonts.ready; } catch {}
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - .5) * .3;
+      this.vy = (Math.random() - .5) * .3;
+      this.r = Math.random() * 1.4 + .4;
+      this.alpha = Math.random() * .5 + .1;
+      this.color = Math.random() > .5 ? '124,58,237' : '6,182,212';
     }
-    return font;
-  }
-  try {
-    const family = await loadCustomFont(effectiveUrl);
-    const sizeMatch = font.match(/^\s*(.*?\d+px)/);
-    const prefix = sizeMatch ? sizeMatch[1].trim() : 'bold 30px';
-    const resolved = `${prefix} "${family}"`;
-    if (document.fonts && document.fonts.load) {
-      try { await document.fonts.load(resolved); } catch {}
+    for (let i = 0; i < 90; i++) particles.push(new Particle());
+
+    function drawLine(a, b, d) {
+      const op = (1 - d / 120) * .18;
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(124,58,237,${op})`;
+      ctx.lineWidth = .5;
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
     }
-    return resolved;
-  } catch (error) {
-    console.error('CircularGallery: unable to load font from', fontUrl, error);
-    return font;
-  }
-}
-function getFontSize(font) {
-  const match = font.match(/(\d+)px/);
-  return match ? parseInt(match[1], 10) : 30;
-}
-function createTextTexture(gl, text, font = 'bold 30px monospace', color = 'black') {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  context.font = font;
-  const metrics = context.measureText(text);
-  const textWidth = Math.ceil(metrics.width);
-  const textHeight = Math.ceil(getFontSize(font) * 1.2);
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
-  context.font = font;
-  context.fillStyle = color;
-  context.textBaseline = 'middle';
-  context.textAlign = 'center';
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillText(text, canvas.width / 2, canvas.height / 2);
-  const texture = new Texture(gl, { generateMipmaps: false });
-  texture.image = canvas;
-  return { texture, width: canvas.width, height: canvas.height };
-}
 
-// ── Title ──
-class Title {
-  constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }) {
-    autoBind(this);
-    this.gl = gl;
-    this.plane = plane;
-    this.renderer = renderer;
-    this.text = text;
-    this.textColor = textColor;
-    this.font = font;
-    this.createMesh();
-  }
-  createMesh() {
-    const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
-    const geometry = new Plane(this.gl);
-    const program = new Program(this.gl, {
-      vertex: `
-        attribute vec3 position;
-        attribute vec2 uv;
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+        ctx.fill();
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+          if (d < 120) drawLine(particles[i], particles[j], d);
         }
-      `,
-      fragment: `
-        precision highp float;
-        uniform sampler2D tMap;
-        varying vec2 vUv;
-        void main() {
-          vec4 color = texture2D(tMap, vUv);
-          if (color.a < 0.1) discard;
-          gl_FragColor = color;
-        }
-      `,
-      uniforms: { tMap: { value: texture } },
-      transparent: true
-    });
-    this.mesh = new Mesh(this.gl, { geometry, program });
-    const aspect = width / height;
-    const textHeight = this.plane.scale.y * 0.15;
-    const textWidth = textHeight * aspect;
-    this.mesh.scale.set(textWidth, textHeight, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
-    this.mesh.setParent(this.plane);
-  }
-}
-
-// ── Media ──
-class Media {
-  constructor({
-    geometry,
-    gl,
-    image,
-    index,
-    length,
-    renderer,
-    scene,
-    screen,
-    text,
-    viewport,
-    bend,
-    textColor,
-    borderRadius = 0,
-    font
-  }) {
-    this.extra = 0;
-    this.geometry = geometry;
-    this.gl = gl;
-    this.image = image;
-    this.index = index;
-    this.length = length;
-    this.renderer = renderer;
-    this.scene = scene;
-    this.screen = screen;
-    this.text = text;
-    this.viewport = viewport;
-    this.bend = bend;
-    this.textColor = textColor;
-    this.borderRadius = borderRadius;
-    this.font = font;
-    this.createShader();
-    this.createMesh();
-    this.createTitle();
-    this.onResize();
-  }
-  createShader() {
-    const texture = new Texture(this.gl, { generateMipmaps: true });
-    this.program = new Program(this.gl, {
-      depthTest: false,
-      depthWrite: false,
-      vertex: `
-        precision highp float;
-        attribute vec3 position;
-        attribute vec2 uv;
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
-        uniform float uTime;
-        uniform float uSpeed;
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-        }
-      `,
-      fragment: `
-        precision highp float;
-        uniform vec2 uImageSizes;
-        uniform vec2 uPlaneSizes;
-        uniform sampler2D tMap;
-        uniform float uBorderRadius;
-        varying vec2 vUv;
-        
-        float roundedBoxSDF(vec2 p, vec2 b, float r) {
-          vec2 d = abs(p) - b;
-          return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
-        }
-        
-        void main() {
-          vec2 ratio = vec2(
-            min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
-            min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
-          );
-          vec2 uv = vec2(
-            vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-            vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
-          );
-          vec4 color = texture2D(tMap, uv);
-          
-          float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
-          float edgeSmooth = 0.002;
-          float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
-          
-          gl_FragColor = vec4(color.rgb, alpha);
-        }
-      `,
-      uniforms: {
-        tMap: { value: texture },
-        uPlaneSizes: { value: [0, 0] },
-        uImageSizes: { value: [0, 0] },
-        uSpeed: { value: 0 },
-        uTime: { value: 100 * Math.random() },
-        uBorderRadius: { value: this.borderRadius }
-      },
-      transparent: true
-    });
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = this.image;
-    img.onload = () => {
-      texture.image = img;
-      this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-    };
-  }
-  createMesh() {
-    this.plane = new Mesh(this.gl, { geometry: this.geometry, program: this.program });
-    this.plane.setParent(this.scene);
-  }
-  createTitle() {
-    this.title = new Title({
-      gl: this.gl,
-      plane: this.plane,
-      renderer: this.renderer,
-      text: this.text,
-      textColor: this.textColor,
-      font: this.font
-    });
-  }
-  update(scroll, direction) {
-    this.plane.position.x = this.x - scroll.current - this.extra;
-    const x = this.plane.position.x;
-    const H = this.viewport.width / 2;
-    if (this.bend === 0) {
-      this.plane.position.y = 0;
-      this.plane.rotation.z = 0;
-    } else {
-      const B_abs = Math.abs(this.bend);
-      const R = (H * H + B_abs * B_abs) / (2 * B_abs);
-      const effectiveX = Math.min(Math.abs(x), H);
-      const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-      if (this.bend > 0) {
-        this.plane.position.y = -arc;
-        this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
-      } else {
-        this.plane.position.y = arc;
-        this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
       }
+      requestAnimationFrame(animate);
     }
-    this.speed = scroll.current - scroll.last;
-    this.program.uniforms.uTime.value += 0.04;
-    this.program.uniforms.uSpeed.value = this.speed;
-    const planeOffset = this.plane.scale.x / 2;
-    const viewportOffset = this.viewport.width / 2;
-    this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
-    this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
-    if (direction === 'right' && this.isBefore) {
-      this.extra -= this.widthTotal;
-      this.isBefore = this.isAfter = false;
-    }
-    if (direction === 'left' && this.isAfter) {
-      this.extra += this.widthTotal;
-      this.isBefore = this.isAfter = false;
-    }
-  }
-  onResize({ screen, viewport } = {}) {
-    if (screen) this.screen = screen;
-    if (viewport) {
-      this.viewport = viewport;
-      if (this.plane.program.uniforms.uViewportSizes) {
-        this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
-      }
-    }
-    this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
-    this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
-    this.padding = 2;
-    this.width = this.plane.scale.x + this.padding;
-    this.widthTotal = this.width * this.length;
-    this.x = this.width * this.index;
-  }
-}
+    animate();
 
-// ── App ──
-class App {
-  constructor(
-    container,
-    {
-      items,
-      bend,
-      textColor = '#ffffff',
-      borderRadius = 0,
-      font = 'bold 30px Figtree',
-      scrollSpeed = 2,
-      scrollEase = 0.05
-    } = {}
-  ) {
-    document.documentElement.classList.remove('no-js');
-    this.container = container;
-    this.scrollSpeed = scrollSpeed;
-    this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
-    this.onCheckDebounce = debounce(this.onCheck, 200);
-    this.createRenderer();
-    this.createCamera();
-    this.createScene();
-    this.onResize();
-    this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
-    this.update();
-    this.addEventListeners();
-  }
-  createRenderer() {
-    this.renderer = new Renderer({
-      alpha: true,
-      antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+    /* ── SCROLL NAV ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
     });
-    this.gl = this.renderer.gl;
-    this.gl.clearColor(0, 0, 0, 0);
-    this.container.appendChild(this.gl.canvas);
-  }
-  createCamera() {
-    this.camera = new Camera(this.gl);
-    this.camera.fov = 45;
-    this.camera.position.z = 20;
-  }
-  createScene() { this.scene = new Transform(); }
-  createGeometry() {
-    this.planeGeometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
-  }
-  createMedias(items, bend = 1, textColor, borderRadius, font) {
-    const defaultItems = [
-      { image: 'https://picsum.photos/seed/1/800/600?grayscale', text: 'Bridge' },
-      { image: 'https://picsum.photos/seed/2/800/600?grayscale', text: 'Desk Setup' },
-      { image: 'https://picsum.photos/seed/3/800/600?grayscale', text: 'Waterfall' },
-      { image: 'https://picsum.photos/seed/4/800/600?grayscale', text: 'Strawberries' },
-      { image: 'https://picsum.photos/seed/5/800/600?grayscale', text: 'Deep Diving' },
-      { image: 'https://picsum.photos/seed/16/800/600?grayscale', text: 'Train Track' },
-      { image: 'https://picsum.photos/seed/17/800/600?grayscale', text: 'Santorini' },
-      { image: 'https://picsum.photos/seed/8/800/600?grayscale', text: 'Blurry Lights' },
-      { image: 'https://picsum.photos/seed/9/800/600?grayscale', text: 'New York' },
-      { image: 'https://picsum.photos/seed/10/800/600?grayscale', text: 'Good Boy' },
-      { image: 'https://picsum.photos/seed/21/800/600?grayscale', text: 'Coastline' },
-      { image: 'https://picsum.photos/seed/12/800/600?grayscale', text: 'Palm Trees' }
-    ];
-    const galleryItems = items && items.length ? items : defaultItems;
-    this.mediasImages = galleryItems.concat(galleryItems);
-    this.medias = this.mediasImages.map((data, index) => {
-      return new Media({
-        geometry: this.planeGeometry,
-        gl: this.gl,
-        image: data.image,
-        index,
-        length: this.mediasImages.length,
-        renderer: this.renderer,
-        scene: this.scene,
-        screen: this.screen,
-        text: data.text,
-        viewport: this.viewport,
-        bend,
-        textColor,
-        borderRadius,
-        font
+
+    /* ── COUNTER ANIMATION ── */
+    const statNums = document.querySelectorAll('.stat-num[data-target]');
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = +el.dataset.target;
+        let cur = 0;
+        const step = target / 60;
+        const id = setInterval(() => {
+          cur = Math.min(cur + step, target);
+          el.textContent = Math.floor(cur) + (target === 98 ? '%' : '+');
+          if (cur >= target) {
+            el.textContent = target + (target === 98 ? '%' : '+');
+            clearInterval(id);
+          }
+        }, 20);
+        counterObs.unobserve(el);
+      });
+    }, { threshold: .5 });
+    statNums.forEach(el => counterObs.observe(el));
+
+    /* ── SCROLL REVEAL ── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+      });
+    }, { threshold: .15 });
+    document.querySelectorAll('.price-card').forEach((el, i) => {
+      el.dataset.delay = i * 120;
+      revealObs.observe(el);
+    });
+    document.querySelectorAll('.process-step').forEach((el, i) => {
+      el.dataset.delay = i * 100;
+      revealObs.observe(el);
+    });
+
+    /* ── MAGIC BENTO (GSAP benzeri) ── */
+    (function() {
+      const GLOW = '124, 58, 237';
+      const SPOTLIGHT_R = 320;
+      const PARTICLE_COUNT = 10;
+
+      const gridEl = document.getElementById('bento-grid');
+      const spotlight = document.createElement('div');
+      Object.assign(spotlight.style, {
+        position: 'fixed',
+        width: '700px',
+        height: '700px',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        background: `radial-gradient(circle, rgba(${GLOW},.14) 0%, rgba(${GLOW},.07) 18%, rgba(${GLOW},.03) 32%, transparent 65%)`,
+        zIndex: '200',
+        opacity: '0',
+        transform: 'translate(-50%,-50%)',
+        mixBlendMode: 'screen',
+        transition: 'opacity .3s'
+      });
+      document.body.appendChild(spotlight);
+
+      function calcSpot(r) { return { prox: r * .5, fade: r * .75 }; }
+
+      document.addEventListener('mousemove', e => {
+        const section = gridEl.closest('.bento-section') || gridEl;
+        const sr = section.getBoundingClientRect();
+        const inside = e.clientX >= sr.left && e.clientX <= sr.right && e.clientY >= sr.top && e.clientY <= sr.bottom;
+
+        const cards = gridEl.querySelectorAll('.magic-bento-card');
+        if (!inside) {
+          spotlight.style.opacity = '0';
+          cards.forEach(c => { c.style.setProperty('--glow-intensity', '0'); });
+          return;
+        }
+
+        spotlight.style.left = e.clientX + 'px';
+        spotlight.style.top = e.clientY + 'px';
+
+        const { prox, fade } = calcSpot(SPOTLIGHT_R);
+        let minDist = Infinity;
+
+        cards.forEach(card => {
+          const cr = card.getBoundingClientRect();
+          const cx = cr.left + cr.width / 2,
+            cy = cr.top + cr.height / 2;
+          const dist = Math.max(0, Math.hypot(e.clientX - cx, e.clientY - cy) - Math.max(cr.width, cr.height) / 2);
+          minDist = Math.min(minDist, dist);
+
+          const gi = dist <= prox ? 1 : dist <= fade ? (fade - dist) / (fade - prox) : 0;
+          const rx = ((e.clientX - cr.left) / cr.width * 100).toFixed(1) + '%';
+          const ry = ((e.clientY - cr.top) / cr.height * 100).toFixed(1) + '%';
+          card.style.setProperty('--glow-x', rx);
+          card.style.setProperty('--glow-y', ry);
+          card.style.setProperty('--glow-intensity', gi.toFixed(3));
+          card.style.setProperty('--glow-radius', SPOTLIGHT_R + 'px');
+        });
+
+        const op = minDist <= prox ? .85 : minDist <= fade ? ((fade - minDist) / (fade - prox)) * .85 : 0;
+        spotlight.style.opacity = op;
+      });
+
+      gridEl.querySelectorAll('.magic-bento-card').forEach(card => {
+        const glowRaw = card.style.getPropertyValue('--glow-color') || GLOW;
+        let hovered = false;
+        let activeParticles = [];
+        let particleTimers = [];
+
+        function spawnParticles() {
+          const { width, height } = card.getBoundingClientRect();
+          particleTimers.forEach(clearTimeout);
+          particleTimers = [];
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particleTimers.push(setTimeout(() => {
+              if (!hovered) return;
+              const p = document.createElement('div');
+              p.style.cssText = `position:absolute;width:4px;height:4px;border-radius:50%;
+                background:rgba(${glowRaw},1);box-shadow:0 0 6px rgba(${glowRaw},.6);
+                pointer-events:none;z-index:10;
+                left:${Math.random() * width}px;top:${Math.random() * height}px;
+                opacity:0;transform:scale(0);`;
+              card.appendChild(p);
+              activeParticles.push(p);
+              p.animate([{ opacity: 0, transform: 'scale(0)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 300, fill: 'forwards', easing: 'cubic-bezier(.34,1.56,.64,1)' });
+              const dx = (Math.random() - .5) * 90,
+                dy = (Math.random() - .5) * 90;
+              p.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: `translate(${dx}px,${dy}px) rotate(${Math.random() * 360}deg)` }], { duration: 2500 + Math.random() * 1500, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out', fill: 'forwards' });
+              p.animate([{ opacity: 1 }, { opacity: .25 }], { duration: 1500, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+            }, i * 90));
+          }
+        }
+
+        function killParticles() {
+          particleTimers.forEach(clearTimeout);
+          particleTimers = [];
+          activeParticles.forEach(p => {
+            p.animate([{ opacity: p.style.opacity || 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(0)' }], { duration: 250, fill: 'forwards' }).onfinish = () => p.remove();
+          });
+          activeParticles = [];
+        }
+
+        card.addEventListener('mouseenter', () => { hovered = true;
+          spawnParticles(); });
+        card.addEventListener('mouseleave', () => {
+          hovered = false;
+          killParticles();
+          card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+        });
+
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left,
+            y = e.clientY - r.top;
+          const cx = r.width / 2,
+            cy = r.height / 2;
+          const rx = ((y - cy) / cy * -7).toFixed(2);
+          const ry = ((x - cx) / cx * 7).toFixed(2);
+          const mx = ((x - cx) * .04).toFixed(2);
+          const my = ((y - cy) * .04).toFixed(2);
+          card.style.transform = `translateY(-4px) translateX(${mx}px) translateY(${my}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+          card.style.transition = 'transform .08s ease';
+        });
+
+        card.addEventListener('click', e => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left,
+            y = e.clientY - r.top;
+          const maxD = Math.max(Math.hypot(x, y), Math.hypot(x - r.width, y), Math.hypot(x, y - r.height), Math.hypot(x - r.width, y - r.height));
+          const rip = document.createElement('div');
+          rip.style.cssText = `position:absolute;width:${maxD * 2}px;height:${maxD * 2}px;border-radius:50%;
+            background:radial-gradient(circle,rgba(${glowRaw},.4) 0%,rgba(${glowRaw},.18) 30%,transparent 70%);
+            left:${x - maxD}px;top:${y - maxD}px;pointer-events:none;z-index:1000;`;
+          card.appendChild(rip);
+          rip.animate([{ transform: 'scale(0)', opacity: 1 }, { transform: 'scale(1)', opacity: 0 }], { duration: 750, easing: 'ease-out' }).onfinish = () => rip.remove();
+        });
+      });
+    })();
+
+    /* ── MOUSE PARALLAX ORBS ── */
+    document.addEventListener('mousemove', e => {
+      const mx = (e.clientX / window.innerWidth - .5) * 20;
+      const my = (e.clientY / window.innerHeight - .5) * 20;
+      document.querySelectorAll('.orb').forEach((o, i) => {
+        const f = (i + 1) * .4;
+        o.style.transform = `translate(${mx * f}px,${my * f}px)`;
       });
     });
-  }
-  onTouchDown(e) {
-    this.isDown = true;
-    this.scroll.position = this.scroll.current;
-    this.start = e.touches ? e.touches[0].clientX : e.clientX;
-  }
-  onTouchMove(e) {
-    if (!this.isDown) return;
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    const distance = (this.start - x) * (this.scrollSpeed * 0.025);
-    this.scroll.target = this.scroll.position + distance;
-  }
-  onTouchUp() { this.isDown = false; this.onCheck(); }
-  onWheel(e) {
-    const delta = e.deltaY || e.wheelDelta || e.detail;
-    this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
-    this.onCheckDebounce();
-  }
-  onKeyDown(e) {
-    switch (e.key) {
-      case 'ArrowRight': e.preventDefault(); this.scroll.target += this.scrollSpeed * 5; this.onCheckDebounce(); break;
-      case 'ArrowLeft':  e.preventDefault(); this.scroll.target -= this.scrollSpeed * 5; this.onCheckDebounce(); break;
-      case 'Home':       e.preventDefault(); this.scroll.target = 0; this.onCheckDebounce(); break;
-      default: break;
-    }
-  }
-  onCheck() {
-    if (!this.medias || !this.medias[0]) return;
-    const width = this.medias[0].width;
-    const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
-    const item = width * itemIndex;
-    this.scroll.target = this.scroll.target < 0 ? -item : item;
-  }
-  onResize() {
-    this.screen = { width: this.container.clientWidth, height: this.container.clientHeight };
-    this.renderer.setSize(this.screen.width, this.screen.height);
-    this.camera.perspective({ aspect: this.screen.width / this.screen.height });
-    const fov = (this.camera.fov * Math.PI) / 180;
-    const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
-    const width = height * this.camera.aspect;
-    this.viewport = { width, height };
-    if (this.medias) {
-      this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
-    }
-  }
-  update() {
-    this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
-    const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
-    if (this.medias) {
-      this.medias.forEach(media => media.update(this.scroll, direction));
-    }
-    this.renderer.render({ scene: this.scene, camera: this.camera });
-    this.scroll.last = this.scroll.current;
-    this.raf = window.requestAnimationFrame(this.update.bind(this));
-  }
-  addEventListeners() {
-    this.boundOnResize = this.onResize.bind(this);
-    this.boundOnWheel = this.onWheel.bind(this);
-    this.boundOnTouchDown = this.onTouchDown.bind(this);
-    this.boundOnTouchMove = this.onTouchMove.bind(this);
-    this.boundOnTouchUp = this.onTouchUp.bind(this);
-    this.boundOnKeyDown = this.onKeyDown.bind(this);
-    window.addEventListener('resize', this.boundOnResize);
-    window.addEventListener('mousewheel', this.boundOnWheel);
-    window.addEventListener('wheel', this.boundOnWheel);
-    window.addEventListener('mousedown', this.boundOnTouchDown);
-    window.addEventListener('mousemove', this.boundOnTouchMove);
-    window.addEventListener('mouseup', this.boundOnTouchUp);
-    window.addEventListener('touchstart', this.boundOnTouchDown);
-    window.addEventListener('touchmove', this.boundOnTouchMove);
-    window.addEventListener('touchend', this.boundOnTouchUp);
-    this.container?.addEventListener('keydown', this.boundOnKeyDown);
-  }
-  destroy() {
-    window.cancelAnimationFrame(this.raf);
-    window.removeEventListener('resize', this.boundOnResize);
-    window.removeEventListener('mousewheel', this.boundOnWheel);
-    window.removeEventListener('wheel', this.boundOnWheel);
-    window.removeEventListener('mousedown', this.boundOnTouchDown);
-    window.removeEventListener('mousemove', this.boundOnTouchMove);
-    window.removeEventListener('mouseup', this.boundOnTouchUp);
-    window.removeEventListener('touchstart', this.boundOnTouchDown);
-    window.removeEventListener('touchmove', this.boundOnTouchMove);
-    window.removeEventListener('touchend', this.boundOnTouchUp);
-    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
-      this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
-    }
-    if (this.container) {
-      this.container.removeEventListener('keydown', this.boundOnKeyDown);
-    }
-  }
-}
 
-// ── Galeriyi başlat ──
-const container = document.getElementById('gallery-container');
-if (container) {
-  // İsteğe bağlı olarak özel görseller ve metinler tanımlayabilirsiniz:
-  // const customItems = [ { image: 'url1', text: 'Açıklama' }, ... ];
-  // new App(container, { items: customItems, bend: 3, textColor: '#fff', ... });
+    /* ── BAR HEIGHTS ── */
+    const bars = document.querySelectorAll('.pm-bar-chart span');
+    const heights = [40, 60, 45, 80, 65, 90, 100];
+    bars.forEach((b, i) => b.style.height = heights[i] + '%');
+  </script>
 
-  new App(container, {
-    bend: 3,
-    textColor: '#f0f4ff',
-    borderRadius: 0.05,
-    font: 'bold 30px Figtree',
-    scrollSpeed: 2,
-    scrollEase: 0.05
-  });
-}
-</script>
+  <!-- ─── GALERİ JAVASCRIPT (CircularGallery) ─── -->
+  <script type="importmap">
+    {
+      "imports": {
+        "ogl": "https://unpkg.com/ogl@0.0.41/dist/ogl.mjs"
+      }
+    }
+  </script>
+  <script type="module">
+    import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
+
+    // ── Yardımcı fonksiyonlar ──
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+    function lerp(p1, p2, t) { return p1 + (p2 - p1) * t; }
+
+    function autoBind(instance) {
+      const proto = Object.getPrototypeOf(instance);
+      Object.getOwnPropertyNames(proto).forEach(key => {
+        if (key !== 'constructor' && typeof instance[key] === 'function') {
+          instance[key] = instance[key].bind(instance);
+        }
+      });
+    }
+
+    const DEFAULT_FONT = 'bold 30px Figtree';
+    const DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap';
+
+    function deriveFontFamilyFromUrl(url) {
+      const fileName = (url.split('/').pop() || 'custom-font').split('?')[0];
+      const base = fileName.replace(/\.(woff2?|ttf|otf|eot)$/i, '');
+      return base.replace(/[^a-zA-Z0-9-_ ]/g, '').trim() || 'CircularGalleryFont';
+    }
+
+    async function loadFontFromStylesheet(url) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Failed to fetch font stylesheet (${response.status})`);
+      const cssText = await response.text();
+      const faceBlocks = cssText.match(/@font-face\s*{[^}]*}/g) || [];
+      let family = null;
+      const fontFaces = [];
+      for (const block of faceBlocks) {
+        const familyMatch = block.match(/font-family:\s*['"]?([^;'"]+)['"]?/);
+        const urlMatch = block.match(/url\(\s*['"]?([^'")]+)['"]?\s*\)/);
+        if (!familyMatch || !urlMatch) continue;
+        family = familyMatch[1].trim();
+        const descriptors = {};
+        const weightMatch = block.match(/font-weight:\s*([^;]+);/);
+        const styleMatch = block.match(/font-style:\s*([^;]+);/);
+        const rangeMatch = block.match(/unicode-range:\s*([^;]+);/);
+        if (weightMatch) descriptors.weight = weightMatch[1].trim();
+        if (styleMatch) descriptors.style = styleMatch[1].trim();
+        if (rangeMatch) descriptors.unicodeRange = rangeMatch[1].trim();
+        fontFaces.push(new FontFace(family, `url(${urlMatch[1]})`, descriptors));
+      }
+      if (!family) throw new Error('No @font-face rule found in the stylesheet');
+      await Promise.allSettled(
+        fontFaces.map(async face => {
+          await face.load();
+          document.fonts.add(face);
+        })
+      );
+      return family;
+    }
+
+    async function loadFontFromFile(url) {
+      const family = deriveFontFamilyFromUrl(url);
+      const fontFace = new FontFace(family, `url(${url})`);
+      await fontFace.load();
+      document.fonts.add(fontFace);
+      return family;
+    }
+
+    async function loadCustomFont(fontUrl) {
+      const isStylesheet = fontUrl.includes('fonts.googleapis.com') || /\.css(\?.*)?$/i.test(fontUrl);
+      return isStylesheet ? loadFontFromStylesheet(fontUrl) : loadFontFromFile(fontUrl);
+    }
+
+    async function resolveFont(font, fontUrl) {
+      const effectiveUrl = fontUrl || (font === DEFAULT_FONT ? DEFAULT_FONT_URL : null);
+      if (!effectiveUrl) {
+        if (document.fonts && document.fonts.load) {
+          try { await document.fonts.load(font);
+            await document.fonts.ready; } catch {}
+        }
+        return font;
+      }
+      try {
+        const family = await loadCustomFont(effectiveUrl);
+        const sizeMatch = font.match(/^\s*(.*?\d+px)/);
+        const prefix = sizeMatch ? sizeMatch[1].trim() : 'bold 30px';
+        const resolved = `${prefix} "${family}"`;
+        if (document.fonts && document.fonts.load) {
+          try { await document.fonts.load(resolved); } catch {}
+        }
+        return resolved;
+      } catch (error) {
+        console.error('CircularGallery: unable to load font from', fontUrl, error);
+        return font;
+      }
+    }
+
+    function getFontSize(font) {
+      const match = font.match(/(\d+)px/);
+      return match ? parseInt(match[1], 10) : 30;
+    }
+
+    function createTextTexture(gl, text, font = 'bold 30px monospace', color = 'black') {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      context.font = font;
+      const metrics = context.measureText(text);
+      const textWidth = Math.ceil(metrics.width);
+      const textHeight = Math.ceil(getFontSize(font) * 1.2);
+      canvas.width = textWidth + 20;
+      canvas.height = textHeight + 20;
+      context.font = font;
+      context.fillStyle = color;
+      context.textBaseline = 'middle';
+      context.textAlign = 'center';
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillText(text, canvas.width / 2, canvas.height / 2);
+      const texture = new Texture(gl, { generateMipmaps: false });
+      texture.image = canvas;
+      return { texture, width: canvas.width, height: canvas.height };
+    }
+
+    // ── Title ──
+    class Title {
+      constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }) {
+        autoBind(this);
+        this.gl = gl;
+        this.plane = plane;
+        this.renderer = renderer;
+        this.text = text;
+        this.textColor = textColor;
+        this.font = font;
+        this.createMesh();
+      }
+      createMesh() {
+        const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
+        const geometry = new Plane(this.gl);
+        const program = new Program(this.gl, {
+          vertex: `
+            attribute vec3 position;
+            attribute vec2 uv;
+            uniform mat4 modelViewMatrix;
+            uniform mat4 projectionMatrix;
+            varying vec2 vUv;
+            void main() {
+              vUv = uv;
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+          `,
+          fragment: `
+            precision highp float;
+            uniform sampler2D tMap;
+            varying vec2 vUv;
+            void main() {
+              vec4 color = texture2D(tMap, vUv);
+              if (color.a < 0.1) discard;
+              gl_FragColor = color;
+            }
+          `,
+          uniforms: { tMap: { value: texture } },
+          transparent: true
+        });
+        this.mesh = new Mesh(this.gl, { geometry, program });
+        const aspect = width / height;
+        const textHeight = this.plane.scale.y * 0.15;
+        const textWidth = textHeight * aspect;
+        this.mesh.scale.set(textWidth, textHeight, 1);
+        this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
+        this.mesh.setParent(this.plane);
+      }
+    }
+
+    // ── Media ──
+    class Media {
+      constructor({
+        geometry,
+        gl,
+        image,
+        index,
+        length,
+        renderer,
+        scene,
+        screen,
+        text,
+        viewport,
+        bend,
+        textColor,
+        borderRadius = 0,
+        font
+      }) {
+        this.extra = 0;
+        this.geometry = geometry;
+        this.gl = gl;
+        this.image = image;
+        this.index = index;
+        this.length = length;
+        this.renderer = renderer;
+        this.scene = scene;
+        this.screen = screen;
+        this.text = text;
+        this.viewport = viewport;
+        this.bend = bend;
+        this.textColor = textColor;
+        this.borderRadius = borderRadius;
+        this.font = font;
+        this.createShader();
+        this.createMesh();
+        this.createTitle();
+        this.onResize();
+      }
+      createShader() {
+        const texture = new Texture(this.gl, { generateMipmaps: true });
+        this.program = new Program(this.gl, {
+          depthTest: false,
+          depthWrite: false,
+          vertex: `
+            precision highp float;
+            attribute vec3 position;
+            attribute vec2 uv;
+            uniform mat4 modelViewMatrix;
+            uniform mat4 projectionMatrix;
+            uniform float uTime;
+            uniform float uSpeed;
+            varying vec2 vUv;
+            void main() {
+              vUv = uv;
+              vec3 p = position;
+              p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+            }
+          `,
+          fragment: `
+            precision highp float;
+            uniform vec2 uImageSizes;
+            uniform vec2 uPlaneSizes;
+            uniform sampler2D tMap;
+            uniform float uBorderRadius;
+            varying vec2 vUv;
+            
+            float roundedBoxSDF(vec2 p, vec2 b, float r) {
+              vec2 d = abs(p) - b;
+              return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
+            }
+            
+            void main() {
+              vec2 ratio = vec2(
+                min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
+                min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
+              );
+              vec2 uv = vec2(
+                vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+                vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
+              );
+              vec4 color = texture2D(tMap, uv);
+              
+              float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
+              float edgeSmooth = 0.002;
+              float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
+              
+              gl_FragColor = vec4(color.rgb, alpha);
+            }
+          `,
+          uniforms: {
+            tMap: { value: texture },
+            uPlaneSizes: { value: [0, 0] },
+            uImageSizes: { value: [0, 0] },
+            uSpeed: { value: 0 },
+            uTime: { value: 100 * Math.random() },
+            uBorderRadius: { value: this.borderRadius }
+          },
+          transparent: true
+        });
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = this.image;
+        img.onload = () => {
+          texture.image = img;
+          this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
+        };
+      }
+      createMesh() {
+        this.plane = new Mesh(this.gl, { geometry: this.geometry, program: this.program });
+        this.plane.setParent(this.scene);
+      }
+      createTitle() {
+        this.title = new Title({
+          gl: this.gl,
+          plane: this.plane,
+          renderer: this.renderer,
+          text: this.text,
+          textColor: this.textColor,
+          font: this.font
+        });
+      }
+      update(scroll, direction) {
+        this.plane.position.x = this.x - scroll.current - this.extra;
+        const x = this.plane.position.x;
+        const H = this.viewport.width / 2;
+        if (this.bend === 0) {
+          this.plane.position.y = 0;
+          this.plane.rotation.z = 0;
+        } else {
+          const B_abs = Math.abs(this.bend);
+          const R = (H * H + B_abs * B_abs) / (2 * B_abs);
+          const effectiveX = Math.min(Math.abs(x), H);
+          const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
+          if (this.bend > 0) {
+            this.plane.position.y = -arc;
+            this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
+          } else {
+            this.plane.position.y = arc;
+            this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
+          }
+        }
+        this.speed = scroll.current - scroll.last;
+        this.program.uniforms.uTime.value += 0.04;
+        this.program.uniforms.uSpeed.value = this.speed;
+        const planeOffset = this.plane.scale.x / 2;
+        const viewportOffset = this.viewport.width / 2;
+        this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
+        this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
+        if (direction === 'right' && this.isBefore) {
+          this.extra -= this.widthTotal;
+          this.isBefore = this.isAfter = false;
+        }
+        if (direction === 'left' && this.isAfter) {
+          this.extra += this.widthTotal;
+          this.isBefore = this.isAfter = false;
+        }
+      }
+      onResize({ screen, viewport } = {}) {
+        if (screen) this.screen = screen;
+        if (viewport) {
+          this.viewport = viewport;
+          if (this.plane.program.uniforms.uViewportSizes) {
+            this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
+          }
+        }
+        this.scale = this.screen.height / 1500;
+        this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
+        this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+        this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
+        this.padding = 2;
+        this.width = this.plane.scale.x + this.padding;
+        this.widthTotal = this.width * this.length;
+        this.x = this.width * this.index;
+      }
+    }
+
+    // ── App ──
+    class App {
+      constructor(
+        container, {
+          items,
+          bend,
+          textColor = '#ffffff',
+          borderRadius = 0,
+          font = 'bold 30px Figtree',
+          scrollSpeed = 2,
+          scrollEase = 0.05
+        } = {}
+      ) {
+        document.documentElement.classList.remove('no-js');
+        this.container = container;
+        this.scrollSpeed = scrollSpeed;
+        this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
+        this.onCheckDebounce = debounce(this.onCheck, 200);
+        this.createRenderer();
+        this.createCamera();
+        this.createScene();
+        this.onResize();
+        this.createGeometry();
+        this.createMedias(items, bend, textColor, borderRadius, font);
+        this.update();
+        this.addEventListeners();
+      }
+      createRenderer() {
+        this.renderer = new Renderer({
+          alpha: true,
+          antialias: true,
+          dpr: Math.min(window.devicePixelRatio || 1, 2)
+        });
+        this.gl = this.renderer.gl;
+        this.gl.clearColor(0, 0, 0, 0);
+        this.container.appendChild(this.gl.canvas);
+      }
+      createCamera() {
+        this.camera = new Camera(this.gl);
+        this.camera.fov = 45;
+        this.camera.position.z = 20;
+      }
+      createScene() { this.scene = new Transform(); }
+      createGeometry() {
+        this.planeGeometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
+      }
+      createMedias(items, bend = 1, textColor, borderRadius, font) {
+        const defaultItems = [
+          { image: 'https://picsum.photos/seed/1/800/600?grayscale', text: 'Bridge' },
+          { image: 'https://picsum.photos/seed/2/800/600?grayscale', text: 'Desk Setup' },
+          { image: 'https://picsum.photos/seed/3/800/600?grayscale', text: 'Waterfall' },
+          { image: 'https://picsum.photos/seed/4/800/600?grayscale', text: 'Strawberries' },
+          { image: 'https://picsum.photos/seed/5/800/600?grayscale', text: 'Deep Diving' },
+          { image: 'https://picsum.photos/seed/16/800/600?grayscale', text: 'Train Track' },
+          { image: 'https://picsum.photos/seed/17/800/600?grayscale', text: 'Santorini' },
+          { image: 'https://picsum.photos/seed/8/800/600?grayscale', text: 'Blurry Lights' },
+          { image: 'https://picsum.photos/seed/9/800/600?grayscale', text: 'New York' },
+          { image: 'https://picsum.photos/seed/10/800/600?grayscale', text: 'Good Boy' },
+          { image: 'https://picsum.photos/seed/21/800/600?grayscale', text: 'Coastline' },
+          { image: 'https://picsum.photos/seed/12/800/600?grayscale', text: 'Palm Trees' }
+        ];
+        const galleryItems = items && items.length ? items : defaultItems;
+        this.mediasImages = galleryItems.concat(galleryItems);
+        this.medias = this.mediasImages.map((data, index) => {
+          return new Media({
+            geometry: this.planeGeometry,
+            gl: this.gl,
+            image: data.image,
+            index,
+            length: this.mediasImages.length,
+            renderer: this.renderer,
+            scene: this.scene,
+            screen: this.screen,
+            text: data.text,
+            viewport: this.viewport,
+            bend,
+            textColor,
+            borderRadius,
+            font
+          });
+        });
+      }
+      onTouchDown(e) {
+        this.isDown = true;
+        this.scroll.position = this.scroll.current;
+        this.start = e.touches ? e.touches[0].clientX : e.clientX;
+      }
+      onTouchMove(e) {
+        if (!this.isDown) return;
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const distance = (this.start - x) * (this.scrollSpeed * 0.025);
+        this.scroll.target = this.scroll.position + distance;
+      }
+      onTouchUp() { this.isDown = false;
+        this.onCheck(); }
+      onWheel(e) {
+        const delta = e.deltaY || e.wheelDelta || e.detail;
+        this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+        this.onCheckDebounce();
+      }
+      onKeyDown(e) {
+        switch (e.key) {
+          case 'ArrowRight':
+            e.preventDefault();
+            this.scroll.target += this.scrollSpeed * 5;
+            this.onCheckDebounce();
+            break;
+          case 'ArrowLeft':
+            e.preventDefault();
+            this.scroll.target -= this.scrollSpeed * 5;
+            this.onCheckDebounce();
+            break;
+          case 'Home':
+            e.preventDefault();
+            this.scroll.target = 0;
+            this.onCheckDebounce();
+            break;
+          default:
+            break;
+        }
+      }
+      onCheck() {
+        if (!this.medias || !this.medias[0]) return;
+        const width = this.medias[0].width;
+        const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
+        const item = width * itemIndex;
+        this.scroll.target = this.scroll.target < 0 ? -item : item;
+      }
+      onResize() {
+        this.screen = { width: this.container.clientWidth, height: this.container.clientHeight };
+        this.renderer.setSize(this.screen.width, this.screen.height);
+        this.camera.perspective({ aspect: this.screen.width / this.screen.height });
+        const fov = (this.camera.fov * Math.PI) / 180;
+        const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
+        const width = height * this.camera.aspect;
+        this.viewport = { width, height };
+        if (this.medias) {
+          this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
+        }
+      }
+      update() {
+        this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
+        const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
+        if (this.medias) {
+          this.medias.forEach(media => media.update(this.scroll, direction));
+        }
+        this.renderer.render({ scene: this.scene, camera: this.camera });
+        this.scroll.last = this.scroll.current;
+        this.raf = window.requestAnimationFrame(this.update.bind(this));
+      }
+      addEventListeners() {
+        this.boundOnResize = this.onResize.bind(this);
+        this.boundOnWheel = this.onWheel.bind(this);
+        this.boundOnTouchDown = this.onTouchDown.bind(this);
+        this.boundOnTouchMove = this.onTouchMove.bind(this);
+        this.boundOnTouchUp = this.onTouchUp.bind(this);
+        this.boundOnKeyDown = this.onKeyDown.bind(this);
+        window.addEventListener('resize', this.boundOnResize);
+        window.addEventListener('mousewheel', this.boundOnWheel);
+        window.addEventListener('wheel', this.boundOnWheel);
+        window.addEventListener('mousedown', this.boundOnTouchDown);
+        window.addEventListener('mousemove', this.boundOnTouchMove);
+        window.addEventListener('mouseup', this.boundOnTouchUp);
+        window.addEventListener('touchstart', this.boundOnTouchDown);
+        window.addEventListener('touchmove', this.boundOnTouchMove);
+        window.addEventListener('touchend', this.boundOnTouchUp);
+        this.container?.addEventListener('keydown', this.boundOnKeyDown);
+      }
+      destroy() {
+        window.cancelAnimationFrame(this.raf);
+        window.removeEventListener('resize', this.boundOnResize);
+        window.removeEventListener('mousewheel', this.boundOnWheel);
+        window.removeEventListener('wheel', this.boundOnWheel);
+        window.removeEventListener('mousedown', this.boundOnTouchDown);
+        window.removeEventListener('mousemove', this.boundOnTouchMove);
+        window.removeEventListener('mouseup', this.boundOnTouchUp);
+        window.removeEventListener('touchstart', this.boundOnTouchDown);
+        window.removeEventListener('touchmove', this.boundOnTouchMove);
+        window.removeEventListener('touchend', this.boundOnTouchUp);
+        if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
+          this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+        }
+        if (this.container) {
+          this.container.removeEventListener('keydown', this.boundOnKeyDown);
+        }
+      }
+    }
+
+    // ── Galeriyi Başlat ──
+    const container = document.getElementById('gallery-container');
+    if (container) {
+      // Özel görseller eklemek isterseniz aşağıdaki items dizisini güncelleyin.
+      // const customItems = [ { image: 'https://...', text: 'Açıklama' }, ... ];
+      // new App(container, { items: customItems, ... });
+
+      new App(container, {
+        bend: 3,
+        textColor: '#f0f4ff',
+        borderRadius: 0.05,
+        font: 'bold 30px Figtree',
+        scrollSpeed: 2,
+        scrollEase: 0.05
+      });
+    }
+  </script>
 
 </body>
 </html>
