@@ -6,7 +6,7 @@
   <title>ALPİ — Geleceği Birlikte İnşa Ediyoruz</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ── TÜM STILLER (güncellendi) ── */
+    /* ── TÜM STILLER (kartlar eski haline döndü) ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #060b18; --bg2: #0a1020; --violet: #7c3aed; --violet2: #a855f7;
@@ -23,20 +23,21 @@
       min-height: 100vh;
     }
 
-    /* DarkVeil arka planı – fixed, tüm ekran */
-    #darkveil-container {
+    /* ── SIVI ARKA PLAN (LiquidEther benzeri) ── */
+    #liquid-bg {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
+      background: #060b18; /* fallback */
     }
-    #darkveil-container canvas {
+    #liquid-bg canvas {
       display: block;
       width: 100% !important;
       height: 100% !important;
     }
 
-    /* NAV */
+    /* NAV (değişmedi) */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -150,7 +151,7 @@
     }
     .stat-label { font-size: .78rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-top: .2rem; }
 
-    /* ── GENEL BÖLÜM ── */
+    /* ── BÖLÜMLER ── */
     section { position: relative; z-index: 2; }
     .section-label {
       display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
@@ -162,13 +163,13 @@
     }
     .section-sub { color: var(--muted); max-width: 520px; line-height: 1.7; margin-top: .85rem; }
 
-    /* ── HİZMETLER (MAGIC BENTO) – GÜNCELLENDİ ── */
+    /* ── HİZMETLER (ESKİ HALİ) ── */
     #services { padding: 6rem 2rem; }
     .services-header { text-align: center; margin-bottom: 3rem; }
     .services-header .section-sub { margin: .85rem auto 0; }
     .bento-section { position: relative; user-select: none; }
     .card-grid {
-      display: grid; gap: 1rem; padding: 0.75em;
+      display: grid; gap: 0.65em; padding: 0.75em;
       max-width: 62em; margin: 0 auto; font-size: clamp(1rem, 0.9rem + 0.4vw, 1.4rem);
     }
     @media(min-width:600px) { .card-grid { grid-template-columns: repeat(2,1fr); } }
@@ -180,6 +181,7 @@
     }
     @media(max-width:599px) { .card-grid { grid-template-columns:1fr; width:92%; margin:0 auto; padding:.5em; } }
 
+    /* Eski kart stilleri – opak, koyu arka plan, no glass */
     .magic-bento-card {
       display: flex;
       flex-direction: column;
@@ -188,14 +190,10 @@
       aspect-ratio: 4/3;
       min-height: 200px;
       width: 100%;
-      padding: 1.6em 1.4em;
+      padding: 1.4em;
       border-radius: 20px;
-      /* 🧊 Glassmorphism – yarı saydam, buzlu cam efekti */
-      background: rgba(13, 16, 32, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      background: #0d1020; /* opak koyu */
       overflow: hidden;
       transition: all 0.3s ease;
       cursor: default;
@@ -206,9 +204,8 @@
       --glow-color: 124,58,237;
     }
     .magic-bento-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 30px rgba(124,58,237,0.15);
-      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
     }
 
     .magic-bento-card__header {
@@ -219,7 +216,7 @@
       color: var(--white);
     }
     .magic-bento-card__label {
-      font-size: .65em;
+      font-size: .7em;
       font-weight: 700;
       letter-spacing: .1em;
       text-transform: uppercase;
@@ -230,59 +227,56 @@
       background: rgba(255,255,255,.04);
     }
     .bento-icon {
-      width: 2.6em;
-      height: 2.6em;
+      width: 2.4em;
+      height: 2.4em;
       border-radius: .7em;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1em;
+      font-size: 1.2em;
       flex-shrink: 0;
-      background: rgba(255,255,255,0.06);
     }
     .magic-bento-card__content {
       display: flex;
       flex-direction: column;
       position: relative;
       color: var(--white);
-      margin-top: 0.5rem;
     }
     .magic-bento-card__title {
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
-      font-size: 1.3em;
-      margin: 0 0 0.2em;
+      font-size: 1.2em;
+      margin: 0 0 .3em;
       color: #f0f4ff;
-      letter-spacing: -0.01em;
     }
     .magic-bento-card__description {
       font-size: .78em;
-      line-height: 1.6;
-      color: rgba(200,210,255,0.65);
+      line-height: 1.55;
+      color: rgba(200,210,255,.6);
     }
     .bento-tag {
       display: inline-block;
       margin-top: .7em;
-      padding: .25em .7em;
+      padding: .2em .65em;
       border-radius: 2em;
       background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      font-size: .6em;
+      border: 1px solid rgba(255,255,255,.07);
+      font-size: .65em;
       font-weight: 600;
       letter-spacing: .07em;
-      color: rgba(200,210,255,0.5);
+      color: rgba(200,210,255,.5);
     }
 
-    /* Glow border (güncellendi) */
+    /* Glow border (eski) */
     .magic-bento-card--border-glow::after {
       content: '';
       position: absolute;
       inset: 0;
-      padding: 4px;
+      padding: 6px;
       background: radial-gradient(
         var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-        rgba(var(--glow-color), calc(var(--glow-intensity) * 0.8)) 0%,
-        rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3)) 30%,
+        rgba(var(--glow-color), calc(var(--glow-intensity) * 0.85)) 0%,
+        rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 30%,
         transparent 60%
       );
       border-radius: inherit;
@@ -292,25 +286,28 @@
       mask-composite: exclude;
       pointer-events: none;
       z-index: 1;
-      transition: opacity 0.3s;
     }
-    .magic-bento-card--border-glow:hover::after {
-      opacity: 1;
+    .magic-bento-card--border-glow:hover {
+      box-shadow: 0 4px 24px rgba(46,24,78,.5), 0 0 40px rgba(var(--glow-color),.15);
     }
 
-    /* Blob'lar (hafifçe soluk) */
+    .particle-container { position: relative; overflow: hidden; }
+    .particle-container:hover {
+      box-shadow: 0 4px 24px rgba(46,24,78,.3), 0 0 30px rgba(var(--glow-color),.12);
+    }
+
+    .global-spotlight { mix-blend-mode: screen; will-change: transform, opacity; z-index: 200 !important; pointer-events: none; }
+
     .magic-bento-card .blob {
       position: absolute;
       border-radius: 50%;
       filter: blur(55px);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.3;
-      transition: transform 0.6s ease;
+      opacity: .55;
+      transition: transform .6s ease;
     }
-    .magic-bento-card:hover .blob {
-      transform: scale(1.2);
-    }
+    .magic-bento-card:hover .blob { transform: scale(1.3); }
 
     /* ── FEATURES ── */
     #features {
@@ -525,8 +522,8 @@
 </head>
 <body>
 
-  <!-- DARKVEIL ARKA PLAN -->
-  <div id="darkveil-container"></div>
+  <!-- SIVI ARKA PLAN (LiquidEther benzeri) -->
+  <div id="liquid-bg"></div>
 
   <!-- NAV -->
   <nav id="nav">
@@ -561,7 +558,7 @@
     </div>
   </section>
 
-  <!-- SERVICES / MAGIC BENTO (GÜNCELLENDİ) -->
+  <!-- SERVICES (eski haliyle) -->
   <section id="services">
     <div class="services-header">
       <span class="section-label">⬡ Hizmetlerimiz</span>
@@ -572,7 +569,7 @@
 
       <!-- Card 1: UI/UX -->
       <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:124,58,237;">
-        <div class="blob" style="width:180px;height:180px;background:rgba(124,58,237,.15);top:-60px;right:-60px;"></div>
+        <div class="blob" style="width:180px;height:180px;background:rgba(124,58,237,.22);top:-60px;right:-60px;"></div>
         <div class="magic-bento-card__header">
           <span class="magic-bento-card__label">Tasarım</span>
           <div class="bento-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">🎨</div>
@@ -586,7 +583,7 @@
 
       <!-- Card 2: Web Dev -->
       <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:6,182,212;">
-        <div class="blob" style="width:160px;height:160px;background:rgba(6,182,212,.15);top:-50px;left:-50px;"></div>
+        <div class="blob" style="width:160px;height:160px;background:rgba(6,182,212,.2);top:-50px;left:-50px;"></div>
         <div class="magic-bento-card__header">
           <span class="magic-bento-card__label">Geliştirme</span>
           <div class="bento-icon" style="background:linear-gradient(135deg,#06b6d4,#0e7490);">⚡</div>
@@ -600,8 +597,8 @@
 
       <!-- Card 3: AI (span 2x2) -->
       <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:168,85,247;">
-        <div class="blob" style="width:280px;height:280px;background:rgba(168,85,247,.12);bottom:-80px;right:-80px;"></div>
-        <div class="blob" style="width:150px;height:150px;background:rgba(6,182,212,.08);top:-40px;left:30%;"></div>
+        <div class="blob" style="width:280px;height:280px;background:rgba(168,85,247,.18);bottom:-80px;right:-80px;"></div>
+        <div class="blob" style="width:150px;height:150px;background:rgba(6,182,212,.12);top:-40px;left:30%;"></div>
         <div class="magic-bento-card__header">
           <span class="magic-bento-card__label">Yapay Zeka</span>
           <div class="bento-icon" style="background:linear-gradient(135deg,#a855f7,#7c3aed);font-size:1.4em;">🧠</div>
@@ -615,7 +612,7 @@
 
       <!-- Card 4: Mobile (span 2 col) -->
       <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:245,158,11;">
-        <div class="blob" style="width:200px;height:200px;background:rgba(245,158,11,.12);bottom:-60px;right:-40px;"></div>
+        <div class="blob" style="width:200px;height:200px;background:rgba(245,158,11,.18);bottom:-60px;right:-40px;"></div>
         <div class="magic-bento-card__header">
           <span class="magic-bento-card__label">Mobil</span>
           <div class="bento-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">📱</div>
@@ -629,7 +626,7 @@
 
       <!-- Card 5: Marketing -->
       <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:236,72,153;">
-        <div class="blob" style="width:160px;height:160px;background:rgba(236,72,153,.12);top:-50px;right:-30px;"></div>
+        <div class="blob" style="width:160px;height:160px;background:rgba(236,72,153,.2);top:-50px;right:-30px;"></div>
         <div class="magic-bento-card__header">
           <span class="magic-bento-card__label">Pazarlama</span>
           <div class="bento-icon" style="background:linear-gradient(135deg,#ec4899,#be185d);">📈</div>
@@ -643,7 +640,7 @@
 
       <!-- Card 6: Cloud -->
       <div class="magic-bento-card magic-bento-card--border-glow particle-container" style="--glow-color:34,197,94;">
-        <div class="blob" style="width:150px;height:150px;background:rgba(34,197,94,.12);bottom:-50px;left:-30px;"></div>
+        <div class="blob" style="width:150px;height:150px;background:rgba(34,197,94,.2);bottom:-50px;left:-30px;"></div>
         <div class="magic-bento-card__header">
           <span class="magic-bento-card__label">Altyapı</span>
           <div class="bento-icon" style="background:linear-gradient(135deg,#22c55e,#15803d);">☁️</div>
@@ -659,11 +656,129 @@
   </section>
 
   <!-- FEATURES, PROCESS, PRICING, CTA, FOOTER (değişmedi) -->
-  <section id="features"> ... </section>
-  <section id="process"> ... </section>
-  <section id="pricing"> ... </section>
-  <section id="cta"> ... </section>
-  <footer> ... </footer>
+  <section id="features">
+    <div class="features-inner">
+      <div>
+        <span class="section-label">⬡ Neden ALPİ?</span>
+        <h2 class="section-title">Fark Yaratan<br>Yaklaşım</h2>
+        <p class="section-sub">Sadece kod yazmıyor, iş ortağınız oluyoruz. Her projede mükemmelliği hedefleyen bir ekip.</p>
+        <ul class="feature-list" style="margin-top:2rem;">
+          <li class="feature-item"><div class="fi-icon">🎯</div><div><div class="fi-title">Sonuç Odaklı Strateji</div><div class="fi-desc">Her projeyi KPI'larla ölçüyor, ölçülebilir başarı hedefleri belirliyor ve sürekli optimizasyon yapıyoruz.</div></div></li>
+          <li class="feature-item"><div class="fi-icon">⚡</div><div><div class="fi-title">Hızlı Teslimat</div><div class="fi-desc">Agile metodoloji ve sprint bazlı çalışma ile projelerinizi zamanında, hatta öncesinde teslim ediyoruz.</div></div></li>
+          <li class="feature-item"><div class="fi-icon">🔒</div><div><div class="fi-title">Güvenlik & Kalite</div><div class="fi-desc">ISO 27001 standartlarında güvenlik testleri ve kapsamlı QA süreçleri ile hatasız çözümler sunuyoruz.</div></div></li>
+          <li class="feature-item"><div class="fi-icon">🤝</div><div><div class="fi-title">7/24 Destek</div><div class="fi-desc">Proje sonrasında da yanınızdayız. Dedicated support ekibimiz her an yardıma hazır.</div></div></li>
+        </ul>
+      </div>
+      <div class="phone-mock">
+        <div class="pm-bar"><div class="pm-dots"><span></span><span></span><span></span></div><div class="pm-logo">ALPİ Dashboard</div></div>
+        <div class="pm-metric"><div class="pm-metric-label">Aylık Büyüme</div><div class="pm-metric-val" style="background:linear-gradient(135deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+142%</div><div class="pm-bar-chart"><span style="height:40%;animation-delay:.1s"></span><span style="height:60%;animation-delay:.2s"></span><span style="height:45%;animation-delay:.3s"></span><span style="height:80%;animation-delay:.4s"></span><span style="height:65%;animation-delay:.5s"></span><span style="height:90%;animation-delay:.6s"></span><span style="height:100%;animation-delay:.7s"></span></div></div>
+        <div class="pm-metric"><div class="pm-metric-label">Aktif Projeler</div><div class="pm-metric-val">24</div></div>
+        <div class="pm-tags"><span class="pm-tag">React ✦</span><span class="pm-tag">AI/ML ✦</span><span class="pm-tag">Cloud ✦</span><span class="pm-tag">UX ✦</span><span class="pm-tag">Mobile ✦</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="process-header">
+      <span class="section-label">⬡ Çalışma Sürecimiz</span>
+      <h2 class="section-title">Fikrinizden<br>Ürüne Giden Yol</h2>
+      <p class="section-sub" style="margin:0 auto;">Şeffaf ve sistematik bir yaklaşımla her projeyi başarıya taşıyoruz.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">01</div><div class="step-content"><div class="step-title">Keşif & Analiz</div><div class="step-desc">İş hedeflerinizi, hedef kitlenizi ve pazar dinamiklerini derinlemesine analiz ediyoruz. Kapsamlı bir yol haritası oluşturuyoruz.</div></div></div>
+      <div class="process-step"><div class="step-num">02</div><div class="step-content"><div class="step-title">Strateji & Planlama</div><div class="step-desc">Araştırma bulgularına dayalı, ölçülebilir hedefler içeren detaylı bir proje planı hazırlıyoruz. Her adım net ve anlaşılır.</div></div></div>
+      <div class="process-step"><div class="step-num">03</div><div class="step-content"><div class="step-title">Tasarım & Geliştirme</div><div class="step-desc">Yaratıcı ekibimiz wireframe'den final tasarıma, frontend'den backend'e kadar tüm geliştirme sürecini yönetiyor.</div></div></div>
+      <div class="process-step"><div class="step-num">04</div><div class="step-content"><div class="step-title">Test & Optimizasyon</div><div class="step-desc">Kapsamlı kalite testleri, performans optimizasyonu ve kullanıcı testleri ile mükemmel bir ürün çıkarıyoruz.</div></div></div>
+      <div class="process-step"><div class="step-num">05</div><div class="step-content"><div class="step-title">Lansman & Büyüme</div><div class="step-desc">Başarılı lansman sonrasında analitik takibi, sürekli iyileştirme ve büyüme stratejileri ile yanınızda olmaya devam ediyoruz.</div></div></div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="pricing-header">
+      <span class="section-label">⬡ Fiyatlandırma</span>
+      <h2 class="section-title">Her Bütçeye<br>Uygun Paket</h2>
+      <p class="section-sub" style="margin:0 auto;">Şeffaf fiyatlandırma. Gizli ücret yok. İhtiyacınıza göre özelleştirin.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount"><sup>₺</sup>4.990<sub>/ay</sub></div>
+        <div class="price-desc">Küçük işletmeler ve start-up'lar için ideal başlangıç paketi.</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="chk">✦</span> 1 Web Sitesi</li>
+          <li><span class="chk">✦</span> Temel SEO Optimizasyonu</li>
+          <li><span class="chk">✦</span> Aylık 5 İçerik</li>
+          <li><span class="chk">✦</span> E-posta Desteği</li>
+          <li><span class="cross">✗</span> <span style="opacity:.4">Mobil Uygulama</span></li>
+          <li><span class="cross">✗</span> <span style="opacity:.4">AI Entegrasyonu</span></li>
+        </ul>
+        <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Başla →</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">⭐ Popüler</div>
+        <div class="price-tier">Growth</div>
+        <div class="price-amount"><sup>₺</sup>12.990<sub>/ay</sub></div>
+        <div class="price-desc">Büyüyen işletmeler için kapsamlı dijital çözüm paketi.</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="chk">✦</span> 3 Web Sitesi / Uygulama</li>
+          <li><span class="chk">✦</span> Gelişmiş SEO & SEM</li>
+          <li><span class="chk">✦</span> Aylık 20 İçerik</li>
+          <li><span class="chk">✦</span> 24/7 Canlı Destek</li>
+          <li><span class="chk">✦</span> Mobil Uygulama</li>
+          <li><span class="cross">✗</span> <span style="opacity:.4">Özel AI Modeli</span></li>
+        </ul>
+        <a href="#cta" class="btn-primary" style="display:block;text-align:center;width:100%;">Hemen Başla ✦</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-amount" style="font-size:2rem;">Özel<br>Fiyat</div>
+        <div class="price-desc">Kurumsal firmalar için tam kapsamlı, özelleştirilmiş çözümler.</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="chk">✦</span> Sınırsız Proje</li>
+          <li><span class="chk">✦</span> Tam Stack Geliştirme</li>
+          <li><span class="chk">✦</span> Sınırsız İçerik</li>
+          <li><span class="chk">✦</span> Dedicated Ekip</li>
+          <li><span class="chk">✦</span> Mobil Uygulama</li>
+          <li><span class="chk">✦</span> Özel AI Modeli</li>
+        </ul>
+        <a href="#cta" class="btn-ghost" style="display:block;text-align:center;width:100%;">Teklif Al →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta">
+    <div class="cta-glass">
+      <span class="section-label">⬡ Hadi Başlayalım</span>
+      <h2>Projenizi Hayata<br>Geçirmeye Hazır mısınız?</h2>
+      <p>Ücretsiz danışma görüşmemizde iş hedeflerinizi konuşalım ve size özel bir yol haritası çizelim. İlk adım bizden!</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="mailto:merhaba@alpi.com.tr" class="btn-primary">📧 Bizimle İletişime Geç</a>
+        <a href="tel:+905001234567" class="btn-ghost">📞 Hemen Ara</a>
+      </div>
+      <p style="margin-top:1.5rem;font-size:.8rem;color:var(--muted);">Yanıt süremiz ortalama 2 saat ✦ Ücretsiz konsültasyon ✦ Taahhüt yok</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">ALPİ</div>
+    <ul class="footer-links">
+      <li><a href="#services">Hizmetler</a></li>
+      <li><a href="#process">Süreç</a></li>
+      <li><a href="#pricing">Fiyatlar</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Kariyer</a></li>
+    </ul>
+    <div class="social-links">
+      <a class="soc-btn" href="#" title="LinkedIn">💼</a>
+      <a class="soc-btn" href="#" title="Twitter/X">🐦</a>
+      <a class="soc-btn" href="#" title="Instagram">📸</a>
+      <a class="soc-btn" href="#" title="GitHub">⚡</a>
+    </div>
+    <div class="footer-copy">© 2024 ALPİ Dijital Ajans — Tüm hakları saklıdır.</div>
+  </footer>
 
   <!-- ─── JAVASCRIPT ─── -->
   <script>
@@ -711,7 +826,7 @@
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    /* ── MAGIC BENTO SPOTLIGHT + PARTICLE ── */
+    /* ── MAGIC BENTO SPOTLIGHT + PARTICLE (eski) ── */
     (function() {
       const GLOW = '124, 58, 237';
       const SPOTLIGHT_R = 320;
@@ -856,114 +971,98 @@
     bars.forEach((b, i) => b.style.height = heights[i] + '%');
   </script>
 
-  <!-- ─── DARKVEIL (OGL) ─── -->
+  <!-- ─── SIVI ARKA PLAN (Three.js) ─── -->
   <script type="importmap">
-    { "imports": { "ogl": "https://unpkg.com/ogl@0.0.41/dist/ogl.mjs" } }
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
   </script>
   <script type="module">
-    import { Renderer, Program, Mesh, Triangle, Vec2 } from 'ogl';
+    import * as THREE from 'three';
 
-    const vertex = `
-      attribute vec2 position;
-      void main(){ gl_Position = vec4(position, 0.0, 1.0); }
+    // Basit bir sıvı efekti – dalgalı renk geçişleri
+    const container = document.getElementById('liquid-bg');
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const uniforms = {
+      uTime: { value: 0 },
+      uResolution: { value: new THREE.Vector2() }
+    };
+
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
     `;
 
-    const fragment = `
-      #ifdef GL_ES
-      precision lowp float;
-      #endif
+    const fragmentShader = `
+      precision highp float;
+      varying vec2 vUv;
       uniform vec2 uResolution;
       uniform float uTime;
-      uniform float uHueShift;
-      uniform float uNoise;
-      uniform float uScan;
-      uniform float uScanFreq;
-      uniform float uWarp;
-      #define iTime uTime
-      #define iResolution uResolution
 
-      vec4 buf[8];
-      float rand(vec2 c){ return fract(sin(dot(c, vec2(12.9898,78.233)))*43758.5453); }
+      void main() {
+        vec2 uv = vUv;
+        // Dalgalı hareket
+        float wave1 = sin(uv.x * 12.0 + uTime * 0.8) * cos(uv.y * 10.0 + uTime * 0.6) * 0.5 + 0.5;
+        float wave2 = sin(uv.y * 14.0 - uTime * 0.7) * cos(uv.x * 9.0 + uTime * 0.9) * 0.5 + 0.5;
+        float wave3 = sin((uv.x + uv.y) * 18.0 + uTime * 1.2) * 0.5 + 0.5;
 
-      mat3 rgb2yiq = mat3(0.299,0.587,0.114, 0.596,-0.274,-0.322, 0.211,-0.523,0.312);
-      mat3 yiq2rgb = mat3(1.0,0.956,0.621, 1.0,-0.272,-0.647, 1.0,-1.106,1.703);
+        // Renkler (LiquidEther benzeri mor-pembe-mavi)
+        vec3 c1 = vec3(0.32, 0.15, 1.0); // mor
+        vec3 c2 = vec3(1.0, 0.62, 0.99); // pembe
+        vec3 c3 = vec3(0.70, 0.58, 0.81); // lavanta
 
-      vec3 hueShiftRGB(vec3 col, float deg){
-        vec3 yiq = rgb2yiq * col;
-        float rad = radians(deg);
-        float cosh = cos(rad), sinh = sin(rad);
-        vec3 yiqShift = vec3(yiq.x, yiq.y*cosh - yiq.z*sinh, yiq.y*sinh + yiq.z*cosh);
-        return clamp(yiq2rgb * yiqShift, 0.0, 1.0);
-      }
-
-      vec4 sigmoid(vec4 x){ return 1./(1. + exp(-x)); }
-
-      vec4 cppn_fn(vec2 coordinate, float in0, float in1, float in2){
-        // ... (shader kodu aynen devam eder, uzunluk nedeniyle kısaltıldı, ama tam çalışır)
-        // Buraya shader'ın tamamını koymanız gerekir. Ben burada kısaltıyorum ama kodun tamamını kullanın.
-      }
-
-      void mainImage(out vec4 fragColor, in vec2 fragCoord){
-        vec2 uv = fragCoord / uResolution.xy * 2. - 1.;
-        uv.y *= -1.;
-        uv += uWarp * vec2(sin(uv.y * 6.283 + uTime * 0.5), cos(uv.x * 6.283 + uTime * 0.5)) * 0.05;
-        fragColor = cppn_fn(uv, 0.1*sin(0.3*uTime), 0.1*sin(0.69*uTime), 0.1*sin(0.44*uTime));
-      }
-
-      void main(){
-        vec4 col;
-        mainImage(col, gl_FragCoord.xy);
-        col.rgb = hueShiftRGB(col.rgb, uHueShift);
-        float scanline_val = sin(gl_FragCoord.y * uScanFreq) * 0.5 + 0.5;
-        col.rgb *= 1. - (scanline_val * scanline_val) * uScan;
-        col.rgb += (rand(gl_FragCoord.xy + uTime) - 0.5) * uNoise;
-        gl_FragColor = vec4(clamp(col.rgb, 0.0, 1.0), 1.0);
+        float mixVal = (wave1 * 0.6 + wave2 * 0.3 + wave3 * 0.1);
+        vec3 color = mix(mix(c1, c2, mixVal), c3, sin(uTime * 0.3) * 0.2 + 0.5);
+        // Hafif parlaklık ve doygunluk
+        color = pow(color, vec3(1.2));
+        float alpha = 0.85;
+        gl_FragColor = vec4(color, alpha);
       }
     `;
 
-    const container = document.getElementById('darkveil-container');
-    if (container) {
-      const renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio, 2) });
-      const gl = renderer.gl;
-      const geometry = new Triangle(gl);
-      const program = new Program(gl, {
-        vertex,
-        fragment,
-        uniforms: {
-          uTime: { value: 0 },
-          uResolution: { value: new Vec2() },
-          uHueShift: { value: 0 },
-          uNoise: { value: 0 },
-          uScan: { value: 0 },
-          uScanFreq: { value: 0 },
-          uWarp: { value: 0 }
-        }
-      });
-      const mesh = new Mesh(gl, { geometry, program });
-      container.appendChild(gl.canvas);
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms,
+      transparent: true,
+      depthWrite: false
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 
-      const resize = () => {
-        const w = container.clientWidth, h = container.clientHeight;
-        renderer.setSize(w, h);
-        program.uniforms.uResolution.value.set(w, h);
-      };
-      window.addEventListener('resize', resize);
-      resize();
-
-      const start = performance.now();
-      let frame;
-      const loop = () => {
-        program.uniforms.uTime.value = (performance.now() - start) / 1000 * 0.5;
-        renderer.render({ scene: mesh });
-        frame = requestAnimationFrame(loop);
-      };
-      loop();
-
-      window.addEventListener('beforeunload', () => {
-        cancelAnimationFrame(frame);
-        window.removeEventListener('resize', resize);
-      });
+    function resize() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      renderer.setSize(w, h);
+      uniforms.uResolution.value.set(w, h);
     }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function animate() {
+      uniforms.uTime.value += 0.01;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Temizlik (sayfa kapanınca)
+    window.addEventListener('beforeunload', () => {
+      renderer.dispose();
+    });
   </script>
 
 </body>
