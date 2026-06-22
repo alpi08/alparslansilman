@@ -6,7 +6,7 @@
   <title>ALPİ — Geleceği Birlikte İnşa Ediyoruz</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ── MEVCUT TÜM STILLER (orijinal haliyle) ── */
+    /* ── MEVCUT TÜM STILLER (orijinal) ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #060b18; --bg2: #0a1020; --violet: #7c3aed; --violet2: #a855f7;
@@ -440,8 +440,6 @@
       .gallery-wrapper { height: 400px; border-radius: 16px; }
       #gallery { padding: 3rem 1rem; }
     }
-
-    /* Galeri içindeki canvas'ı konteynıra tam oturt */
     .gallery-wrapper canvas {
       display: block;
       width: 100% !important;
@@ -1562,7 +1560,7 @@
     // ── Galeriyi Başlat ──
     const container = document.getElementById('gallery-container');
     if (container) {
-      // Özel görseller eklemek isterseniz aşağıdaki items dizisini güncelleyin.
+      // Özel görseller eklemek isterseniz bu kısmı güncelleyin.
       // const customItems = [ { image: 'https://...', text: 'Açıklama' }, ... ];
       // new App(container, { items: customItems, ... });
 
