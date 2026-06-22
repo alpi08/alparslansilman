@@ -16,15 +16,27 @@
     }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif;
-      overflow-x: hidden; min-height: 100vh;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
-    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    body::before {
-      content: ''; position: fixed; inset: 0; z-index: 1;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      background-size: 180px; pointer-events: none; opacity: .5;
+    /* DarkVeil arka planı – tüm sayfayı kaplar */
+    #darkveil-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
     }
+    #darkveil-container canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    /* Eski partikül ve noise overlay kaldırıldı, sadece DarkVeil var */
+
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -68,8 +80,11 @@
       background: linear-gradient(135deg, rgba(124,58,237,.38), rgba(6,182,212,.28)) !important;
       transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124,58,237,.3) !important;
     }
+
+    /* ── HERO ── */
     #hero {
-      position: relative; z-index: 2; min-height: 100vh;
+      position: relative; z-index: 2;
+      min-height: 100vh;
       display: flex; align-items: center; justify-content: center; text-align: center;
       padding: 8rem 2rem 4rem;
     }
@@ -123,13 +138,6 @@
       transition: border-color .3s, background .3s, transform .25s; text-decoration: none;
     }
     .btn-ghost:hover { border-color: var(--borderh); background: var(--glassh); transform: translateY(-3px); }
-    .orb {
-      position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 1;
-      animation: floatOrb 8s ease-in-out infinite;
-    }
-    .orb1 { width:400px; height:400px; background: rgba(124,58,237,.22); top:10%; left:5%; animation-delay:0s; }
-    .orb2 { width:300px; height:300px; background: rgba(6,182,212,.18); top:30%; right:8%; animation-delay:-3s; }
-    .orb3 { width:250px; height:250px; background: rgba(168,85,247,.15); bottom:15%; left:30%; animation-delay:-5s; }
     .hero-stats {
       display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
       margin-top: 4.5rem; animation: fadeUp .8s .6s ease both;
@@ -141,6 +149,8 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .stat-label { font-size: .78rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-top: .2rem; }
+
+    /* ── BÖLÜM GENEL ── */
     section { position: relative; z-index: 2; }
     .section-label {
       display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
@@ -151,6 +161,8 @@
       font-weight: 800; line-height: 1.15;
     }
     .section-sub { color: var(--muted); max-width: 520px; line-height: 1.7; margin-top: .85rem; }
+
+    /* ── SERVICES / MAGIC BENTO ── */
     #services { padding: 6rem 2rem; }
     .services-header { text-align: center; margin-bottom: 3rem; }
     .services-header .section-sub { margin: .85rem auto 0; }
@@ -214,6 +226,8 @@
       opacity: .55; transition: transform .6s ease;
     }
     .magic-bento-card:hover .blob { transform: scale(1.3); }
+
+    /* ── FEATURES ── */
     #features {
       padding: 5rem 4rem;
       background: linear-gradient(180deg, transparent, rgba(124,58,237,.06), transparent);
@@ -272,6 +286,8 @@
       padding:.2rem .6rem; border-radius:.4rem; font-size:.65rem; font-weight:600;
       background: rgba(124,58,237,.2); color:var(--violet2); border: 1px solid rgba(124,58,237,.3);
     }
+
+    /* ── PROCESS ── */
     #process { padding: 6rem 4rem; }
     .process-header { text-align: center; margin-bottom: 4rem; }
     .process-steps {
@@ -298,6 +314,8 @@
     .step-content { padding-top: .9rem; }
     .step-title { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
     .step-desc { font-size:.875rem; color:var(--muted); line-height:1.7; max-width:520px; }
+
+    /* ── PRICING ── */
     #pricing { padding: 6rem 4rem; }
     .pricing-header { text-align:center; margin-bottom:3.5rem; }
     .pricing-grid {
@@ -333,6 +351,8 @@
     .price-features li { display:flex; align-items:center; gap:.6rem; font-size:.875rem; }
     .price-features li .chk { color:var(--cyan); font-size:1rem; }
     .price-features li .cross { color:rgba(255,255,255,.2); }
+
+    /* ── CTA ── */
     #cta { padding: 7rem 4rem; text-align:center; }
     .cta-glass {
       max-width: 780px; margin:0 auto; padding:4rem 3rem; border-radius:2rem;
@@ -347,6 +367,8 @@
     }
     .cta-glass h2 { font-family:'Outfit',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; margin-bottom:1rem; }
     .cta-glass p { color:var(--muted); max-width:480px; margin:0 auto 2rem; line-height:1.7; }
+
+    /* ── FOOTER ── */
     footer {
       position:relative; z-index:2; padding:3rem 4rem;
       border-top:1px solid var(--border);
@@ -372,6 +394,7 @@
     ::-webkit-scrollbar-track { background:var(--bg); }
     ::-webkit-scrollbar-thumb { background:var(--violet); border-radius:10px; }
 
+    /* ── KEYFRAMES ── */
     @keyframes fadeUp {
       from { opacity:0; transform:translateY(24px); }
       to { opacity:1; transform:translateY(0); }
@@ -383,10 +406,6 @@
     @keyframes stepIn {
       from { opacity:0; transform:translateX(-20px); }
       to { opacity:1; transform:translateX(0); }
-    }
-    @keyframes floatOrb {
-      0%,100% { transform:translateY(0) scale(1); }
-      50% { transform:translateY(-30px) scale(1.05); }
     }
     @keyframes floatPhone {
       0%,100% { transform:translateY(0) rotate(-1deg); }
@@ -404,6 +423,8 @@
       from { transform:scaleY(0); transform-origin:bottom; }
       to { transform:scaleY(1); }
     }
+
+    /* ── RESPONSIVE ── */
     @media(max-width:900px) {
       nav { padding:1rem 1.5rem; }
       .nav-links { display:none; }
@@ -415,48 +436,18 @@
     @media(prefers-reduced-motion:reduce) {
       *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
     }
-
-    /* ── GALERİ EK STİLLERİ ── */
-    #gallery {
-      padding: 4rem 2rem;
-      background: linear-gradient(180deg, transparent, rgba(124,58,237,.06), transparent);
-      position: relative; z-index: 2;
-    }
-    #gallery .section-label { text-align: center; display: block; }
-    #gallery .section-title { text-align: center; }
-    .gallery-wrapper {
-      height: 600px;
-      width: 100%;
-      max-width: 1400px;
-      margin: 1.5rem auto 0;
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-      box-shadow: 0 20px 60px rgba(0,0,0,.5);
-      position: relative;
-    }
-    @media(max-width: 768px) {
-      .gallery-wrapper { height: 400px; border-radius: 16px; }
-      #gallery { padding: 3rem 1rem; }
-    }
-    .gallery-wrapper canvas {
-      display: block;
-      width: 100% !important;
-      height: 100% !important;
-    }
   </style>
 </head>
 <body>
 
-  <canvas id="bg-canvas"></canvas>
+  <!-- DARKVEIL ARKA PLAN (fixed, tüm ekran) -->
+  <div id="darkveil-container"></div>
 
   <!-- NAV -->
   <nav id="nav">
     <div class="nav-logo">ALPİ</div>
     <ul class="nav-links">
       <li><a href="#services">Hizmetler</a></li>
-      <li><a href="#gallery">Galeri</a></li>
       <li><a href="#features">Neden Biz</a></li>
       <li><a href="#process">Süreç</a></li>
       <li><a href="#pricing">Fiyatlar</a></li>
@@ -466,9 +457,6 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
     <div class="hero-inner">
       <div class="hero-badge">
         <span class="badge-dot"></span> ✦ 2024'ün En İyi Dijital Ajansı
@@ -576,16 +564,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- GALERİ (CircularGallery) -->
-  <section id="gallery">
-    <div style="text-align:center; margin-bottom: 1rem;">
-      <span class="section-label">⬡ Dönen Galeri</span>
-      <h2 class="section-title">Keşfet, İlham Al</h2>
-      <p class="section-sub" style="margin:0.5rem auto 0; max-width:480px;">Fare ile sürükleyin, kaydırın veya ok tuşlarını kullanarak görseller arasında gezinin.</p>
-    </div>
-    <div class="gallery-wrapper" id="gallery-container" tabindex="0" role="region" aria-label="Dönen görsel galerisi"></div>
   </section>
 
   <!-- FEATURES -->
@@ -753,69 +731,10 @@
     <div class="footer-copy">© 2024 ALPİ Dijital Ajans — Tüm hakları saklıdır.</div>
   </footer>
 
-  <!-- ─── MEVCUT JAVASCRIPT (particles, counter, scroll, bento) ─── -->
+  <!-- ─── JAVASCRIPT (Counter, Scroll, Bento, DarkVeil) ─── -->
+
+  <!-- Counter & Scroll Reveal -->
   <script>
-    /* ── PARTICLE CANVAS ── */
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [];
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    function Particle() {
-      this.x = Math.random() * W;
-      this.y = Math.random() * H;
-      this.vx = (Math.random() - .5) * .3;
-      this.vy = (Math.random() - .5) * .3;
-      this.r = Math.random() * 1.4 + .4;
-      this.alpha = Math.random() * .5 + .1;
-      this.color = Math.random() > .5 ? '124,58,237' : '6,182,212';
-    }
-    for (let i = 0; i < 90; i++) particles.push(new Particle());
-
-    function drawLine(a, b, d) {
-      const op = (1 - d / 120) * .18;
-      ctx.beginPath();
-      ctx.strokeStyle = `rgba(124,58,237,${op})`;
-      ctx.lineWidth = .5;
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
-        ctx.fill();
-      });
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-          if (d < 120) drawLine(particles[i], particles[j], d);
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    /* ── SCROLL NAV ── */
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    });
-
     /* ── COUNTER ANIMATION ── */
     const statNums = document.querySelectorAll('.stat-num[data-target]');
     const counterObs = new IntersectionObserver(entries => {
@@ -854,7 +773,13 @@
       revealObs.observe(el);
     });
 
-    /* ── MAGIC BENTO (GSAP benzeri) ── */
+    /* ── SCROLL NAV ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* ── MAGIC BENTO (Spotlight + Particle) ── */
     (function() {
       const GLOW = '124, 58, 237';
       const SPOTLIGHT_R = 320;
@@ -993,23 +918,13 @@
       });
     })();
 
-    /* ── MOUSE PARALLAX ORBS ── */
-    document.addEventListener('mousemove', e => {
-      const mx = (e.clientX / window.innerWidth - .5) * 20;
-      const my = (e.clientY / window.innerHeight - .5) * 20;
-      document.querySelectorAll('.orb').forEach((o, i) => {
-        const f = (i + 1) * .4;
-        o.style.transform = `translate(${mx * f}px,${my * f}px)`;
-      });
-    });
-
     /* ── BAR HEIGHTS ── */
     const bars = document.querySelectorAll('.pm-bar-chart span');
     const heights = [40, 60, 45, 80, 65, 90, 100];
     bars.forEach((b, i) => b.style.height = heights[i] + '%');
   </script>
 
-  <!-- ─── GALERİ JAVASCRIPT (CircularGallery) ─── -->
+  <!-- ─── DARKVEIL (OGL arka plan) ─── -->
   <script type="importmap">
     {
       "imports": {
@@ -1018,559 +933,317 @@
     }
   </script>
   <script type="module">
-    import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
+    import { Renderer, Program, Mesh, Triangle, Vec2 } from 'ogl';
 
-    // ── Yardımcı fonksiyonlar ──
-    function debounce(func, wait) {
-      let timeout;
-      return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-      };
-    }
+    // ── DarkVeil Shader'ları ──
+    const vertex = `
+      attribute vec2 position;
+      void main(){ gl_Position = vec4(position, 0.0, 1.0); }
+    `;
 
-    function lerp(p1, p2, t) { return p1 + (p2 - p1) * t; }
+    const fragment = `
+      #ifdef GL_ES
+      precision lowp float;
+      #endif
+      uniform vec2 uResolution;
+      uniform float uTime;
+      uniform float uHueShift;
+      uniform float uNoise;
+      uniform float uScan;
+      uniform float uScanFreq;
+      uniform float uWarp;
+      #define iTime uTime
+      #define iResolution uResolution
 
-    function autoBind(instance) {
-      const proto = Object.getPrototypeOf(instance);
-      Object.getOwnPropertyNames(proto).forEach(key => {
-        if (key !== 'constructor' && typeof instance[key] === 'function') {
-          instance[key] = instance[key].bind(instance);
+      vec4 buf[8];
+      float rand(vec2 c){ return fract(sin(dot(c, vec2(12.9898,78.233)))*43758.5453); }
+
+      mat3 rgb2yiq = mat3(0.299,0.587,0.114, 0.596,-0.274,-0.322, 0.211,-0.523,0.312);
+      mat3 yiq2rgb = mat3(1.0,0.956,0.621, 1.0,-0.272,-0.647, 1.0,-1.106,1.703);
+
+      vec3 hueShiftRGB(vec3 col, float deg){
+        vec3 yiq = rgb2yiq * col;
+        float rad = radians(deg);
+        float cosh = cos(rad), sinh = sin(rad);
+        vec3 yiqShift = vec3(yiq.x, yiq.y*cosh - yiq.z*sinh, yiq.y*sinh + yiq.z*cosh);
+        return clamp(yiq2rgb * yiqShift, 0.0, 1.0);
+      }
+
+      vec4 sigmoid(vec4 x){ return 1./(1. + exp(-x)); }
+
+      vec4 cppn_fn(vec2 coordinate, float in0, float in1, float in2){
+        buf[6] = vec4(coordinate.x, coordinate.y, 0.3948333106474662+in0, 0.36+in1);
+        buf[7] = vec4(0.14+in2, sqrt(coordinate.x*coordinate.x + coordinate.y*coordinate.y), 0., 0.);
+        buf[0] = mat4(
+          vec4(6.5404263,-3.6126034,0.7590882,-1.13613),
+          vec4(2.4582713,3.1660357,1.2219609,0.06276096),
+          vec4(-5.478085,-6.159632,1.8701609,-4.7742867),
+          vec4(6.039214,-5.542865,-0.90925294,3.251348)
+        ) * buf[6] + mat4(
+          vec4(0.8473259,-5.722911,3.975766,1.6522468),
+          vec4(-0.24321538,0.5839259,-1.7661959,-5.350116),
+          vec4(0.,0.,0.,0.),
+          vec4(0.,0.,0.,0.)
+        ) * buf[7] + vec4(0.21808943,1.1243913,-1.7969975,5.0294676);
+        buf[1] = mat4(
+          vec4(-3.3522482,-6.0612736,0.55641043,-4.4719114),
+          vec4(0.8631464,1.7432913,5.643898,1.6106541),
+          vec4(2.4941394,-3.5012043,1.7184316,6.357333),
+          vec4(3.310376,8.209261,1.1355612,-1.165539)
+        ) * buf[6] + mat4(
+          vec4(5.24046,-13.034365,0.009859298,15.870829),
+          vec4(2.987511,3.129433,-0.89023495,-1.6822904),
+          vec4(0.,0.,0.,0.),
+          vec4(0.,0.,0.,0.)
+        ) * buf[7] + vec4(-5.9457836,-6.573602,-0.8812491,1.5436668);
+        buf[0] = sigmoid(buf[0]);
+        buf[1] = sigmoid(buf[1]);
+        buf[2] = mat4(
+          vec4(-15.219568,8.095543,-2.429353,-1.9381982),
+          vec4(-5.951362,4.3115187,2.6393783,1.274315),
+          vec4(-7.3145227,6.7297835,5.2473326,5.9411426),
+          vec4(5.0796127,8.979051,-1.7278991,-1.158976)
+        ) * buf[6] + mat4(
+          vec4(-11.967154,-11.608155,6.1486754,11.237008),
+          vec4(2.124141,-6.263192,-1.7050359,-0.7021966),
+          vec4(0.,0.,0.,0.),
+          vec4(0.,0.,0.,0.)
+        ) * buf[7] + vec4(-4.17164,-3.2281182,-4.576417,-3.6401186);
+        buf[3] = mat4(
+          vec4(3.1832156,-13.738922,1.879223,3.233465),
+          vec4(0.64300746,12.768129,1.9141049,0.50990224),
+          vec4(-0.049295485,4.4807224,1.4733979,1.801449),
+          vec4(5.0039253,13.000481,3.3991797,-4.5561905)
+        ) * buf[6] + mat4(
+          vec4(-0.1285731,7.720628,-3.1425676,4.742367),
+          vec4(0.6393625,3.714393,-0.8108378,-0.39174938),
+          vec4(0.,0.,0.,0.),
+          vec4(0.,0.,0.,0.)
+        ) * buf[7] + vec4(-1.1811101,-21.621881,0.7851888,1.2329718);
+        buf[2] = sigmoid(buf[2]);
+        buf[3] = sigmoid(buf[3]);
+        buf[4] = mat4(
+          vec4(5.214916,-7.183024,2.7228765,2.6592617),
+          vec4(-5.601878,-25.3591,4.067988,0.4602802),
+          vec4(-10.57759,24.286327,21.102104,37.546658),
+          vec4(4.3024497,-1.9625226,2.3458803,-1.372816)
+        ) * buf[0] + mat4(
+          vec4(-17.6526,-10.507558,2.2587414,12.462782),
+          vec4(6.265566,-502.75443,-12.642513,0.9112289),
+          vec4(-10.983244,20.741234,-9.701768,-0.7635988),
+          vec4(5.383626,1.4819539,-4.1911616,-4.8444734)
+        ) * buf[1] + mat4(
+          vec4(12.785233,-16.345072,-0.39901125,1.7955981),
+          vec4(-30.48365,-1.8345358,1.4542528,-1.1118771),
+          vec4(19.872723,-7.337935,-42.941723,-98.52709),
+          vec4(8.337645,-2.7312303,-2.2927687,-36.142323)
+        ) * buf[2] + mat4(
+          vec4(-16.298317,3.5471997,-0.44300047,-9.444417),
+          vec4(57.5077,-35.609753,16.163465,-4.1534753),
+          vec4(-0.07470326,-3.8656476,-7.0901804,3.1523974),
+          vec4(-12.559385,-7.077619,1.490437,-0.8211543)
+        ) * buf[3] + vec4(-7.67914,15.927437,1.3207729,-1.6686112);
+        buf[5] = mat4(
+          vec4(-1.4109162,-0.372762,-3.770383,-21.367174),
+          vec4(-6.2103205,-9.35908,0.92529047,8.82561),
+          vec4(11.460242,-22.348068,13.625772,-18.693201),
+          vec4(-0.3429052,-3.9905605,-2.4626114,-0.45033523)
+        ) * buf[0] + mat4(
+          vec4(7.3481627,-4.3661838,-6.3037653,-3.868115),
+          vec4(1.5462853,6.5488915,1.9701879,-0.58291394),
+          vec4(6.5858274,-2.2180402,3.7127688,-1.3730392),
+          vec4(-5.7973905,10.134961,-2.3395722,-5.965605)
+        ) * buf[1] + mat4(
+          vec4(-2.5132585,-6.6685553,-1.4029363,-0.16285264),
+          vec4(-0.37908727,0.53738135,4.389061,-1.3024765),
+          vec4(-0.70647055,2.0111287,-5.1659346,-3.728635),
+          vec4(-13.562562,10.487719,-0.9173751,-2.6487076)
+        ) * buf[2] + mat4(
+          vec4(-8.645013,6.5546675,-6.3944063,-5.5933375),
+          vec4(-0.57783127,-1.077275,36.91025,5.736769),
+          vec4(14.283112,3.7146652,7.1452246,-4.5958776),
+          vec4(2.7192075,3.6021907,-4.366337,-2.3653464)
+        ) * buf[3] + vec4(-5.9000807,-4.329569,1.2427121,8.59503);
+        buf[4] = sigmoid(buf[4]);
+        buf[5] = sigmoid(buf[5]);
+        buf[6] = mat4(
+          vec4(-1.61102,0.7970257,1.4675229,0.20917463),
+          vec4(-28.793737,-7.1390953,1.5025433,4.656581),
+          vec4(-10.94861,39.66238,0.74318546,-10.095605),
+          vec4(-0.7229728,-1.5483948,0.7301322,2.1687684)
+        ) * buf[0] + mat4(
+          vec4(3.2547753,21.489103,-1.0194173,-3.3100595),
+          vec4(-3.7316632,-3.3792162,-7.223193,-0.23685838),
+          vec4(13.1804495,0.7916005,5.338587,5.687114),
+          vec4(-4.167605,-17.798311,-6.815736,-1.6451967)
+        ) * buf[1] + mat4(
+          vec4(0.604885,-7.800309,-7.213122,-2.741014),
+          vec4(-3.522382,-0.12359311,-0.5258442,0.43852118),
+          vec4(9.6752825,-22.853785,2.062431,0.099892326),
+          vec4(-4.3196306,-17.730087,2.5184598,5.30267)
+        ) * buf[2] + mat4(
+          vec4(-6.545563,-15.790176,-6.0438633,-5.415399),
+          vec4(-43.591583,28.551912,-16.00161,18.84728),
+          vec4(4.212382,8.394307,3.0958717,8.657522),
+          vec4(-5.0237565,-4.450633,-4.4768,-5.5010443)
+        ) * buf[3] + mat4(
+          vec4(1.6985557,-67.05806,6.897715,1.9004834),
+          vec4(1.8680354,2.3915145,2.5231109,4.081538),
+          vec4(11.158006,1.7294737,2.0738268,7.386411),
+          vec4(-4.256034,-306.24686,8.258898,-17.132736)
+        ) * buf[4] + mat4(
+          vec4(1.6889864,-4.5852966,3.8534803,-6.3482175),
+          vec4(1.3543309,-1.2640043,9.932754,2.9079645),
+          vec4(-5.2770967,0.07150358,-0.13962056,3.3269649),
+          vec4(28.34703,-4.918278,6.1044083,4.085355)
+        ) * buf[5] + vec4(6.6818056,12.522166,-3.7075126,-4.104386);
+        buf[7] = mat4(
+          vec4(-8.265602,-4.7027016,5.098234,0.7509808),
+          vec4(8.6507845,-17.15949,16.51939,-8.884479),
+          vec4(-4.036479,-2.3946867,-2.6055532,-1.9866527),
+          vec4(-2.2167742,-1.8135649,-5.9759874,4.8846445)
+        ) * buf[0] + mat4(
+          vec4(6.7790847,3.5076547,-2.8191125,-2.7028968),
+          vec4(-5.743024,-0.27844876,1.4958696,-5.0517144),
+          vec4(13.122226,15.735168,-2.9397483,-4.101023),
+          vec4(-14.375265,-5.030483,-6.2599335,2.9848232)
+        ) * buf[1] + mat4(
+          vec4(4.0950394,-0.94011575,-5.674733,4.755022),
+          vec4(4.3809423,4.8310084,1.7425908,-3.437416),
+          vec4(2.117492,0.16342592,-104.56341,16.949184),
+          vec4(-5.22543,-2.994248,3.8350096,-1.9364246)
+        ) * buf[2] + mat4(
+          vec4(-5.900337,1.7946124,-13.604192,-3.8060522),
+          vec4(6.6583457,31.911177,25.164474,91.81147),
+          vec4(11.840538,4.1503043,-0.7314397,6.768467),
+          vec4(-6.3967767,4.034772,6.1714606,-0.32874924)
+        ) * buf[3] + mat4(
+          vec4(3.4992442,-196.91893,-8.923708,2.8142626),
+          vec4(3.4806502,-3.1846354,5.1725626,5.1804223),
+          vec4(-2.4009497,15.585794,1.2863957,2.0252278),
+          vec4(-71.25271,-62.441242,-8.138444,0.50670296)
+        ) * buf[4] + mat4(
+          vec4(-12.291733,-11.176166,-7.3474145,4.390294),
+          vec4(10.805477,5.6337385,-0.9385842,-4.7348723),
+          vec4(-12.869276,-7.039391,5.3029537,7.5436664),
+          vec4(1.4593618,8.91898,3.5101583,5.840625)
+        ) * buf[5] + vec4(2.2415268,-6.705987,-0.98861027,-2.117676);
+        buf[6] = sigmoid(buf[6]);
+        buf[7] = sigmoid(buf[7]);
+        buf[0] = mat4(
+          vec4(1.6794263,1.3817469,2.9625452,0.),
+          vec4(-1.8834411,-1.4806935,-3.5924516,0.),
+          vec4(-1.3279216,-1.0918057,-2.3124623,0.),
+          vec4(0.2662234,0.23235129,0.44178495,0.)
+        ) * buf[0] + mat4(
+          vec4(-0.6299101,-0.5945583,-0.9125601,0.),
+          vec4(0.17828953,0.18300213,0.18182953,0.),
+          vec4(-2.96544,-2.5819945,-4.9001055,0.),
+          vec4(1.4195864,1.1868085,2.5176322,0.)
+        ) * buf[1] + mat4(
+          vec4(-1.2584374,-1.0552157,-2.1688404,0.),
+          vec4(-0.7200217,-0.52666044,-1.438251,0.),
+          vec4(0.15345335,0.15196142,0.272854,0.),
+          vec4(0.945728,0.8861938,1.2766753,0.)
+        ) * buf[2] + mat4(
+          vec4(-2.4218085,-1.968602,-4.35166,0.),
+          vec4(-22.683098,-18.0544,-41.954372,0.),
+          vec4(0.63792,0.5470648,1.1078634,0.),
+          vec4(-1.5489894,-1.3075932,-2.6444845,0.)
+        ) * buf[3] + mat4(
+          vec4(-0.49252132,-0.39877754,-0.91366625,0.),
+          vec4(0.95609266,0.7923952,1.640221,0.),
+          vec4(0.30616966,0.15693925,0.8639857,0.),
+          vec4(1.1825981,0.94504964,2.176963,0.)
+        ) * buf[4] + mat4(
+          vec4(0.35446745,0.3293795,0.59547555,0.),
+          vec4(-0.58784515,-0.48177817,-1.0614829,0.),
+          vec4(2.5271258,1.9991658,4.6846647,0.),
+          vec4(0.13042648,0.08864098,0.30187556,0.)
+        ) * buf[5] + mat4(
+          vec4(-1.7718065,-1.4033192,-3.3355875,0.),
+          vec4(3.1664357,2.638297,5.378702,0.),
+          vec4(-3.1724713,-2.6107926,-5.549295,0.),
+          vec4(-2.851368,-2.249092,-5.3013067,0.)
+        ) * buf[6] + mat4(
+          vec4(1.5203838,1.2212278,2.8404984,0.),
+          vec4(1.5210563,1.2651345,2.683903,0.),
+          vec4(2.9789467,2.4364579,5.2347264,0.),
+          vec4(2.2270417,1.8825914,3.8028636,0.)
+        ) * buf[7] + vec4(-1.5468478,-3.6171484,0.24762098,0.);
+        buf[0] = sigmoid(buf[0]);
+        return vec4(buf[0].x, buf[0].y, buf[0].z, 1.);
+      }
+
+      void mainImage(out vec4 fragColor, in vec2 fragCoord){
+        vec2 uv = fragCoord / uResolution.xy * 2. - 1.;
+        uv.y *= -1.;
+        uv += uWarp * vec2(sin(uv.y * 6.283 + uTime * 0.5), cos(uv.x * 6.283 + uTime * 0.5)) * 0.05;
+        fragColor = cppn_fn(uv, 0.1*sin(0.3*uTime), 0.1*sin(0.69*uTime), 0.1*sin(0.44*uTime));
+      }
+
+      void main(){
+        vec4 col;
+        mainImage(col, gl_FragCoord.xy);
+        col.rgb = hueShiftRGB(col.rgb, uHueShift);
+        float scanline_val = sin(gl_FragCoord.y * uScanFreq) * 0.5 + 0.5;
+        col.rgb *= 1. - (scanline_val * scanline_val) * uScan;
+        col.rgb += (rand(gl_FragCoord.xy + uTime) - 0.5) * uNoise;
+        gl_FragColor = vec4(clamp(col.rgb, 0.0, 1.0), 1.0);
+      }
+    `;
+
+    // ── DarkVeil başlatma ──
+    const container = document.getElementById('darkveil-container');
+    if (container) {
+      const renderer = new Renderer({
+        dpr: Math.min(window.devicePixelRatio, 2),
+      });
+      const gl = renderer.gl;
+      const geometry = new Triangle(gl);
+
+      const program = new Program(gl, {
+        vertex,
+        fragment,
+        uniforms: {
+          uTime: { value: 0 },
+          uResolution: { value: new Vec2() },
+          uHueShift: { value: 0 },
+          uNoise: { value: 0 },
+          uScan: { value: 0 },
+          uScanFreq: { value: 0 },
+          uWarp: { value: 0 }
         }
       });
-    }
 
-    const DEFAULT_FONT = 'bold 30px Figtree';
-    const DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap';
+      const mesh = new Mesh(gl, { geometry, program });
+      container.appendChild(gl.canvas);
 
-    function deriveFontFamilyFromUrl(url) {
-      const fileName = (url.split('/').pop() || 'custom-font').split('?')[0];
-      const base = fileName.replace(/\.(woff2?|ttf|otf|eot)$/i, '');
-      return base.replace(/[^a-zA-Z0-9-_ ]/g, '').trim() || 'CircularGalleryFont';
-    }
+      const resize = () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        renderer.setSize(w, h);
+        program.uniforms.uResolution.value.set(w, h);
+      };
 
-    async function loadFontFromStylesheet(url) {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Failed to fetch font stylesheet (${response.status})`);
-      const cssText = await response.text();
-      const faceBlocks = cssText.match(/@font-face\s*{[^}]*}/g) || [];
-      let family = null;
-      const fontFaces = [];
-      for (const block of faceBlocks) {
-        const familyMatch = block.match(/font-family:\s*['"]?([^;'"]+)['"]?/);
-        const urlMatch = block.match(/url\(\s*['"]?([^'")]+)['"]?\s*\)/);
-        if (!familyMatch || !urlMatch) continue;
-        family = familyMatch[1].trim();
-        const descriptors = {};
-        const weightMatch = block.match(/font-weight:\s*([^;]+);/);
-        const styleMatch = block.match(/font-style:\s*([^;]+);/);
-        const rangeMatch = block.match(/unicode-range:\s*([^;]+);/);
-        if (weightMatch) descriptors.weight = weightMatch[1].trim();
-        if (styleMatch) descriptors.style = styleMatch[1].trim();
-        if (rangeMatch) descriptors.unicodeRange = rangeMatch[1].trim();
-        fontFaces.push(new FontFace(family, `url(${urlMatch[1]})`, descriptors));
-      }
-      if (!family) throw new Error('No @font-face rule found in the stylesheet');
-      await Promise.allSettled(
-        fontFaces.map(async face => {
-          await face.load();
-          document.fonts.add(face);
-        })
-      );
-      return family;
-    }
+      window.addEventListener('resize', resize);
+      resize();
 
-    async function loadFontFromFile(url) {
-      const family = deriveFontFamilyFromUrl(url);
-      const fontFace = new FontFace(family, `url(${url})`);
-      await fontFace.load();
-      document.fonts.add(fontFace);
-      return family;
-    }
+      const start = performance.now();
+      let frame;
 
-    async function loadCustomFont(fontUrl) {
-      const isStylesheet = fontUrl.includes('fonts.googleapis.com') || /\.css(\?.*)?$/i.test(fontUrl);
-      return isStylesheet ? loadFontFromStylesheet(fontUrl) : loadFontFromFile(fontUrl);
-    }
+      const loop = () => {
+        program.uniforms.uTime.value = (performance.now() - start) / 1000 * 0.5;
+        renderer.render({ scene: mesh });
+        frame = requestAnimationFrame(loop);
+      };
 
-    async function resolveFont(font, fontUrl) {
-      const effectiveUrl = fontUrl || (font === DEFAULT_FONT ? DEFAULT_FONT_URL : null);
-      if (!effectiveUrl) {
-        if (document.fonts && document.fonts.load) {
-          try { await document.fonts.load(font);
-            await document.fonts.ready; } catch {}
-        }
-        return font;
-      }
-      try {
-        const family = await loadCustomFont(effectiveUrl);
-        const sizeMatch = font.match(/^\s*(.*?\d+px)/);
-        const prefix = sizeMatch ? sizeMatch[1].trim() : 'bold 30px';
-        const resolved = `${prefix} "${family}"`;
-        if (document.fonts && document.fonts.load) {
-          try { await document.fonts.load(resolved); } catch {}
-        }
-        return resolved;
-      } catch (error) {
-        console.error('CircularGallery: unable to load font from', fontUrl, error);
-        return font;
-      }
-    }
+      loop();
 
-    function getFontSize(font) {
-      const match = font.match(/(\d+)px/);
-      return match ? parseInt(match[1], 10) : 30;
-    }
-
-    function createTextTexture(gl, text, font = 'bold 30px monospace', color = 'black') {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      context.font = font;
-      const metrics = context.measureText(text);
-      const textWidth = Math.ceil(metrics.width);
-      const textHeight = Math.ceil(getFontSize(font) * 1.2);
-      canvas.width = textWidth + 20;
-      canvas.height = textHeight + 20;
-      context.font = font;
-      context.fillStyle = color;
-      context.textBaseline = 'middle';
-      context.textAlign = 'center';
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillText(text, canvas.width / 2, canvas.height / 2);
-      const texture = new Texture(gl, { generateMipmaps: false });
-      texture.image = canvas;
-      return { texture, width: canvas.width, height: canvas.height };
-    }
-
-    // ── Title ──
-    class Title {
-      constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }) {
-        autoBind(this);
-        this.gl = gl;
-        this.plane = plane;
-        this.renderer = renderer;
-        this.text = text;
-        this.textColor = textColor;
-        this.font = font;
-        this.createMesh();
-      }
-      createMesh() {
-        const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
-        const geometry = new Plane(this.gl);
-        const program = new Program(this.gl, {
-          vertex: `
-            attribute vec3 position;
-            attribute vec2 uv;
-            uniform mat4 modelViewMatrix;
-            uniform mat4 projectionMatrix;
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-          `,
-          fragment: `
-            precision highp float;
-            uniform sampler2D tMap;
-            varying vec2 vUv;
-            void main() {
-              vec4 color = texture2D(tMap, vUv);
-              if (color.a < 0.1) discard;
-              gl_FragColor = color;
-            }
-          `,
-          uniforms: { tMap: { value: texture } },
-          transparent: true
-        });
-        this.mesh = new Mesh(this.gl, { geometry, program });
-        const aspect = width / height;
-        const textHeight = this.plane.scale.y * 0.15;
-        const textWidth = textHeight * aspect;
-        this.mesh.scale.set(textWidth, textHeight, 1);
-        this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
-        this.mesh.setParent(this.plane);
-      }
-    }
-
-    // ── Media ──
-    class Media {
-      constructor({
-        geometry,
-        gl,
-        image,
-        index,
-        length,
-        renderer,
-        scene,
-        screen,
-        text,
-        viewport,
-        bend,
-        textColor,
-        borderRadius = 0,
-        font
-      }) {
-        this.extra = 0;
-        this.geometry = geometry;
-        this.gl = gl;
-        this.image = image;
-        this.index = index;
-        this.length = length;
-        this.renderer = renderer;
-        this.scene = scene;
-        this.screen = screen;
-        this.text = text;
-        this.viewport = viewport;
-        this.bend = bend;
-        this.textColor = textColor;
-        this.borderRadius = borderRadius;
-        this.font = font;
-        this.createShader();
-        this.createMesh();
-        this.createTitle();
-        this.onResize();
-      }
-      createShader() {
-        const texture = new Texture(this.gl, { generateMipmaps: true });
-        this.program = new Program(this.gl, {
-          depthTest: false,
-          depthWrite: false,
-          vertex: `
-            precision highp float;
-            attribute vec3 position;
-            attribute vec2 uv;
-            uniform mat4 modelViewMatrix;
-            uniform mat4 projectionMatrix;
-            uniform float uTime;
-            uniform float uSpeed;
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              vec3 p = position;
-              p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-            }
-          `,
-          fragment: `
-            precision highp float;
-            uniform vec2 uImageSizes;
-            uniform vec2 uPlaneSizes;
-            uniform sampler2D tMap;
-            uniform float uBorderRadius;
-            varying vec2 vUv;
-            
-            float roundedBoxSDF(vec2 p, vec2 b, float r) {
-              vec2 d = abs(p) - b;
-              return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
-            }
-            
-            void main() {
-              vec2 ratio = vec2(
-                min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
-                min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
-              );
-              vec2 uv = vec2(
-                vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-                vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
-              );
-              vec4 color = texture2D(tMap, uv);
-              
-              float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
-              float edgeSmooth = 0.002;
-              float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
-              
-              gl_FragColor = vec4(color.rgb, alpha);
-            }
-          `,
-          uniforms: {
-            tMap: { value: texture },
-            uPlaneSizes: { value: [0, 0] },
-            uImageSizes: { value: [0, 0] },
-            uSpeed: { value: 0 },
-            uTime: { value: 100 * Math.random() },
-            uBorderRadius: { value: this.borderRadius }
-          },
-          transparent: true
-        });
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = this.image;
-        img.onload = () => {
-          texture.image = img;
-          this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-        };
-      }
-      createMesh() {
-        this.plane = new Mesh(this.gl, { geometry: this.geometry, program: this.program });
-        this.plane.setParent(this.scene);
-      }
-      createTitle() {
-        this.title = new Title({
-          gl: this.gl,
-          plane: this.plane,
-          renderer: this.renderer,
-          text: this.text,
-          textColor: this.textColor,
-          font: this.font
-        });
-      }
-      update(scroll, direction) {
-        this.plane.position.x = this.x - scroll.current - this.extra;
-        const x = this.plane.position.x;
-        const H = this.viewport.width / 2;
-        if (this.bend === 0) {
-          this.plane.position.y = 0;
-          this.plane.rotation.z = 0;
-        } else {
-          const B_abs = Math.abs(this.bend);
-          const R = (H * H + B_abs * B_abs) / (2 * B_abs);
-          const effectiveX = Math.min(Math.abs(x), H);
-          const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-          if (this.bend > 0) {
-            this.plane.position.y = -arc;
-            this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
-          } else {
-            this.plane.position.y = arc;
-            this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
-          }
-        }
-        this.speed = scroll.current - scroll.last;
-        this.program.uniforms.uTime.value += 0.04;
-        this.program.uniforms.uSpeed.value = this.speed;
-        const planeOffset = this.plane.scale.x / 2;
-        const viewportOffset = this.viewport.width / 2;
-        this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
-        this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
-        if (direction === 'right' && this.isBefore) {
-          this.extra -= this.widthTotal;
-          this.isBefore = this.isAfter = false;
-        }
-        if (direction === 'left' && this.isAfter) {
-          this.extra += this.widthTotal;
-          this.isBefore = this.isAfter = false;
-        }
-      }
-      onResize({ screen, viewport } = {}) {
-        if (screen) this.screen = screen;
-        if (viewport) {
-          this.viewport = viewport;
-          if (this.plane.program.uniforms.uViewportSizes) {
-            this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
-          }
-        }
-        this.scale = this.screen.height / 1500;
-        this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-        this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
-        this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
-        this.padding = 2;
-        this.width = this.plane.scale.x + this.padding;
-        this.widthTotal = this.width * this.length;
-        this.x = this.width * this.index;
-      }
-    }
-
-    // ── App ──
-    class App {
-      constructor(
-        container, {
-          items,
-          bend,
-          textColor = '#ffffff',
-          borderRadius = 0,
-          font = 'bold 30px Figtree',
-          scrollSpeed = 2,
-          scrollEase = 0.05
-        } = {}
-      ) {
-        document.documentElement.classList.remove('no-js');
-        this.container = container;
-        this.scrollSpeed = scrollSpeed;
-        this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
-        this.onCheckDebounce = debounce(this.onCheck, 200);
-        this.createRenderer();
-        this.createCamera();
-        this.createScene();
-        this.onResize();
-        this.createGeometry();
-        this.createMedias(items, bend, textColor, borderRadius, font);
-        this.update();
-        this.addEventListeners();
-      }
-      createRenderer() {
-        this.renderer = new Renderer({
-          alpha: true,
-          antialias: true,
-          dpr: Math.min(window.devicePixelRatio || 1, 2)
-        });
-        this.gl = this.renderer.gl;
-        this.gl.clearColor(0, 0, 0, 0);
-        this.container.appendChild(this.gl.canvas);
-      }
-      createCamera() {
-        this.camera = new Camera(this.gl);
-        this.camera.fov = 45;
-        this.camera.position.z = 20;
-      }
-      createScene() { this.scene = new Transform(); }
-      createGeometry() {
-        this.planeGeometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
-      }
-      createMedias(items, bend = 1, textColor, borderRadius, font) {
-        const defaultItems = [
-          { image: 'https://picsum.photos/seed/1/800/600?grayscale', text: 'Bridge' },
-          { image: 'https://picsum.photos/seed/2/800/600?grayscale', text: 'Desk Setup' },
-          { image: 'https://picsum.photos/seed/3/800/600?grayscale', text: 'Waterfall' },
-          { image: 'https://picsum.photos/seed/4/800/600?grayscale', text: 'Strawberries' },
-          { image: 'https://picsum.photos/seed/5/800/600?grayscale', text: 'Deep Diving' },
-          { image: 'https://picsum.photos/seed/16/800/600?grayscale', text: 'Train Track' },
-          { image: 'https://picsum.photos/seed/17/800/600?grayscale', text: 'Santorini' },
-          { image: 'https://picsum.photos/seed/8/800/600?grayscale', text: 'Blurry Lights' },
-          { image: 'https://picsum.photos/seed/9/800/600?grayscale', text: 'New York' },
-          { image: 'https://picsum.photos/seed/10/800/600?grayscale', text: 'Good Boy' },
-          { image: 'https://picsum.photos/seed/21/800/600?grayscale', text: 'Coastline' },
-          { image: 'https://picsum.photos/seed/12/800/600?grayscale', text: 'Palm Trees' }
-        ];
-        const galleryItems = items && items.length ? items : defaultItems;
-        this.mediasImages = galleryItems.concat(galleryItems);
-        this.medias = this.mediasImages.map((data, index) => {
-          return new Media({
-            geometry: this.planeGeometry,
-            gl: this.gl,
-            image: data.image,
-            index,
-            length: this.mediasImages.length,
-            renderer: this.renderer,
-            scene: this.scene,
-            screen: this.screen,
-            text: data.text,
-            viewport: this.viewport,
-            bend,
-            textColor,
-            borderRadius,
-            font
-          });
-        });
-      }
-      onTouchDown(e) {
-        this.isDown = true;
-        this.scroll.position = this.scroll.current;
-        this.start = e.touches ? e.touches[0].clientX : e.clientX;
-      }
-      onTouchMove(e) {
-        if (!this.isDown) return;
-        const x = e.touches ? e.touches[0].clientX : e.clientX;
-        const distance = (this.start - x) * (this.scrollSpeed * 0.025);
-        this.scroll.target = this.scroll.position + distance;
-      }
-      onTouchUp() { this.isDown = false;
-        this.onCheck(); }
-      onWheel(e) {
-        const delta = e.deltaY || e.wheelDelta || e.detail;
-        this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
-        this.onCheckDebounce();
-      }
-      onKeyDown(e) {
-        switch (e.key) {
-          case 'ArrowRight':
-            e.preventDefault();
-            this.scroll.target += this.scrollSpeed * 5;
-            this.onCheckDebounce();
-            break;
-          case 'ArrowLeft':
-            e.preventDefault();
-            this.scroll.target -= this.scrollSpeed * 5;
-            this.onCheckDebounce();
-            break;
-          case 'Home':
-            e.preventDefault();
-            this.scroll.target = 0;
-            this.onCheckDebounce();
-            break;
-          default:
-            break;
-        }
-      }
-      onCheck() {
-        if (!this.medias || !this.medias[0]) return;
-        const width = this.medias[0].width;
-        const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
-        const item = width * itemIndex;
-        this.scroll.target = this.scroll.target < 0 ? -item : item;
-      }
-      onResize() {
-        this.screen = { width: this.container.clientWidth, height: this.container.clientHeight };
-        this.renderer.setSize(this.screen.width, this.screen.height);
-        this.camera.perspective({ aspect: this.screen.width / this.screen.height });
-        const fov = (this.camera.fov * Math.PI) / 180;
-        const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
-        const width = height * this.camera.aspect;
-        this.viewport = { width, height };
-        if (this.medias) {
-          this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
-        }
-      }
-      update() {
-        this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
-        const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
-        if (this.medias) {
-          this.medias.forEach(media => media.update(this.scroll, direction));
-        }
-        this.renderer.render({ scene: this.scene, camera: this.camera });
-        this.scroll.last = this.scroll.current;
-        this.raf = window.requestAnimationFrame(this.update.bind(this));
-      }
-      addEventListeners() {
-        this.boundOnResize = this.onResize.bind(this);
-        this.boundOnWheel = this.onWheel.bind(this);
-        this.boundOnTouchDown = this.onTouchDown.bind(this);
-        this.boundOnTouchMove = this.onTouchMove.bind(this);
-        this.boundOnTouchUp = this.onTouchUp.bind(this);
-        this.boundOnKeyDown = this.onKeyDown.bind(this);
-        window.addEventListener('resize', this.boundOnResize);
-        window.addEventListener('mousewheel', this.boundOnWheel);
-        window.addEventListener('wheel', this.boundOnWheel);
-        window.addEventListener('mousedown', this.boundOnTouchDown);
-        window.addEventListener('mousemove', this.boundOnTouchMove);
-        window.addEventListener('mouseup', this.boundOnTouchUp);
-        window.addEventListener('touchstart', this.boundOnTouchDown);
-        window.addEventListener('touchmove', this.boundOnTouchMove);
-        window.addEventListener('touchend', this.boundOnTouchUp);
-        this.container?.addEventListener('keydown', this.boundOnKeyDown);
-      }
-      destroy() {
-        window.cancelAnimationFrame(this.raf);
-        window.removeEventListener('resize', this.boundOnResize);
-        window.removeEventListener('mousewheel', this.boundOnWheel);
-        window.removeEventListener('wheel', this.boundOnWheel);
-        window.removeEventListener('mousedown', this.boundOnTouchDown);
-        window.removeEventListener('mousemove', this.boundOnTouchMove);
-        window.removeEventListener('mouseup', this.boundOnTouchUp);
-        window.removeEventListener('touchstart', this.boundOnTouchDown);
-        window.removeEventListener('touchmove', this.boundOnTouchMove);
-        window.removeEventListener('touchend', this.boundOnTouchUp);
-        if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
-          this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
-        }
-        if (this.container) {
-          this.container.removeEventListener('keydown', this.boundOnKeyDown);
-        }
-      }
-    }
-
-    // ── Galeriyi Başlat ──
-    const container = document.getElementById('gallery-container');
-    if (container) {
-      // Özel görseller eklemek isterseniz bu kısmı güncelleyin.
-      // const customItems = [ { image: 'https://...', text: 'Açıklama' }, ... ];
-      // new App(container, { items: customItems, ... });
-
-      new App(container, {
-        bend: 3,
-        textColor: '#f0f4ff',
-        borderRadius: 0.05,
-        font: 'bold 30px Figtree',
-        scrollSpeed: 2,
-        scrollEase: 0.05
+      // Cleanup (optional)
+      window.addEventListener('beforeunload', () => {
+        cancelAnimationFrame(frame);
+        window.removeEventListener('resize', resize);
       });
     }
   </script>
